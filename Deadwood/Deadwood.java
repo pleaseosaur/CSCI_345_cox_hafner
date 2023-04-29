@@ -13,27 +13,31 @@ public class Deadwood {
     }
 
     private void setupGame() {
-        // xml parser here?
+        // calls SetupGame class
     }
 
-    public void playerMove(String location) {
+    public void playerMove(String player, String location) {
         // move logic
     }
 
-    public void playerUpgrade(int rank) {
+    public void playerUpgrade(String player, int rank) {
         // upgrade logic
     }
 
-    public void takeRole(String role) {
+    public void takeRole(String player, String role) {
         // role logic
     }
 
-    public void playerRehearse() {
+    public void playerRehearse(String player) {
         // rehearse logic
     }
 
-    public void playerAct() {
+    public void playerAct(String player) {
         // act logic
+    }
+
+    public void endDay() {
+
     }
 
     public void endGame() {
