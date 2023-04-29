@@ -24,11 +24,21 @@ public class Deadwood {
         // upgrade logic
     }
 
+    public void takeRole(String role) {
+        // role logic
+    }
+
+    public void playerRehearse() {
+        // rehearse logic
+    }
+
     public void playerAct() {
         // act logic
     }
 
-
+    public void endGame() {
+        // end game logic
+    }
 
 
 }
