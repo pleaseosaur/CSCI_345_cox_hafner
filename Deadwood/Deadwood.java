@@ -1,43 +1,50 @@
-import java.util.HashMap;
-import java.util.Map;
-
-
 // Core game logic
 
 
 public class Deadwood {
-    private Player player;
+    private Player currentPlayer;
+    private GameManager manager;
 
-    public Deadwood() {
-        setupGame();
+    public Deadwood(GameManager manager) {
+        this.manager = manager;
     }
 
-    private void setupGame() {
-        // calls SetupGame class
+    public void setCurrentPlayer(Player player) {
+        this.currentPlayer = player;
     }
 
-    public void playerMove(String location) {
+    public Player getPlayer() {
+        return currentPlayer;
+    }
+
+
+
+    public void move(Location location) {
         // move logic
     }
 
-    public void playerUpgrade(int rank) {
+    public void upgrade(int rank) {
         // upgrade logic
     }
 
-    public void takeRole(String role) {
+    public void takeRole(Role role) {
         // role logic
     }
 
-    public void playerRehearse() {
+    public void rehearse() {
         // rehearse logic
     }
 
-    public void playerAct() {
+    public void act() {
         // act logic
     }
 
-    public void endDay() {
+    public void endTurn() {
+        // end player turn logic
+    }
 
+    public void endDay() {
+        // end day logic
     }
 
     public void endGame() {

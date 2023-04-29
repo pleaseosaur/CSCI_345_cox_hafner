@@ -1,7 +1,10 @@
+import java.util.Set;
+
 public class Main {
     public static void main (String[] args) {
-        Deadwood game = new Deadwood();
-        UI ui = new UI(game);
-        ui.run();
+        GameData data = new GameData();
+        SetupGame setup = new SetupGame(Integer.parseInt(args[0]), data);
+        GameManager manager = new GameManager(setup);
+
     }
 }
