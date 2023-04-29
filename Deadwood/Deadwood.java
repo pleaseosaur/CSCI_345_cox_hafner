@@ -16,23 +16,23 @@ public class Deadwood {
         // calls SetupGame class
     }
 
-    public void playerMove(String player, String location) {
+    public void playerMove(String location) {
         // move logic
     }
 
-    public void playerUpgrade(String player, int rank) {
+    public void playerUpgrade(int rank) {
         // upgrade logic
     }
 
-    public void takeRole(String player, String role) {
+    public void takeRole(String role) {
         // role logic
     }
 
-    public void playerRehearse(String player) {
+    public void playerRehearse() {
         // rehearse logic
     }
 
-    public void playerAct(String player) {
+    public void playerAct() {
         // act logic
     }
 
