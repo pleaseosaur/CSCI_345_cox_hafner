@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Dice {
     private int numDice;
     private int sides;
@@ -15,8 +17,9 @@ public class Dice {
         return -1;
     }
 
-    public List<> wrapRoll(){
+    public List<Integer> wrapRoll(){
         // do wrap calculations
+        return null; //dummy return
     }
 
 }

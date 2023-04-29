@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Board {
     private List<Location> locations;
     private int openScenes;
@@ -20,5 +22,6 @@ public class Board {
     }
     public boolean endDay(){
         // end day logic
+        return false; // dummy return
     }
 }

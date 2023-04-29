@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Scene {
     private String name;
     private String description;
