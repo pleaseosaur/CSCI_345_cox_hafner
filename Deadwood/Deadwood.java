@@ -24,5 +24,11 @@ public class Deadwood {
         // upgrade logic
     }
 
+    public void playerAct() {
+        // act logic
+    }
+
+
+
 
 }
