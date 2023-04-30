@@ -1,9 +1,8 @@
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class UI {
 
-    private Scanner scanner;
+    final Scanner scanner;
 
 
     public UI() {
