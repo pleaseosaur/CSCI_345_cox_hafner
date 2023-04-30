@@ -2,11 +2,19 @@
 
 
 public class Deadwood {
+
+    private UI ui;
     private Player currentPlayer;
     private GameManager manager;
 
-    public Deadwood(GameManager manager) {
-        this.manager = manager;
+
+    public Deadwood() {
+        this.ui = new UI();
+    }
+
+    public void startGame() {
+        ui.displayWelcomeMessage();
+        ui.getPlayerCount();
     }
 
     public void setCurrentPlayer(Player player) {
