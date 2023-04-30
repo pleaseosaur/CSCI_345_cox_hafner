@@ -2,17 +2,22 @@
 // Player interface and game tracking
 
 public class GameManager {
-    private SetupGame setup;
     private Deadwood game;
     private boolean gameActive;
+    private int days;
 
     public GameManager(int numPlayers) {
-        this.gameActive = true;
+        setGameActive(true);
         setupGame(numPlayers);
     }
 
     public void setupGame(int numPlayers) {
-        this.setup = new SetupGame(numPlayers);
+        SetupGame setup = new SetupGame(numPlayers);
+        if(numPlayers == 2 || numPlayers == 3) {
+            setDays(3);
+        } else {
+            setDays(4);
+        }
     }
 
     public void runGame() {
@@ -23,9 +28,24 @@ public class GameManager {
         // turn logic per player
     }
 
+    public void setGameActive(boolean b) {
+        this.gameActive = b;
+    }
+
+    public boolean gameIsActive() {
+        return gameActive;
+    }
+
+    public void setDays(int n) {
+        this.days = n;
+    }
+
+    public int getDays() {
+        return this.days;
+    }
+
     private boolean checkEnd() {
-        // check for end of game condition and return t/f
-        return false; // dummy return so method will compile
+        return getDays() == 0;
     }
 
     private void scoreGame() {
