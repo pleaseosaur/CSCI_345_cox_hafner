@@ -21,24 +21,24 @@ public class GameData {
         List<Player> players = new ArrayList<>();
         if(numPlayers == 5) {
             for(int i = 1; i <= numPlayers; i++) {
-                Player player = new Player("Player" + i, 1, 2, 0);
+                Player player = new Player("Player " + i, 1, 2, 0);
                 players.add(player);
             }
         }
         if(numPlayers == 6) {
             for(int i = 1; i <= numPlayers; i++) {
-                Player player = new Player("Player" + i, 1, 4, 0);
+                Player player = new Player("Player " + i, 1, 4, 0);
                 players.add(player);
             }
         }
         if(numPlayers == 7 || numPlayers == 8) {
             for(int i = 1; i <= numPlayers; i++) {
-                Player player = new Player("Player" + i, 2, 0, 0);
+                Player player = new Player("Player " + i, 2, 0, 0);
                 players.add(player);
             }
         } else {
             for (int i = 1; i <= numPlayers; i++) {
-                Player player = new Player("Player" + i, 1, 0, 0);
+                Player player = new Player("Player " + i, 1, 0, 0);
                 players.add(player);
             }
         }
