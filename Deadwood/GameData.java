@@ -17,6 +17,7 @@ public class GameData {
         // parse xml
     }
 
+    // TODO - look into optimizing this repetitive code nonsense
     public List<Player> createPlayers(int numPlayers) {
         List<Player> players = new ArrayList<>();
         if(numPlayers == 5) {
