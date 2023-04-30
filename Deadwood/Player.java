@@ -9,11 +9,11 @@ public class Player {
     private int practiceChips;
     private Location location;
 
-    public Player(String name){
+    public Player(String name, int rank, int credits, int dollars){
         this.name = name;
-        this.rank = 1;
-        this.credits = 0;
-        this.dollars = 0;
+        this.rank = rank;
+        this.credits = credits;
+        this.dollars = dollars;
         this.role = null;
         this.practiceChips = 0;
         this.location = null;
@@ -33,5 +33,9 @@ public class Player {
     }
     public void rehearse(){
         // call method from Deadwood.java to do logic
+    }
+
+    public boolean hasRole() {
+        return this.role != null;
     }
 }
