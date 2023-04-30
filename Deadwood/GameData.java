@@ -1,16 +1,29 @@
+import java.util.ArrayList;
 import java.util.List;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import java.io.IOException;
+
 
 public class GameData {
-    // need private attributes for xml parsing here
 
     public GameData() {
         // parse xml
     }
 
     public List<Player> createPlayers(int numPlayers) {
-        // establish players
-        // return players;
-        return null; //dummy return
+        List<Player> players = new ArrayList<>();
+        for(int i = 1; i <= numPlayers; i++) {
+            Player player = new Player("Player" + i); // TODO - need to update the Player class
+            players.add(player);
+        }
+        return players;
     }
 
     public Board createBoard() {

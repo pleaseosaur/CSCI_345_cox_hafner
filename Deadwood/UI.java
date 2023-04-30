@@ -11,11 +11,16 @@ public class UI {
 
     public void displayWelcomeMessage() {
         System.out.println("Welcome to Deadwood!"); // basic - add more later if desired
+        System.out.println("You may enter 'exit' at any time to terminate the game.");
     }
 
     public int getPlayerCount() {
         System.out.println("Please enter the number of players: ");
         try {
+            if(scanner.next().equals("exit")) {
+                System.out.println("Your loss! Enjoy not being a world-renown thespian.");
+                System.exit(0);
+            }
             int numPlayers = scanner.nextInt();
             if(numPlayers < 2 || numPlayers > 8) {
                 System.out.println("Sorry, the number of players should be between 2 and 8.");
@@ -28,12 +33,14 @@ public class UI {
             return getPlayerCount();
         }
     }
+
+    public void displayMessage(String message){
+        System.out.println(message);
+    }
     public void playerAction(){
         //player input here
     }
-    public void displayMessage(String message){
-        // message logic here
-    }
+
     public void displayBoard(Board b){
         // display board logic here
     }

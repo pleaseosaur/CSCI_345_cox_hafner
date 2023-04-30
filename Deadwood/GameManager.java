@@ -6,10 +6,13 @@ public class GameManager {
     private Deadwood game;
     private boolean gameActive;
 
-    public GameManager(SetupGame setup) {
-        this.setup = setup;
-        this.game = new Deadwood(this);
+    public GameManager(int numPlayers) {
         this.gameActive = true;
+        setupGame(numPlayers);
+    }
+
+    public void setupGame(int numPlayers) {
+        this.setup = new SetupGame(numPlayers);
     }
 
     public void runGame() {

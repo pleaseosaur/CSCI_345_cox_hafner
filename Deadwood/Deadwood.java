@@ -3,7 +3,7 @@
 
 public class Deadwood {
 
-    private UI ui;
+    final UI ui;
     private Player currentPlayer;
     private GameManager manager;
 
@@ -14,7 +14,8 @@ public class Deadwood {
 
     public void startGame() {
         ui.displayWelcomeMessage();
-        ui.getPlayerCount();
+        int players = ui.getPlayerCount();
+        this.manager = new GameManager(players);
     }
 
     public void setCurrentPlayer(Player player) {

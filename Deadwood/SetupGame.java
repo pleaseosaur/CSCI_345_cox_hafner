@@ -8,8 +8,8 @@ public class SetupGame {
     private Board board;
     private Deck deck;
 
-    public SetupGame(int numPlayers, GameData data) {
-        this.data = data;
+    public SetupGame(int numPlayers) {
+        this.data = new GameData();
         this.players = data.createPlayers(numPlayers);
         this.board = data.createBoard();
         this.deck = data.createDeck();
