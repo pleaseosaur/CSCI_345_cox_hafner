@@ -9,6 +9,16 @@ public class Player {
     private int practiceChips;
     private Location location;
 
+    public Player(String name){
+        this.name = name;
+        this.rank = 1;
+        this.credits = 0;
+        this.dollars = 0;
+        this.role = null;
+        this.practiceChips = 0;
+        this.location = null;
+    }
+
     public void move(){
         // call method from Deadwood.java to do logic
     }
