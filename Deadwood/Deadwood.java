@@ -22,7 +22,7 @@ public class Deadwood {
         this.currentPlayer = player;
     }
 
-    public Player getPlayer() {
+    public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
@@ -33,15 +33,15 @@ public class Deadwood {
     }
 
     public void upgrade(int rank) {
-        // upgrade logic
+        currentPlayer.setRank(rank);
     }
 
     public void takeRole(Role role) {
-        // role logic
+        currentPlayer.setRole(role);
     }
 
     public void rehearse() {
-        // rehearse logic
+        currentPlayer.setPracticeChips();
     }
 
     public void act() {
@@ -49,7 +49,9 @@ public class Deadwood {
     }
 
     public void endTurn() {
-        // end player turn logic
+        int currentIndex = manager.getPlayers().indexOf(currentPlayer);
+        int nextIndex = (currentIndex + 1) % manager.getPlayers().size();
+        setCurrentPlayer(manager.getPlayers().get(nextIndex));
     }
 
     public void endDay() {

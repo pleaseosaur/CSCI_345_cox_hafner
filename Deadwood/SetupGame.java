@@ -10,17 +10,29 @@ public class SetupGame {
 
     public SetupGame(int numPlayers) {
         this.data = new GameData();
-        this.players = data.createPlayers(numPlayers);
-        this.board = data.createBoard();
-        this.deck = data.createDeck();
+        setPlayers(data.createPlayers(numPlayers));
+        setBoard(data.createBoard());
+        setDeck(data.createDeck());
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 
     public List<Player> getPlayers() {
         return players;
     }
 
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     public Board getBoard() {
         return board;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
     }
 
     public Deck getDeck() {

@@ -1,8 +1,9 @@
-
+import java.util.List;
 // Player interface and game tracking
 
 public class GameManager {
     private Deadwood game;
+    private List<Player> players;
     private boolean gameActive;
     private int days;
 
@@ -13,11 +14,16 @@ public class GameManager {
 
     public void setupGame(int numPlayers) {
         SetupGame setup = new SetupGame(numPlayers);
+        this.players = setup.getPlayers();
         if(numPlayers == 2 || numPlayers == 3) {
             setDays(3);
         } else {
             setDays(4);
         }
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 
     public void runGame() {
