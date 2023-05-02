@@ -2,8 +2,20 @@ public class Role {
     private String name;
     private String flavorText;
     private int rank;
+    private int x;
+    private int y;
+    private int h;
+    private int w;
     private boolean onCard;
     private boolean taken;
+
+    public Role(String n, int r, int x, int y, int h, int w, String f, boolean o, boolean t){
+        setName(n);
+        setFlavorText(f);
+        setRank(r);
+        setOnCard(o);
+        setTaken(t);
+    }
 
     public String getName(){
         return name;

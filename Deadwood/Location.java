@@ -1,11 +1,19 @@
-import java.security.GeneralSecurityException;
-
 import java.util.List;
 
 public class Location {
     private String name;
     private Scene scene;
-    private List<Location> neighbors;
+    private List<Role> roles;
+    private List<String> neighbors;
+    private List<Take> takes;
+
+    public Location(String n, Scene s, List<Role> r, List<String> l, List<Take> takes){
+        setName(n);
+        setScene(s);
+        setRoles(r);
+        setNeighbors(l);
+        setTakes(takes);
+    }
 
     public String getName(){
         return this.name;
@@ -19,10 +27,26 @@ public class Location {
     public void setScene(Scene s){
         this.scene = s;
     }
-    public List<Location> getNeighbors(){
+    public List<String> getNeighbors(){
         return neighbors;
     }
-    public void setNeighbors(List<Location> n){
+    public void setNeighbors(List<String> n){
         this.neighbors = n;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<Take> getTakes() {
+        return takes;
+    }
+
+    public void setTakes(List<Take> takes) {
+        this.takes = takes;
     }
 }

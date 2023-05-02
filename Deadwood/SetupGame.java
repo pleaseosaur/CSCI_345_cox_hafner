@@ -11,11 +11,11 @@ public class SetupGame {
     private Deck deck;
 
     public SetupGame(int numPlayers) {
-        this.data = new GameData();
+        this.data = new GameData("board.xml", "cards.xml"); //TODO - figure out where to put this
         setPlayers(numPlayers);
         setDays(numPlayers);
-        setBoard(data.createBoard());
-        setDeck(data.createDeck());
+//        setBoard(data.createBoard());
+//        setDeck(data.createDeck());
     }
 
     public void setPlayers(int numPlayers) {
