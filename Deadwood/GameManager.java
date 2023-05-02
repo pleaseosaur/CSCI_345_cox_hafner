@@ -14,12 +14,12 @@ public class GameManager {
 
     public void setupGame(int numPlayers) {
         SetupGame setup = new SetupGame(numPlayers);
-        this.players = setup.getPlayers();
-        if(numPlayers == 2 || numPlayers == 3) {
-            setDays(3);
-        } else {
-            setDays(4);
-        }
+        setPlayers(setup.getPlayers());
+        setDays(setup.getDays());
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 
     public List<Player> getPlayers() {
