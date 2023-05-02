@@ -17,6 +17,7 @@ public class SetupGame {
         }
         catch (Exception e){
             System.out.println("Error loading Game Data.");
+            e.printStackTrace();
         }
         setPlayers(numPlayers);
         setDays(numPlayers);
