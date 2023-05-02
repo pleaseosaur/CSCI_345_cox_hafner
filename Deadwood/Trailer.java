@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class Trailer extends Location{
-    public Trailer(String n, Scene s, List<Role> r, List<Location> l, List<Take> takes) {
+    public Trailer(String n, Scene s, List<Role> r, List<String> l, List<Take> takes) {
         super(n, s, r, l, takes);
     }
 

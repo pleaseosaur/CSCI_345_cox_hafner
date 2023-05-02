@@ -11,7 +11,13 @@ public class SetupGame {
     private Deck deck;
 
     public SetupGame(int numPlayers) {
-        this.data = new GameData("board.xml", "cards.xml"); //TODO - figure out where to put this
+        // Exception catch
+        try{
+            this.data = new GameData("board.xml", "cards.xml"); //TODO - figure out where to put this
+        }
+        catch (Exception e){
+            System.out.println("Error loading Game Data.");
+        }
         setPlayers(numPlayers);
         setDays(numPlayers);
 //        setBoard(data.createBoard());
