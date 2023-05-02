@@ -35,7 +35,7 @@ public class GameData {
             System.out.println("XML parse failure");
             e.printStackTrace();
         }
-        return doc;
+        return null;
     }
 
     public Deck createDeck() {
