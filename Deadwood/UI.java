@@ -21,11 +21,14 @@ public class UI {
     public int getPlayerCount() {
         displayMessage("Please enter the number of players: ");
         try {
-            if(scanner.next().equals("exit")) {
+            String numPlayersInput = scanner.next();
+            int numPlayers = 0;
+            if(numPlayersInput.equals("exit")) {
                 displayMessage("Your loss! Enjoy not being a world-renown thespian.");
                 System.exit(0);
+            } else {
+                numPlayers = Integer.parseInt(numPlayersInput);
             }
-            int numPlayers = scanner.nextInt();
             if(numPlayers < 2 || numPlayers > 8) {
                 displayMessage("Sorry, the number of players should be between 2 and 8.");
                 return getPlayerCount();
