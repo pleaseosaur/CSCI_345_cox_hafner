@@ -7,12 +7,12 @@ public class Area {
 
 
     public Area(int x, int y, int h, int w) {
-        setLocation(x, y);
+        setCoordinates(x, y);
         setDimensions(h, w);
 
     }
 
-    public void setLocation(int x, int y) {
+    public void setCoordinates(int x, int y) {
         this.x = x;
         this.y = y;
     }
