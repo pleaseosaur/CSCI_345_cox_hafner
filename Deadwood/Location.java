@@ -4,7 +4,7 @@ public class Location {
     private String name;
     private Scene scene;
     private List<Role> roles;
-    private List<String> neighbors;
+    private List<String> neighbors; // may need to use HashSet<> for undirected graph functionality
     private List<Take> takes;
 
     public Location(String n, Scene s, List<Role> r, List<String> l, List<Take> takes){

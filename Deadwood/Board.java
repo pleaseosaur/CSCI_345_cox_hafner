@@ -1,8 +1,15 @@
 import java.util.List;
 
 public class Board {
+    private String name;
     private List<Location> locations;
     private int openScenes;
+
+    public Board(String n, List<Location> l, int o){
+        this.name = n;
+        this.locations = l;
+        this.openScenes = o;
+    }
 
     public List<Location> getLocations(){
         return this.locations;

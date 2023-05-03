@@ -11,12 +11,15 @@ import org.w3c.dom.NodeList;
 
 public class GameData {
 
+    private Board board;
+    private Deck deck;
+
     public GameData(String boardFile, String cardFile) throws ParserConfigurationException{
         Document boardDoc = getDocFromFile(boardFile);
         Document cardDoc = getDocFromFile(cardFile);
 
-        Board board = createBoard(boardDoc);
-        Deck deck = createDeck(cardDoc);
+        createBoard(boardDoc);
+        createDeck(cardDoc);
 
     }
 
@@ -38,7 +41,7 @@ public class GameData {
         } // exception handling
     }
 
-    public Board createBoard(Document d) {
+    public void createBoard(Document d) {
         d.getDocumentElement().normalize();
 
         String boardName = d.getDocumentElement().getAttribute("name");
@@ -97,21 +100,63 @@ public class GameData {
                         roles.add(role);
                     }
                 }
-
+                // TODO - Add functionality for getting Trailer and Casting Office
                 Location location = new Location(locationName, null, roles, neighbors, takes);
+                locations.add(location);
             }
         }
+
+        // get trailer nodes
+        NodeList trailerNodes = d.getElementsByTagName("trailer");
+        Node trailerNode = trailerNodes.item(0);
+        Element trailerElement = (Element) trailerNode;
+        String trailerName = trailerElement.getAttribute("name");
+        NodeList trailerNeighborNodes = trailerElement.getElementsByTagName("neighbor");
+        List<String> trailerNeighbors = new ArrayList<>();
+        for(int j = 0; j < trailerNeighborNodes.getLength(); j++) {
+            Node trailerNeighborNode = trailerNeighborNodes.item(j);
+            if(trailerNeighborNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element trailerNeighborElement = (Element) trailerNeighborNode;
+                trailerNeighbors.add(trailerNeighborElement.getAttribute("name"));
+            }
+
+            Location trailer = new Location(trailerName, null, null, trailerNeighbors, null);
+            locations.add(trailer);
+        }
+
+        // get office nodes
+        NodeList officeNodes = d.getElementsByTagName("office");
+        Node officeNode = officeNodes.item(0);
+        Element officeElement = (Element) officeNode;
+        String officeName = officeElement.getAttribute("name");
+        NodeList officeNeighborNodes = officeElement.getElementsByTagName("neighbor");
+        List<String> officeNeighbors = new ArrayList<>();
+        for(int j = 0; j < officeNeighborNodes.getLength(); j++) {
+            Node officeNeighborNode = officeNeighborNodes.item(j);
+            if(officeNeighborNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element officeNeighborElement = (Element) officeNeighborNode;
+                officeNeighbors.add(officeNeighborElement.getAttribute("name"));
+            }
+
+            Location office = new Location(officeName, null, null, officeNeighbors, null);
+            locations.add(office);
+        }
+
+        this.board = new Board(boardName, locations, 10);
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Deck createDeck(Document d) {
+
 
         return null;
     }
 
-    public Deck createDeck(Document d) {
-        d.getDocumentElement().normalize();
-        NodeList nList = d.getElementsByTagName("deck");
-        Node nNode = nList.item(0);
-        Element eElement = (Element) nNode;
-
-        return null;
+    public Deck getDeck() {
+        return deck;
     }
 
 }

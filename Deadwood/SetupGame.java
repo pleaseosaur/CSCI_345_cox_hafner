@@ -21,8 +21,8 @@ public class SetupGame {
         }
         setPlayers(numPlayers);
         setDays(numPlayers);
-//        setBoard(data.createBoard());
-//        setDeck(data.createDeck());
+        setBoard();
+        setDeck();
     }
 
     public void setPlayers(int numPlayers) {
@@ -65,16 +65,16 @@ public class SetupGame {
         return days;
     }
 
-    public void setBoard(Board board) {
-        this.board = board;
+    public void setBoard() {
+        this.board = data.getBoard();
     }
 
     public Board getBoard() {
         return board;
     }
 
-    public void setDeck(Deck deck) {
-        this.deck = deck;
+    public void setDeck() {
+        this.deck = data.getDeck();
     }
 
     public Deck getDeck() {
