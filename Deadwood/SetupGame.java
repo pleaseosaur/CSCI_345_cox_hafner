@@ -13,7 +13,7 @@ public class SetupGame {
     public SetupGame(int numPlayers) {
         // Exception catch
         try{
-            this.data = new GameData("board.xml", "cards.xml"); //TODO - figure out where to put this
+            this.data = new GameData("board.xml", "cards.xml");
         }
         catch (Exception e){
             System.out.println("Error loading Game Data.");
