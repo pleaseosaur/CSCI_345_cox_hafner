@@ -80,30 +80,27 @@ public class GameData {
 
         for(int i = 0; i < cardNodes.getLength(); i++) {
             Node cardNode = cardNodes.item(i); // get card node
-
-            System.out.println("Building card "+i+".");
-
             if (cardNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element cardElement = (Element) cardNode; // cast node to element
                 Scene card = createCard(cardElement); // create card
 
                 cards.add(card); // add card to list
             }
-
-            System.out.println("Card "+i+1+" created.");
         }
-        System.out.println("Deck created.");
 
         this.deck = new Deck(cards); // create deck
     }
 
     private Scene createCard(Element cardElement) {
         String cardName = cardElement.getAttribute("name"); // get card name
-        int sceneNumber = Integer.parseInt(cardElement.getAttribute("number")); // get scene number
+
+        // TODO This is where it breaks: Probably because number isn't an attribute in the element itself, not sure what the term is. Will look into
+        // int sceneNumber = Integer.parseInt(cardElement.getAttribute("number")); // get scene number
+        int sceneNumber = -1;
+
         int budget = Integer.parseInt(cardElement.getAttribute("budget")); // get card budget
         String sceneDescription = cardElement.getElementsByTagName("scene").item(0).getTextContent(); // get scene description
         List<Role> roles = createRoles(cardElement.getElementsByTagName("part")); // get part/role nodes
-
         return new Scene(cardName, sceneNumber, sceneDescription, budget, roles, false); // create card;
     }
 
