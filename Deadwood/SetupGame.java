@@ -14,15 +14,15 @@ public class SetupGame {
         // Exception catch
         try{
             this.data = new GameData("board.xml", "cards.xml");
+            setPlayers(numPlayers);
+            setDays(numPlayers);
+            setBoard();
+            setDeck();
         }
         catch (Exception e){
             System.out.println("Error loading Game Data.");
             e.printStackTrace();
         }
-        setPlayers(numPlayers);
-        setDays(numPlayers);
-        setBoard();
-        setDeck();
     }
 
     public void setPlayers(int numPlayers) {
