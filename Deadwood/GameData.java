@@ -19,7 +19,7 @@ public class GameData {
         Document cardDoc = getDocFromFile(cardFile);
 
         createBoard(boardDoc);
-        createDeck(cardDoc);
+        // createDeck(cardDoc);
 
     }
 
@@ -32,6 +32,7 @@ public class GameData {
 
             try {
                 doc = db.parse(filename); // parse file into document
+                System.out.println(filename+" parsed.");
             } catch (Exception ex) {
                 System.out.println("XML parse failure");
                 ex.printStackTrace();
@@ -49,6 +50,7 @@ public class GameData {
         List<Location> locations = new ArrayList<>(); // create list of locations
 
         for(int i = 0; i < locationNodes.getLength(); i++) {
+            System.out.println("Building location "+i+"."); // TODO remove test print
             Node locationNode = locationNodes.item(i); // get location node
 
             if (locationNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -56,14 +58,18 @@ public class GameData {
                 Location location = createLocation(locationElement); // create location
                 locations.add(location); // add location to list
             }
+            System.out.println("Location "+i+" built."); // TODO remove test print
         }
         // TODO - could probably refactor further to allow createLocation to handle trailer and office
         Location trailer = createTrailer((Element) d.getElementsByTagName("trailer").item(0)); // get trailer location
+        System.out.println("Trailer created."); // TODO remove test print
         Location office = createOffice((Element) d.getElementsByTagName("office").item(0)); // get office location
+        System.out.println("Office created."); // TODO remove test print
 
         locations.add(trailer); // add trailer to list
         locations.add(office); // add office to list
 
+        System.out.println("Board created."); // TODO remove test print
         this.board = new Board(boardName, locations, 10); // create board
     }
 
@@ -81,13 +87,18 @@ public class GameData {
         for(int i = 0; i < cardNodes.getLength(); i++) {
             Node cardNode = cardNodes.item(i); // get card node
 
+            System.out.println("Building card "+i+".");
+
             if (cardNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element cardElement = (Element) cardNode; // cast node to element
                 Scene card = createCard(cardElement); // create card
 
                 cards.add(card); // add card to list
             }
+
+            System.out.println("Card "+i+1+" created.");
         }
+        System.out.println("Deck created.");
 
         this.deck = new Deck(cards); // create deck
     }
