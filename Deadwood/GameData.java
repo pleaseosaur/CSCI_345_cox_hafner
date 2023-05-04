@@ -190,7 +190,7 @@ public class GameData {
         List<String> trailerNeighbors = createNeighbors(trailerElement.getElementsByTagName("neighbor")); // get trailer neighbor nodes
         Area trailerArea = getArea((Element) trailerElement.getElementsByTagName("area").item(0)); // get trailer area
 
-        return new Location("Trailer", null, null, trailerNeighbors, null, trailerArea); // create trailer
+        return new Trailer("Trailer", null, null, trailerNeighbors, trailerArea, null); // create trailer
     }
 
     private Location createOffice(Element officeElement) {
@@ -198,7 +198,26 @@ public class GameData {
         List<String> officeNeighbors = createNeighbors(officeElement.getElementsByTagName("neighbor")); // get office neighbor nodes
         Area officeArea = getArea((Element) officeElement.getElementsByTagName("area").item(0)); // get office area
 
-        return new Location("Casting Office", null, null, officeNeighbors, null, officeArea); // create office
+        NodeList upgradeNodes = officeElement.getElementsByTagName("upgrade"); // get upgrade nodes
+        List<Upgrade> upgrades = new ArrayList<>(); // create list of upgrades
+
+        // iterate through upgrade nodes
+        for(int i = 0; i < upgradeNodes.getLength(); i++) {
+            Node upgradeNode = upgradeNodes.item(i); // get upgrade node
+
+            if (upgradeNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element upgradeElement = (Element) upgradeNode; // cast node to element
+                int level = Integer.parseInt(upgradeElement.getAttribute("level")); // get upgrade level
+                String currency = upgradeElement.getAttribute("currency"); // get upgrade currency
+                int amount = Integer.parseInt(upgradeElement.getAttribute("amt")); // get upgrade amount
+                Area upgradeArea = getArea((Element) upgradeElement.getElementsByTagName("area").item(0)); // get upgrade area
+
+                Upgrade upgrade = new Upgrade(level, currency, amount, upgradeArea); // create upgrade
+                upgrades.add(upgrade); // add upgrade to list
+            }
+        }
+
+        return new CastingOffice("Casting Office", null, null, officeNeighbors, null, officeArea, upgrades); // create office
     }
 
     private static Area getArea(Element areaElement) {
