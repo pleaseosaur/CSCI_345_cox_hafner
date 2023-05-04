@@ -26,123 +26,159 @@ public class GameData {
 
     public Document getDocFromFile(String filename) throws ParserConfigurationException {
         {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = null;
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance(); // create document builder factory
+            DocumentBuilder db = dbf.newDocumentBuilder(); // create document builder
+            Document doc = null; // create document
 
             try {
-                doc = db.parse(filename);
+                doc = db.parse(filename); // parse file into document
             } catch (Exception ex) {
                 System.out.println("XML parse failure");
                 ex.printStackTrace();
-            }
+            } // exception handling
 
-            return doc;
+            return doc; // return document
         } // exception handling
     }
 
     public void createBoard(Document d) {
-        d.getDocumentElement().normalize();
 
-        String boardName = d.getDocumentElement().getAttribute("name");
+        d.getDocumentElement().normalize(); // normalize text representation
 
-        NodeList locationNodes = d.getElementsByTagName("set");
+        String boardName = d.getDocumentElement().getAttribute("name"); // get board name
 
-        List<Location> locations = new ArrayList<>();
+        NodeList locationNodes = d.getElementsByTagName("set"); // get all location nodes
+        List<Location> locations = new ArrayList<>(); // create list of locations
 
+        // iterate through location nodes
         for(int i = 0; i < locationNodes.getLength(); i++) {
-            Node locationNode = locationNodes.item(i);
 
+            Node locationNode = locationNodes.item(i); // get location node
+
+            // check if node is an element node
             if(locationNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element locationElement = (Element) locationNode;
 
-                String locationName = locationElement.getAttribute("name");
-                NodeList neighborNodes = locationElement.getElementsByTagName("neighbor");
-                List<String> neighbors = new ArrayList<>();
+                Element locationElement = (Element) locationNode; // cast node to element
+                String locationName = locationElement.getAttribute("name"); // get location name
+                NodeList neighborNodes = locationElement.getElementsByTagName("neighbor"); // get neighbor nodes
+                List<String> neighbors = new ArrayList<>(); // create list of neighbors
+
+                // iterate through neighbor nodes
                 for(int j = 0; j < neighborNodes.getLength(); j++) {
-                    Node neighborNode = neighborNodes.item(j);
+                    Node neighborNode = neighborNodes.item(j); // get neighbor node
+
+                    // check if node is an element node
                     if(neighborNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element neighborElement = (Element) neighborNode;
-                        neighbors.add(neighborElement.getAttribute("name"));
+                        Element neighborElement = (Element) neighborNode; // cast node to element
+                        neighbors.add(neighborElement.getAttribute("name")); // add neighbor name to list
                     }
                 }
+                // get location area
+                Area locationArea = getArea((Element) locationElement.getElementsByTagName("area").item(0));
 
-                NodeList takeNodes = locationElement.getElementsByTagName("take");
-                List<Take> takes = new ArrayList<>();
+                NodeList takeNodes = locationElement.getElementsByTagName("take"); // get take nodes
+                List<Take> takes = new ArrayList<>(); // create list of takes
+
+                // iterate through take nodes
                 for(int j = 0; j < takeNodes.getLength(); j++) {
-                    Node takeNode = takeNodes.item(j);
+
+                    Node takeNode = takeNodes.item(j); // get take node
+
+                    // check if node is an element node
                     if(takeNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element takeElement = (Element) takeNode;
-                        int takeNumber = Integer.parseInt(takeElement.getAttribute("number"));
-                        int takeX = Integer.parseInt(takeElement.getAttribute("x"));
-                        int takeY = Integer.parseInt(takeElement.getAttribute("y"));
-                        int takeH = Integer.parseInt(takeElement.getAttribute("h"));
-                        int takeW = Integer.parseInt(takeElement.getAttribute("w"));
-                        Take take = new Take(takeNumber, takeX, takeY, takeH, takeW);
-                        takes.add(take);
+
+                        Element takeElement = (Element) takeNode; // cast node to element
+                        int takeNumber = Integer.parseInt(takeElement.getAttribute("number")); // get take number
+                        Area takeArea = getArea((Element) takeElement.getElementsByTagName("area").item(0)); // get area
+
+                        Take take = new Take(takeNumber, takeArea); // create take
+                        takes.add(take); // add take to list
                     }
                 }
+                NodeList partNodes = locationElement.getElementsByTagName("part"); // get part/role nodes
 
-                NodeList partNodes = locationElement.getElementsByTagName("part");
-                List<Role> roles = new ArrayList<>();
+                List<Role> roles = new ArrayList<>(); // create list of parts/roles
+
+                // iterate through part/role nodes
                 for(int j = 0; j < partNodes.getLength(); j++) {
-                    Node partNode = partNodes.item(j);
+
+                    Node partNode = partNodes.item(j); // get part/role node
+
+                    // check if node is an element node
                     if(partNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element partElement = (Element) partNode;
-                        String partName = partElement.getAttribute("name");
-                        int partLevel = Integer.parseInt(partElement.getAttribute("level"));
-                        int partX = Integer.parseInt(partElement.getAttribute("x"));
-                        int partY = Integer.parseInt(partElement.getAttribute("y"));
-                        int partH = Integer.parseInt(partElement.getAttribute("h"));
-                        int partW = Integer.parseInt(partElement.getAttribute("w"));
-                        String partLine = partElement.getAttribute("line");
-                        Role role = new Role(partName, partLevel, partX, partY, partH, partW, partLine, false, false);
-                        roles.add(role);
+
+                        Element partElement = (Element) partNode; // cast node to element
+                        String partName = partElement.getAttribute("name"); // get part/role name
+                        int partLevel = Integer.parseInt(partElement.getAttribute("level")); // get part/role level
+                        Area partArea = getArea((Element) partElement.getElementsByTagName("area").item(0)); // get area
+                        String partLine = partElement.getAttribute("line"); // get part/role line
+
+                        Role role = new Role(partName, partLevel, partArea, partLine, false, false); // create role/part
+                        roles.add(role); // add part/role to list
                     }
                 }
-                // TODO - Add functionality for getting Trailer and Casting Office
-                Location location = new Location(locationName, null, roles, neighbors, takes);
-                locations.add(location);
+                Location location = new Location(locationName, null, roles, neighbors, takes, locationArea); // create location
+                locations.add(location); // add location to list
             }
         }
+        NodeList trailerNodes = d.getElementsByTagName("trailer"); // get trailer nodes
+        Node trailerNode = trailerNodes.item(0); // get trailer node
+        Element trailerElement = (Element) trailerNode; // cast node to element
 
-        // get trailer nodes
-        NodeList trailerNodes = d.getElementsByTagName("trailer");
-        Node trailerNode = trailerNodes.item(0);
-        Element trailerElement = (Element) trailerNode;
-        String trailerName = trailerElement.getAttribute("name");
-        NodeList trailerNeighborNodes = trailerElement.getElementsByTagName("neighbor");
-        List<String> trailerNeighbors = new ArrayList<>();
+//        String trailerName = trailerElement.getAttribute("name"); // get trailer name -- don't need this
+
+        NodeList trailerNeighborNodes = trailerElement.getElementsByTagName("neighbor"); // get trailer neighbor nodes
+        List<String> trailerNeighbors = new ArrayList<>(); // create list of trailer neighbors
+
+        // iterate through trailer neighbor nodes
         for(int j = 0; j < trailerNeighborNodes.getLength(); j++) {
-            Node trailerNeighborNode = trailerNeighborNodes.item(j);
+
+            Node trailerNeighborNode = trailerNeighborNodes.item(j); // get trailer neighbor node
+
+            // check if node is an element node
             if(trailerNeighborNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element trailerNeighborElement = (Element) trailerNeighborNode;
-                trailerNeighbors.add(trailerNeighborElement.getAttribute("name"));
+
+                Element trailerNeighborElement = (Element) trailerNeighborNode; // cast node to element
+                trailerNeighbors.add(trailerNeighborElement.getAttribute("name")); // add neighbor name to list
             }
-
-            Location trailer = new Location(trailerName, null, null, trailerNeighbors, null);
-            locations.add(trailer);
         }
+        Area trailerArea = getArea((Element) trailerElement.getElementsByTagName("area").item(0)); // get trailer area
 
-        // get office nodes
-        NodeList officeNodes = d.getElementsByTagName("office");
-        Node officeNode = officeNodes.item(0);
-        Element officeElement = (Element) officeNode;
-        String officeName = officeElement.getAttribute("name");
-        NodeList officeNeighborNodes = officeElement.getElementsByTagName("neighbor");
-        List<String> officeNeighbors = new ArrayList<>();
+        Location trailer = new Location("Trailer", null, null, trailerNeighbors, null, trailerArea); // create trailer
+        locations.add(trailer); // add trailer to list
+
+        NodeList officeNodes = d.getElementsByTagName("office"); // get office nodes
+        Node officeNode = officeNodes.item(0); // get office node
+        Element officeElement = (Element) officeNode; // cast node to element
+//        String officeName = officeElement.getAttribute("name"); // get office name -- don't need this
+        NodeList officeNeighborNodes = officeElement.getElementsByTagName("neighbor"); // get office neighbor nodes
+        List<String> officeNeighbors = new ArrayList<>(); // create list of office neighbors
+
+        // iterate through office neighbor nodes
         for(int j = 0; j < officeNeighborNodes.getLength(); j++) {
-            Node officeNeighborNode = officeNeighborNodes.item(j);
+
+            Node officeNeighborNode = officeNeighborNodes.item(j); // get office neighbor node
+
+            // check if node is an element node
             if(officeNeighborNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element officeNeighborElement = (Element) officeNeighborNode;
-                officeNeighbors.add(officeNeighborElement.getAttribute("name"));
+                Element officeNeighborElement = (Element) officeNeighborNode; // cast node to element
+                officeNeighbors.add(officeNeighborElement.getAttribute("name")); // add neighbor name to list
             }
-
-            Location office = new Location(officeName, null, null, officeNeighbors, null);
-            locations.add(office);
         }
+        Area officeArea = getArea((Element) officeElement.getElementsByTagName("area").item(0)); // get office area
 
-        this.board = new Board(boardName, locations, 10);
+        Location office = new Location("Casting Office", null, null, officeNeighbors, null, officeArea); // create office
+        locations.add(office); // add office to list
+
+        this.board = new Board(boardName, locations, 10); // create board
+    }
+
+    private static Area getArea(Element e) {
+        int x = Integer.parseInt(e.getAttribute("x")); // get x coordinate
+        int y = Integer.parseInt(e.getAttribute("y")); // get y coordinate
+        int h = Integer.parseInt(e.getAttribute("h")); // get height
+        int w = Integer.parseInt(e.getAttribute("w")); // get width
+        return new Area(x, y, h, w); // create area
     }
 
     public Board getBoard() {

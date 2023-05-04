@@ -6,13 +6,15 @@ public class Location {
     private List<Role> roles;
     private List<String> neighbors; // may need to use HashSet<> for undirected graph functionality
     private List<Take> takes;
+    private Area area;
 
-    public Location(String n, Scene s, List<Role> r, List<String> l, List<Take> takes){
+    public Location(String n, Scene s, List<Role> r, List<String> l, List<Take> takes, Area area){
         setName(n);
         setScene(s);
         setRoles(r);
         setNeighbors(l);
         setTakes(takes);
+        setArea(area);
     }
 
     public String getName(){
@@ -48,5 +50,13 @@ public class Location {
 
     public void setTakes(List<Take> takes) {
         this.takes = takes;
+    }
+
+    public void setArea(Area a){
+        this.area = a;
+    }
+
+    public Area getArea(){
+        return this.area;
     }
 }
