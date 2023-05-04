@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -6,8 +7,8 @@ public class Deck {
     public void setCards(List<Scene> c){
         this.cards = c;
     }
-    public void shuffleDeck(){
-        //shuffle logic
+    public static void shuffleDeck(List<Scene> cards) {
+        Collections.shuffle(cards);
     }
     public Scene drawScene(){
         //draw scene logic
