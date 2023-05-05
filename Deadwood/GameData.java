@@ -45,21 +45,21 @@ public class GameData {
         d.getDocumentElement().normalize(); // normalize document
 
         String boardName = d.getDocumentElement().getAttribute("name"); // get board name
-        NodeList locationNodes = d.getElementsByTagName("set"); // get location nodes
+        NodeList setNodes = d.getElementsByTagName("set"); // get location nodes
         List<Location> locations = new ArrayList<>(); // create list of locations
 
-        for(int i = 0; i < locationNodes.getLength(); i++) {
-            Node locationNode = locationNodes.item(i); // get location node
+        for(int i = 0; i < setNodes.getLength(); i++) {
+            Node setNode = setNodes.item(i); // get location node
 
-            if (locationNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element locationElement = (Element) locationNode; // cast node to element
-                Location location = createLocation(locationElement); // create location
-                locations.add(location); // add location to list
+            if (setNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element setElement = (Element) setNode; // cast node to element
+                Location set = createSet(setElement); // create location
+                locations.add(set); // add location to list
             }
         }
         // TODO - could probably refactor further to allow createLocation to handle trailer and office
-        Location trailer = createTrailer((Element) d.getElementsByTagName("trailer").item(0)); // get trailer location
-        Location office = createOffice((Element) d.getElementsByTagName("office").item(0)); // get office location
+        Trailer trailer = createTrailer((Element) d.getElementsByTagName("trailer").item(0)); // get trailer location
+        CastingOffice office = createOffice((Element) d.getElementsByTagName("office").item(0)); // get office location
 
         locations.add(trailer); // add trailer to list
         locations.add(office); // add office to list
@@ -105,15 +105,15 @@ public class GameData {
         return deck;
     }
 
-    private Location createLocation(Element locationElement) {
+    private Location createSet(Element setElement) {
 
-        String locationName = locationElement.getAttribute("name"); // get location name
-        List<String> neighbors = createNeighbors(locationElement.getElementsByTagName("neighbor")); // get neighbor nodes
-        Area locationArea = getArea((Element) locationElement.getElementsByTagName("area").item(0)); // get location area
-        List<Take> takes = createTakes(locationElement.getElementsByTagName("take")); // get take nodes
-        List<Role> roles = createRoles(locationElement.getElementsByTagName("part")); // get part/role nodes
+        String locationName = setElement.getAttribute("name"); // get location name
+        List<String> neighbors = createNeighbors(setElement.getElementsByTagName("neighbor")); // get neighbor nodes
+        Area locationArea = getArea((Element) setElement.getElementsByTagName("area").item(0)); // get location area
+        List<Take> takes = createTakes(setElement.getElementsByTagName("take")); // get take nodes
+        List<Role> roles = createRoles(setElement.getElementsByTagName("part")); // get part/role nodes
 
-        return new Location(locationName, null, roles, neighbors, takes, locationArea); // create location
+        return new Set(locationName, neighbors, locationArea, null, takes, roles); // create set location
     }
 
     private List<String> createNeighbors(NodeList neighborNodes) {
@@ -184,15 +184,15 @@ public class GameData {
         return new Role(partName, partLevel, partArea, partLine, false, false); // create role/part
     }
 
-    private Location createTrailer(Element trailerElement) {
+    private Trailer createTrailer(Element trailerElement) {
 
         List<String> trailerNeighbors = createNeighbors(trailerElement.getElementsByTagName("neighbor")); // get trailer neighbor nodes
         Area trailerArea = getArea((Element) trailerElement.getElementsByTagName("area").item(0)); // get trailer area
 
-        return new Trailer("Trailer", null, null, trailerNeighbors, trailerArea, null); // create trailer
+        return new Trailer("Trailer", trailerNeighbors, trailerArea); // create trailer
     }
 
-    private Location createOffice(Element officeElement) {
+    private CastingOffice createOffice(Element officeElement) {
 
         List<String> officeNeighbors = createNeighbors(officeElement.getElementsByTagName("neighbor")); // get office neighbor nodes
         Area officeArea = getArea((Element) officeElement.getElementsByTagName("area").item(0)); // get office area
@@ -216,7 +216,7 @@ public class GameData {
             }
         }
 
-        return new CastingOffice("Casting Office", null, null, officeNeighbors, null, officeArea, upgrades); // create office
+        return new CastingOffice("Casting Office", officeNeighbors, officeArea, upgrades); // create office
     }
 
     private static Area getArea(Element areaElement) {

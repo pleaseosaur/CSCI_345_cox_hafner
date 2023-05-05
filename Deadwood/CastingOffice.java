@@ -1,11 +1,19 @@
 import java.util.List;
 
 public class CastingOffice extends Location{
-    private final List<Upgrade> upgrades;
+    private List<Upgrade> upgrades;
 
-    public CastingOffice(String n, Scene s, List<Role> r, List<String> l, List<Take> takes, Area a, List<Upgrade> upgrades) {
-        super(n, s, r, l, takes, a);
-        this.upgrades = upgrades;
+    public CastingOffice(String name, List<String> neighbors, Area area, List<Upgrade> upgrades) {
+        super(name, neighbors, area);
+        setUpgrades(upgrades);
+    }
+
+    public void setUpgrades(List<Upgrade> u){
+        this.upgrades = u;
+    }
+
+    public List<Upgrade> getUpgrades(){
+        return this.upgrades;
     }
 
     public boolean actionAllowed(){
