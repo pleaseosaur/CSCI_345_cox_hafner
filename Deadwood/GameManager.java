@@ -2,14 +2,13 @@ import java.util.List;
 // Player interface and game tracking
 
 public class GameManager {
-    private Deadwood game;
+
     private List<Player> players;
-    private boolean gameActive; // TODO - move this to Deadwood
+    private Player currentPlayer;
     private int days;
 
-    public GameManager(int numPlayers) {
-        setGameActive(true);
-        setupGame(numPlayers);
+    public GameManager() {
+
     }
 
     public void setupGame(int numPlayers) {
@@ -26,20 +25,38 @@ public class GameManager {
         return players;
     }
 
-    public void runGame() {
-        // while loop for playing game
+    public void setCurrentPlayer(Player player) {
+        this.currentPlayer = player;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     private void playerTurn(Player player) {
         // turn logic per player
     }
 
-    public void setGameActive(boolean b) {
-        this.gameActive = b;
+    public void move(Location location) {
+        // move logic
     }
 
-    public boolean gameIsActive() {
-        return gameActive;
+    public void upgrade(int rank) {
+        currentPlayer.setRank(rank);
+    }
+
+    public void takeRole(Role role) {
+        currentPlayer.setRole(role);
+    }
+
+    public void rehearse() {
+        currentPlayer.setPracticeChips();
+    }
+
+    public void endTurn() {
+        int currentIndex = getPlayers().indexOf(currentPlayer);
+        int nextIndex = (currentIndex + 1) % getPlayers().size();
+        setCurrentPlayer(getPlayers().get(nextIndex));
     }
 
     public void setDays(int n) {

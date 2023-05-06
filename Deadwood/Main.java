@@ -2,7 +2,8 @@ import java.util.Set;
 
 public class Main {
     public static void main (String[] args) {
-        Deadwood game = new Deadwood();
+        GameManager manager = new GameManager();
+        Deadwood game = new Deadwood(manager);
         game.startGame();
     }
 }
