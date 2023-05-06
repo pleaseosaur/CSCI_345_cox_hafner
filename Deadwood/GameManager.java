@@ -15,6 +15,7 @@ public class GameManager {
         SetupGame setup = new SetupGame(numPlayers);
         setPlayers(setup.getPlayers());
         setDays(setup.getDays());
+        setCurrentPlayer();
     }
 
     public void setPlayers(List<Player> players) {
@@ -23,6 +24,10 @@ public class GameManager {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void setCurrentPlayer() {
+        this.currentPlayer = getPlayers().get(0);
     }
 
     public void setCurrentPlayer(Player player) {
