@@ -4,7 +4,7 @@
 public class Deadwood {
 
     final UI ui;
-    private GameManager manager;
+    private final GameManager manager;
     private boolean gameActive;
 
 
