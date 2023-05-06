@@ -36,7 +36,18 @@ public class Deadwood {
     }
 
     public void runGame() {
-        // game loop
+        // while game is active (no. days > 0)
+            // while day is active (no. open Scenes > 1)
+                // while current player is active
+                    // display available actions (end turn should always be an option)
+                    // if player chooses move, display available locations
+                    // perform player action choice
+                    // display available actions again
+                    // if player chooses end turn, end the turn
+                    // if end turn is the only available option, end turn automatically
+                    // get next player
+                // when open scenes = 1, end the day
+            // when days = 0, end the game
     }
 
     public void move(Location location) {
