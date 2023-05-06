@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -46,7 +48,7 @@ public class GameData {
 
         String boardName = d.getDocumentElement().getAttribute("name"); // get board name
         NodeList setNodes = d.getElementsByTagName("set"); // get location nodes
-        List<Location> locations = new ArrayList<>(); // create list of locations
+        List<Location> tempLocations = new ArrayList<>(); // create list of locations
 
         for(int i = 0; i < setNodes.getLength(); i++) {
             Node setNode = setNodes.item(i); // get location node
@@ -54,17 +56,42 @@ public class GameData {
             if (setNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element setElement = (Element) setNode; // cast node to element
                 Location set = createSet(setElement); // create location
-                locations.add(set); // add location to list
+                tempLocations.add(set); // add location to list
             }
         }
         // TODO - could probably refactor further to allow createLocation to handle trailer and office
         Trailer trailer = createTrailer((Element) d.getElementsByTagName("trailer").item(0)); // get trailer location
         CastingOffice office = createOffice((Element) d.getElementsByTagName("office").item(0)); // get office location
 
-        locations.add(trailer); // add trailer to list
-        locations.add(office); // add office to list
+        tempLocations.add(trailer); // add trailer to list
+        tempLocations.add(office); // add office to list
+
+        // TODO - there may be a better way to do this
+        Map<String, Location> locations = constructGraph(tempLocations); // create map of locations
 
         this.board = new Board(boardName, locations, 10); // create board
+    }
+
+    private Map<String,Location> constructGraph(List<Location> tempLocations) {
+
+        Map<String, Location> locations = new HashMap<>(); // create map of locations
+
+        for(Location location : tempLocations) {
+            locations.put(location.getName(), location); // add location to map
+        }
+
+        for(Location location : tempLocations) {
+            List<String> neighbors = location.getTemp(); // get neighbors of location
+            List<Location> neighborLocations = new ArrayList<>(); // create list of neighbor locations
+
+            for(String neighbor : neighbors) {
+                neighborLocations.add(locations.get(neighbor)); // add neighbor location to list
+            }
+
+            location.setNeighbors(neighborLocations); // set neighbors of location
+        }
+
+        return locations; // return map of locations
     }
 
     public Board getBoard() {
@@ -80,6 +107,7 @@ public class GameData {
 
         for(int i = 0; i < cardNodes.getLength(); i++) {
             Node cardNode = cardNodes.item(i); // get card node
+
             if (cardNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element cardElement = (Element) cardNode; // cast node to element
                 Scene card = createCard(cardElement); // create card
@@ -92,12 +120,14 @@ public class GameData {
     }
 
     private Scene createCard(Element cardElement) {
+
         String cardName = cardElement.getAttribute("name"); // get card name
         Element sceneNode = (Element) cardElement.getElementsByTagName("scene").item(0); // get scene node
         int sceneNumber = Integer.parseInt(sceneNode.getAttribute("number")); //get scene number
         int budget = Integer.parseInt(cardElement.getAttribute("budget")); // get card budget
         String sceneDescription = cardElement.getElementsByTagName("scene").item(0).getTextContent(); // get scene description
         List<Role> roles = createRoles(cardElement.getElementsByTagName("part")); // get part/role nodes
+
         return new Scene(cardName, sceneNumber, sceneDescription, budget, roles, false); // create card;
     }
 

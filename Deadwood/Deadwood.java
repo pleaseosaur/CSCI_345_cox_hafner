@@ -4,7 +4,7 @@
 public class Deadwood {
 
     final UI ui;
-    private Player currentPlayer;
+    private Player currentPlayer; // TODO - probably should move this to GameManager
     private GameManager manager;
 
 
@@ -18,13 +18,13 @@ public class Deadwood {
         this.manager = new GameManager(players);
     }
 
-    public void setCurrentPlayer(Player player) {
+    public void setCurrentPlayer(Player player) { // TODO - probably should move this to GameManager too
         this.currentPlayer = player;
     }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
-    }
+    } // TODO - probably should move this to GameManager too
 
 
 

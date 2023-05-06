@@ -15,7 +15,7 @@ public class UI {
 
     public void displayWelcomeMessage() {
         displayMessage("Welcome to Deadwood!"); // basic - add more later if desired
-        displayMessage("You may enter 'exit' at any time to terminate the game.");
+        displayMessage("You may type 'quit' at any time to terminate the game.");
     }
 
     public int getPlayerCount() {
@@ -23,9 +23,9 @@ public class UI {
         try {
             String numPlayersInput = scanner.next();
             int numPlayers = 0;
-            if(numPlayersInput.equals("exit")) {
+            if(numPlayersInput.equals("quit")) {
                 displayMessage("Your loss! Enjoy not being a world-renown thespian.");
-                System.exit(0);
+                System.exit(0); // TODO -- this should probably be "setGameActive(false)" or something
             } else {
                 numPlayers = Integer.parseInt(numPlayersInput);
             }

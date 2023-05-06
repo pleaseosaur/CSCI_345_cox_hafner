@@ -4,7 +4,7 @@ import java.util.List;
 public class GameManager {
     private Deadwood game;
     private List<Player> players;
-    private boolean gameActive;
+    private boolean gameActive; // TODO - move this to Deadwood
     private int days;
 
     public GameManager(int numPlayers) {

@@ -2,12 +2,13 @@ import java.util.List;
 
 public abstract class Location {
     private String name;
-    private List<String> neighbors; // may need to use HashSet<> for undirected graph functionality
+    private List<String> temp; // temporary list of neighbors
+    private List<Location> neighbors; // list of neighbors as Location objects
     private Area area;
 
-    public Location(String name, List<String> neighbors, Area area){
+    public Location(String name, List<String> temp, Area area){
         setName(name);
-        setNeighbors(neighbors);
+        setTemp(temp);
         setArea(area);
     }
 
@@ -19,11 +20,19 @@ public abstract class Location {
         this.name = n;
     }
 
-    public List<String> getNeighbors(){
-        return neighbors;
+    public List<String> getTemp(){
+        return temp;
     }
 
-    public void setNeighbors(List<String> n){
+    public void setTemp(List<String> n){
+        this.temp = n;
+    }
+
+    public List<Location> getNeighbors(){
+        return this.neighbors;
+    }
+
+    public void setNeighbors(List<Location> n){
         this.neighbors = n;
     }
 

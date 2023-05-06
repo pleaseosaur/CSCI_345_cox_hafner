@@ -1,20 +1,21 @@
 import java.util.List;
+import java.util.Map;
 
 public class Board {
-    private String name;
-    private List<Location> locations;
+    private final String name;
+    private Map<String, Location> locations;
     private int openScenes;
 
-    public Board(String n, List<Location> l, int o){
+    public Board(String n, Map<String, Location> l, int o){
         this.name = n;
         this.locations = l;
         this.openScenes = o;
     }
 
-    public List<Location> getLocations(){
+    public Map<String, Location> getLocations(){
         return this.locations;
     }
-    public void setLocations(List<Location> l){
+    public void setLocations(Map<String, Location> l){
         this.locations = l;
     }
     public int getOpenScenes(){
@@ -28,7 +29,6 @@ public class Board {
         // do move logic
     }
     public boolean endDay(){
-        // end day logic
-        return false; // dummy return
+        return getOpenScenes() == 1;
     }
 }
