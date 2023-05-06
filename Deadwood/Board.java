@@ -8,19 +8,26 @@ public class Board {
 
     public Board(String n, Map<String, Location> l, int o){
         this.name = n;
-        this.locations = l;
-        this.openScenes = o;
+        setLocations(l);
+        setOpenScenes(o);
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public Map<String, Location> getLocations(){
         return this.locations;
     }
+
     public void setLocations(Map<String, Location> l){
         this.locations = l;
     }
+
     public int getOpenScenes(){
         return this.openScenes;
     }
+
     public void setOpenScenes(int o){
         this.openScenes = 0;
     }
@@ -28,7 +35,8 @@ public class Board {
     public void updatePlayerLocation(Player p, Location l){
         // do move logic
     }
-    public boolean endDay(){
+
+    public boolean checkEndDay(){
         return getOpenScenes() == 1;
     }
 }

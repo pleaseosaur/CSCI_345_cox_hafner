@@ -19,22 +19,6 @@ public class Player {
         setLocation(); // TODO - set location to Trailer once locations are created
     }
 
-    public void move(){
-        // call method from Deadwood.java to do logic
-    }
-    public void upgrade(){
-        // call method from Deadwood.java to do logic
-    }
-    public void takeRole(){
-        // call method from Deadwood.java to do logic
-    }
-    public void act(){
-        // call method from Deadwood.java to do logic
-    }
-    public void rehearse(){
-        // call method from Deadwood.java to do logic
-    }
-
     public boolean hasRole() {
         return this.role != null;
     }

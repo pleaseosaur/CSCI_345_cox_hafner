@@ -20,14 +20,15 @@ public class GameManager {
         setCurrentPlayer();
         setBoard(setup.getBoard());
         setDeck(setup.getDeck());
+        setStartingLocation();
     }
 
     private void playerTurn(Player player) {
-        // turn logic per player
+        // TODO - implement turn logic -- may need to be in Deadwood
     }
 
     public void move(Location location) {
-        // move logic
+        currentPlayer.setLocation(location);
     }
 
     public void upgrade(int rank) {
@@ -40,6 +41,10 @@ public class GameManager {
 
     public void rehearse() {
         currentPlayer.setPracticeChips();
+    }
+
+    public void act() {
+        // TODO - implement act
     }
 
     public void endTurn() {
@@ -64,8 +69,14 @@ public class GameManager {
         this.currentPlayer = player;
     }
 
+    public void setStartingLocation() {
+        for (Player player : getPlayers()) {
+            player.setLocation(board.getLocations().get("Trailer"));
+        }
+    }
+
     public Player getCurrentPlayer() {
-        return currentPlayer;
+        return this.currentPlayer;
     }
 
     public void setDays(int n) {
@@ -92,7 +103,12 @@ public class GameManager {
         return this.deck;
     }
 
-    private boolean checkEnd() {
+
+    private boolean checkEndDay() {
+        return board.checkEndDay();
+    }
+
+    private boolean checkEndGame() {
         return getDays() == 0;
     }
 
