@@ -16,7 +16,11 @@ public class Board {
         return this.name;
     }
 
-    public Map<String, Location> getLocations(){
+    public Location getLocation(String name){
+        return getAllLocations().get(name);
+    }
+
+    public Map<String, Location> getAllLocations(){
         return this.locations;
     }
 

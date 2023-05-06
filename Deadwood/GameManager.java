@@ -71,7 +71,7 @@ public class GameManager {
 
     public void setStartingLocation() {
         for (Player player : getPlayers()) {
-            player.setLocation(board.getLocations().get("Trailer"));
+            player.setLocation(board.getLocation("Trailer"));
         }
     }
 
