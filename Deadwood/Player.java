@@ -16,7 +16,6 @@ public class Player {
         setDollars(dollars);
         setRole();
         setPracticeChips(0);
-        setLocation(); // TODO - set location to Trailer once locations are created
     }
 
     public boolean hasRole() {
@@ -77,10 +76,6 @@ public class Player {
 
     public int getPracticeChips() {
         return practiceChips;
-    }
-
-    public void setLocation() { // TODO - remove this method once locations are created
-        this.location = null;
     }
 
     public void setLocation(Location location) {

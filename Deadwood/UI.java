@@ -41,6 +41,39 @@ public class UI {
         }
     }
 
+    public boolean promptRename(){
+
+        displayMessage("Would you like to create custom names? (y/n): ");
+        try {
+            String choice = scanner.next();
+
+            if(choice.equals("y")){
+                return true;
+            }
+            else if(choice.equals("n")){
+                return false;
+            }
+        } catch(Exception e){
+            displayMessage("Please choose either 'y' or 'n'");
+            return promptRename();
+        }
+        return false;
+    }
+
+    public String getPlayerName(String name) {
+
+        displayMessage("Please enter new name for " + name + ": ");
+        String newName;
+
+        try {
+            newName = scanner.next();
+        } catch (Exception e) {
+            return getPlayerName(name);
+        }
+
+        return newName;
+    }
+
 
     public void playerAction(){
         //player input here

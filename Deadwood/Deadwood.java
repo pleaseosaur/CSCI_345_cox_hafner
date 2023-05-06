@@ -1,6 +1,9 @@
 // Core game logic
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Deadwood {
 
     final UI ui;
@@ -18,6 +21,9 @@ public class Deadwood {
         int players = ui.getPlayerCount();
         manager.setupGame(players);
         setGameActive(true);
+        if(ui.promptRename()){
+            renamePlayers();
+        }
         runGame();
     }
 
@@ -65,5 +71,11 @@ public class Deadwood {
         // end game logic
     }
 
+    public void renamePlayers(){
 
+        for(Player player : manager.getPlayers()){
+            String name = ui.getPlayerName(player.getName());
+            manager.renamePlayer(player, name);
+        }
+    }
 }

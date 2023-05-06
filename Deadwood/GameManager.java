@@ -61,6 +61,10 @@ public class GameManager {
         return players;
     }
 
+    public void renamePlayer(Player player, String name){
+        player.setName(name);
+    }
+
     public void setCurrentPlayer() {
         this.currentPlayer = getPlayers().get(0);
     }
