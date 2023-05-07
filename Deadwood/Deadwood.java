@@ -59,14 +59,15 @@ public class Deadwood {
 
     public void startTurn(Player player) {
         List<String> availableRoles;
-        if(!(player.hasRole())){
+        if (!(player.hasRole())) {
             availableRoles = manager.getAvailableRoles();
-            if(availableRoles.size() == 0){
+            if (availableRoles.size() == 0) {
                 availableRoles.add("Unfortunately, all available roles have been taken");
             }
 
-        String playerAction = ui.getPlayerAction(player, availableRoles);
-        // TODO -- implement player action logic
+            String playerAction = ui.getPlayerAction(player, availableRoles);
+            // TODO -- implement player action logic
+        }
     }
 
     public void move(Location location) {
