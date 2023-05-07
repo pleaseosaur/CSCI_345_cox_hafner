@@ -1,8 +1,12 @@
 import java.util.List;
+import java.util.Random;
 
 public class Dice {
-    private int numDice;
     private int sides;
+
+    public Dice(int sides) {
+        this.sides = sides;
+    }
 
     public void setSides(int num) {
         this.sides = num;
@@ -10,6 +14,12 @@ public class Dice {
 
     public int getSides() {
         return this.sides;
+    }
+
+    public int rollDie() {
+        Random rand = new Random();
+        int dieRoll = rand.nextInt(sides)+1;
+        return dieRoll;
     }
 
     public int actRoll(){
