@@ -154,6 +154,7 @@ public class UI {
             displayMessage("Please choose a valid action.");
             getPlayerAction(player, availableRoles);
         }
+        return null;
     }
 
     public void displayBoard(Board b){
