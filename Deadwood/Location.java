@@ -5,6 +5,7 @@ public abstract class Location {
     private List<String> temp; // temporary list of neighbors
     private List<Location> neighbors; // list of neighbors as Location objects
     private Area area;
+    private boolean set;
 
     public Location(String name, List<String> temp, Area area){
         setName(name);
@@ -42,5 +43,13 @@ public abstract class Location {
 
     public Area getArea(){
         return this.area;
+    }
+
+    public boolean isSet() {
+        if(getName().equals("Trailer") || getName().equals("Casting Office")) {
+            return false;
+        }
+
+        return true;
     }
 }

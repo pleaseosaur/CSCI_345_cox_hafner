@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.List;
 
 public class UI {
 
@@ -77,12 +78,29 @@ public class UI {
     // TODO -- implement scanner for player actions
     // TODO -- include more action logic
     // TODO -- include error handling
-    public void playerTurn(Player player){
-        displayMessage("It is " + player.getName() + "'s turn.");
-        displayMessage("You are currently at " + player.getLocation().getName() + ".");
-        if(player.getRole() != null){
-            displayMessage("You are currently playing the role of " + player.getRole().getName() + ".");
-            if(player.getRole().isOnCard()){
+    public String getPlayerAction(Player player, List<String> availableRoles){
+        String playerName = player.getName();
+        String locationName = player.getLocation().getName();
+        Role playerRole = player.getRole();
+
+        displayMessage("It is " + playerName + "'s turn.");
+        displayMessage("You are currently at " + locationName + ".");
+        displayStats(player);
+
+        if(locationName.equals("Trailer")){
+            displayMessage("Your available actions are: \n" +
+                    "1. move\n" +
+                    "2. end turn");
+        }
+        else if(locationName.equals("Casting Office")){
+            displayMessage("Your available actions are: \n" +
+                    "1. move\n" +
+                    "2. upgrade\n" +
+                    "3. end turn");
+        }
+        else if(player.hasRole()){
+            displayMessage("You are currently playing the role of " + playerRole + ".");
+            if(playerRole.isOnCard()){
                 displayMessage("Your available actions are: \n" +
                         "1. rehearse\n" +
                         "2. act\n" +
@@ -96,6 +114,45 @@ public class UI {
         }
         else{
             displayMessage("You are not currently playing a role.");
+            if((availableRoles.size() == 1) && (availableRoles.contains("available"))){
+                for(String role : availableRoles){
+                    displayMessage(role);
+                    displayMessage("Your available actions are: \n" +
+                            "1. move\n" +
+                            "2. end turn");
+                }
+            }
+            else {
+                displayMessage("The available roles are: ");
+                for (String role : availableRoles) {
+                    displayMessage(role);
+                    displayMessage("Your available actions are: \n" +
+                            "1. move\n" +
+                            "2. take role\n" +
+                            "3. end turn");
+                }
+            }
+
+        }
+
+        try {
+            String choice = scanner.next();
+
+            if(!(choice.equals("move"))
+                    || !(choice.equals("take role"))
+                    || !(choice.equals("rehearse"))
+                    || !(choice.equals("act"))
+                    || !(choice.equals("upgrade"))
+                    || !(choice.equals("end turn"))){
+                displayMessage("Please choose a valid action.");
+                getPlayerAction(player, availableRoles);
+            }
+            else{
+                return choice;
+            }
+        } catch(Exception e){
+            displayMessage("Please choose a valid action.");
+            getPlayerAction(player, availableRoles);
         }
     }
 
@@ -103,6 +160,10 @@ public class UI {
         // display board logic here
     }
     public void displayStats(Player p){
-        // stat print logic here
+        displayMessage("Your current stats are: \n" +
+                "Rank: " + p.getRank() + "\n" +
+                "Credits: " + p.getCredits() + "\n" +
+                "Dollars: " + p.getDollars() + "\n" +
+                "Practice Chips: " + p.getPracticeChips() + "\n");
     }
 }

@@ -2,6 +2,7 @@
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Deadwood {
@@ -57,8 +58,15 @@ public class Deadwood {
     }
 
     public void startTurn(Player player) {
-        ui.playerTurn(player);
-        // TODO -- implement any additional turn logic that should be here
+        List<String> availableRoles;
+        if(!(player.hasRole())){
+            availableRoles = manager.getAvailableRoles();
+            if(availableRoles.size() == 0){
+                availableRoles.add("Unfortunately, all available roles have been taken");
+            }
+
+        String playerAction = ui.getPlayerAction(player, availableRoles);
+        // TODO -- implement player action logic
     }
 
     public void move(Location location) {
