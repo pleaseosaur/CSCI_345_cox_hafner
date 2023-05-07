@@ -107,8 +107,7 @@ public class GameManager {
         return this.deck;
     }
 
-
-    private boolean checkEndDay() {
+    public boolean endDay() {
         return board.checkEndDay();
     }
 

@@ -37,8 +37,11 @@ public class Deadwood {
 
     public void runGame() {
         // while game is active (no. days > 0)
+        while(getGameActive()) {
             // while day is active (no. open Scenes > 1)
+            while(!(manager.endDay())) {
                 // while current player is active
+                startTurn(manager.getCurrentPlayer());
                     // display available actions (end turn should always be an option)
                     // if player chooses move, display available locations
                     // perform player action choice
@@ -46,8 +49,16 @@ public class Deadwood {
                     // if player chooses end turn, end the turn
                     // if end turn is the only available option, end turn automatically
                     // get next player
+
                 // when open scenes = 1, end the day
+            }
             // when days = 0, end the game
+        }
+    }
+
+    public void startTurn(Player player) {
+        ui.playerTurn(player);
+        // TODO -- implement any additional turn logic that should be here
     }
 
     public void move(Location location) {

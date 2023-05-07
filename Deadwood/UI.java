@@ -74,9 +74,29 @@ public class UI {
         return newName;
     }
 
-
-    public void playerAction(){
-        //player input here
+    // TODO -- implement scanner for player actions
+    // TODO -- include more action logic
+    // TODO -- include error handling
+    public void playerTurn(Player player){
+        displayMessage("It is " + player.getName() + "'s turn.");
+        displayMessage("You are currently at " + player.getLocation().getName() + ".");
+        if(player.getRole() != null){
+            displayMessage("You are currently playing the role of " + player.getRole().getName() + ".");
+            if(player.getRole().isOnCard()){
+                displayMessage("Your available actions are: \n" +
+                        "1. rehearse\n" +
+                        "2. act\n" +
+                        "3. end turn");
+            }
+            else{
+                displayMessage("Your available actions are: \n" +
+                        "1. act\n" +
+                        "2. end turn");
+            }
+        }
+        else{
+            displayMessage("You are not currently playing a role.");
+        }
     }
 
     public void displayBoard(Board b){
