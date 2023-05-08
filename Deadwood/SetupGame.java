@@ -13,7 +13,7 @@ public class SetupGame {
     public SetupGame(int numPlayers) {
         // Exception catch
         try{
-            this.data = new GameData("board.xml", "cards.xml");
+            this.data = new GameData("Deadwood/board.xml", "Deadwood/cards.xml");
             setPlayers(numPlayers);
             setDays(numPlayers);
             setBoard();
