@@ -84,7 +84,7 @@ public class UI {
         Role playerRole = player.getRole();
 
         displayMessage("It is " + playerName + "'s turn.");
-        displayMessage("You are currently at " + locationName + ".");
+        displayMessage("Your current location is: " + locationName);
         displayStats(player);
 
         if(locationName.equals("Trailer")){
