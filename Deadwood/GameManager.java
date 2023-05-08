@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 // Player interface and game tracking
 
@@ -117,5 +118,35 @@ public class GameManager {
 
     private void scoreGame() {
         // tally scores when endgame is triggered
+    }
+
+    public List<String> getAvailableRoles() {
+
+        Location playerLocation = currentPlayer.getLocation();
+        List<String> availableRoles = new ArrayList<>();
+
+        if(playerLocation.isSet()){
+            Set set = (Set) playerLocation;
+
+            if(set.getScene().isWrapped()){
+                availableRoles.add("Scene is wrapped. No roles are available.");
+            }
+            else {
+                List<Role> offCardRoles = set.getRoles();
+                List<Role> onCardRoles = set.getScene().getRoles();
+                for(Role role : offCardRoles) {
+                    if(!(role.isTaken()) && role.getRank() <= currentPlayer.getRank()){
+                        availableRoles.add(role.getName() + "(rank " + role.getRank() + " - off card)");
+                    }
+                }
+                for(Role role : onCardRoles) {
+                    if(!(role.isTaken()) && role.getRank() <= currentPlayer.getRank()){
+                        availableRoles.add(role.getName() + "(rank " + role.getRank() + " - on card)");
+                    }
+                }
+            }
+
+        }
+        return availableRoles;
     }
 }

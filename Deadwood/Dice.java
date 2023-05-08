@@ -5,7 +5,11 @@ public class Dice {
     private int sides;
 
     public Dice(int sides) {
+<<<<<<< HEAD
         this.sides = sides;
+=======
+        setSides(sides);
+>>>>>>> 077c2bba6b07c61f00a9d782242e1be0e5ac69b6
     }
 
     public void setSides(int num) {
