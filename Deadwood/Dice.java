@@ -1,4 +1,6 @@
+import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Dice {
@@ -27,9 +29,14 @@ public class Dice {
         return -1;
     }
 
-    public List<Integer> wrapRoll(){
+    public List<Integer> wrapRoll(int budget){
         // do wrap calculations
-        return null; //dummy return
+        List<Integer> result = new ArrayList<Integer>();
+        for(int i = 0; i < budget; i++){
+            result.add(rollDie());
+        }
+        Collections.sort(result, Collections.reverseOrder());
+        return result;
     }
 
 }
