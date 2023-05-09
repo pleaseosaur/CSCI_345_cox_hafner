@@ -35,7 +35,7 @@ public class Dice {
         for(int i = 0; i < budget; i++){
             result.add(rollDie());
         }
-        Collections.sort(result, Collections.reverseOrder());
+        result.sort(Collections.reverseOrder());
         return result;
     }
 
