@@ -205,6 +205,14 @@ public class UI {
     public String getChoiceInput(Map<String, String> availableActions) {
         String choice = scanner.next().toLowerCase();
 
+
+        // print for testing
+        for(String key : availableActions.keySet()) {
+            displayMessage(key);
+            displayMessage(availableActions.get(key));
+        } // end print for testing
+
+
         if(choice.equals("quit")) {
             quitGame();
         } else if(availableActions.containsKey(choice)) {
