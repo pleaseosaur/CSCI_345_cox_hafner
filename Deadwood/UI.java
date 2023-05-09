@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.List;
 
@@ -22,11 +24,10 @@ public class UI {
     public int getPlayerCount() {
         displayMessage("Please enter the number of players: ");
         try {
-            String numPlayersInput = scanner.next();
+            String numPlayersInput = scanner.next().toLowerCase();
             int numPlayers = 0;
             if(numPlayersInput.equals("quit")) {
-                displayMessage("Your loss! Enjoy not being a world-renown thespian.");
-                System.exit(0); // TODO -- this should probably be "setGameActive(false)" or something
+                quitGame();
             } else {
                 numPlayers = Integer.parseInt(numPlayersInput);
             }
@@ -44,21 +45,22 @@ public class UI {
 
     public boolean promptRename(){
 
-        displayMessage("Would you like to create custom names? (y/n): ");
-        try {
-            String choice = scanner.next();
+        Map<String, String> options = new HashMap<>();
+        options.put("y", "yes");
+        options.put("n", "no");
 
-            if(choice.equals("y")){
-                return true;
-            }
-            else if(choice.equals("n")){
-                return false;
-            }
-        } catch(Exception e){
-            displayMessage("Please choose either 'y' or 'n'");
+        displayMessage("Would you like to create custom names? (y/n): ");
+
+        String choice = scanner.next().toLowerCase();
+
+        if(options.containsKey(choice)) {
+            return options.get(choice).equals("yes");
+        } else if(options.containsValue(choice)) {
+            return choice.equals("yes");
+        } else {
+            displayMessage("Please enter 'y' ('yes') or 'n' ('no').");
             return promptRename();
         }
-        return false;
     }
 
     public String getPlayerName(String name) {
@@ -75,96 +77,224 @@ public class UI {
         return newName;
     }
 
-    // TODO -- implement scanner for player actions
-    // TODO -- include more action logic
-    // TODO -- include error handling
-    public String getPlayerAction(Player player, List<String> availableRoles){
+    public void startTurnMessage(Player player) {
         String playerName = player.getName();
         String locationName = player.getLocation().getName();
-        Role playerRole = player.getRole();
 
         displayMessage("It is " + playerName + "'s turn.");
         displayMessage("Your current location is: " + locationName);
         displayStats(player);
+    }
+    public String getPlayerAction(Player player, List<String> availableRoles) {
 
-        if(locationName.equals("Trailer")){
-            displayMessage("Your available actions are: \n" +
-                    "1. move\n" +
-                    "2. end turn");
-        }
-        else if(locationName.equals("Casting Office")){
-            displayMessage("Your available actions are: \n" +
-                    "1. move\n" +
-                    "2. upgrade\n" +
-                    "3. end turn");
-        }
-        else if(player.hasRole()){
-            displayMessage("You are currently playing the role of " + playerRole + ".");
-            if(playerRole.isOnCard()){
-                displayMessage("Your available actions are: \n" +
-                        "1. rehearse\n" +
-                        "2. act\n" +
-                        "3. end turn");
+        String locationName = player.getLocation().getName();
+        Role playerRole = player.getRole();
+
+        StringBuilder prompt = new StringBuilder();
+        Map<String, String> availableActions = new HashMap<>();
+
+        if (locationName.equals("Trailer")) {
+
+            prompt.append("""
+                    Your available actions are:\s
+                    1. move
+                    2. end turn""");
+
+            availableActions.put("1", "move");
+            availableActions.put("2", "end turn");
+            availableActions.put("end", "end turn");
+
+        } else if (locationName.equals("Casting Office")) {
+
+            if(player.getRank() < 6) {
+                prompt.append("""
+                        Your available actions are:\s
+                        1. move
+                        2. upgrade
+                        3. end turn""");
+
+                availableActions.put("1", "move");
+                availableActions.put("2", "upgrade");
+                availableActions.put("3", "end turn");
+                availableActions.put("end", "end turn");
+
+            } else {
+                prompt.append("You are already at the highest rank. No upgrades are available.\n");
+                prompt.append("""
+                        Your available actions are:\s
+                        1. move
+                        2. end turn""");
+
+                availableActions.put("1", "move");
+                availableActions.put("2", "end turn");
+                availableActions.put("end", "end turn");
             }
-            else{
-                displayMessage("Your available actions are: \n" +
-                        "1. act\n" +
-                        "2. end turn");
+
+        } else if (player.hasRole()) {
+            displayMessage("You are currently playing the role of " + playerRole + ".\n");
+
+            if (playerRole.isOnCard()) {
+
+                prompt.append("""
+                        Your available actions are:\s
+                        1. rehearse
+                        2. act
+                        3. end turn""");
+
+                availableActions.put("1", "rehearse");
+                availableActions.put("2", "act");
+                availableActions.put("3", "end turn");
+                availableActions.put("end", "end turn");
+
+            } else {
+
+                prompt.append("""
+                        Your available actions are:\s
+                        1. act
+                        2. end turn""");
+
+                availableActions.put("1", "act");
+                availableActions.put("2", "end turn");
+                availableActions.put("end", "end turn");
+
             }
-        }
-        else{
-            displayMessage("You are not currently playing a role.");
-            if((availableRoles.size() == 1) && (availableRoles.contains("available"))){
-                for(String role : availableRoles){
-                    displayMessage(role);
-                    displayMessage("Your available actions are: \n" +
-                            "1. move\n" +
-                            "2. end turn");
-                }
-            }
-            else {
-                displayMessage("The available roles are: ");
+        } else {
+            prompt.append("You are not currently playing a role.\n");
+
+            if ((availableRoles.size() == 1) && (availableRoles.contains("available"))) {
+
                 for (String role : availableRoles) {
                     displayMessage(role);
-                    displayMessage("Your available actions are: \n" +
-                            "1. move\n" +
-                            "2. take role\n" +
-                            "3. end turn");
                 }
-            }
 
+                prompt.append("""
+                            Your available actions are:\s
+                            1. move
+                            2. end turn""");
+
+                availableActions.put("1", "move");
+                availableActions.put("2", "end turn");
+                availableActions.put("end", "end turn");
+
+            } else {
+                prompt.append("The available roles are: \n");
+
+                for (String role : availableRoles) {
+                    prompt.append(role).append("\n");
+                }
+
+                prompt.append("""
+                        Your available actions are:\s
+                        1. move
+                        2. take role
+                        3. end turn""");
+
+                availableActions.put("1", "move");
+                availableActions.put("2", "take role");
+                availableActions.put("role", "take role");
+                availableActions.put("3", "end turn");
+                availableActions.put("end", "end turn");
+            }
         }
 
-        try {
-            String choice = scanner.next();
+        displayMessage(prompt.toString());
 
-            if(!(choice.equals("move"))
-                    || !(choice.equals("take role"))
-                    || !(choice.equals("rehearse"))
-                    || !(choice.equals("act"))
-                    || !(choice.equals("upgrade"))
-                    || !(choice.equals("end turn"))){
-                displayMessage("Please choose a valid action.");
-                getPlayerAction(player, availableRoles);
-            }
-            else{
-                return choice;
-            }
-        } catch(Exception e){
-            displayMessage("Please choose a valid action.");
-            getPlayerAction(player, availableRoles);
+        return getChoiceInput(availableActions);
+    }
+
+    public String getChoiceInput(Map<String, String> availableActions) {
+        String choice = scanner.next().toLowerCase();
+
+        if(choice.equals("quit")) {
+            quitGame();
+        } else if(availableActions.containsKey(choice)) {
+            return availableActions.get(choice);
+        } else if(availableActions.containsValue(choice)) {
+            return choice;
         }
-        return null;
+
+        displayMessage("That is not a valid choice.");
+        displayMessage("Please enter a valid choice: ");
+
+        return getChoiceInput(availableActions);
     }
 
-    public void displayBoard(Board b){
-        // display board logic here
+    public String promptMove(Player player) {
+        List<Location> neighbors = player.getLocation().getNeighbors();
+        Map<String, String> options = new HashMap<>();
+        StringBuilder prompt = new StringBuilder();
+
+        int i = 1;
+
+        prompt.append("The available locations are: \n");
+
+        for(Location neighbor : neighbors) {
+            prompt.append(i).append(". ").append(neighbor.getName()).append("\n");
+            options.put(Integer.toString(i), neighbor.getName());
+            i++;
+        }
+        displayMessage(prompt.toString());
+
+        return getChoiceInput(options);
     }
+
+    public String promptRole(List<String> availableRoles) {
+        Map<String, String> options = new HashMap<>();
+        StringBuilder prompt = new StringBuilder();
+
+        int i = 1;
+
+        prompt.append("The available roles are: \n");
+
+        for(String role : availableRoles) {
+            prompt.append(i).append(". ").append(role).append("\n");
+            options.put(Integer.toString(i), role);
+            i++;
+        }
+
+        displayMessage(prompt.toString());
+
+        return getChoiceInput(options);
+    }
+
+    // TODO -- additional options needed for upgrades -- may display same number w/ different price options
+    // TODO -- need to handle case where player does not have enough money for any upgrades
+    public String promptUpgrade(List<String> upgrades) {
+        Map<String, String> options = new HashMap<>();
+        StringBuilder prompt = new StringBuilder();
+
+        int i = 1;
+
+        // TODO -- duplicate code - refactor
+        prompt.append("The available upgrades are: \n");
+        for(String upgrade : upgrades) {
+            prompt.append(i).append(". ").append(upgrade).append("\n");
+            options.put(Integer.toString(i), upgrade);
+            i++;
+        }
+
+        displayMessage(prompt.toString());
+
+        return getChoiceInput(options);
+    }
+
+    public void displayBoard(List<Player> players){
+        for(Player player : players){
+            displayMessage(player.getName() + " is at " + player.getLocation().getName());
+        }
+    }
+
     public void displayStats(Player p){
         displayMessage("Your current stats are: \n" +
                 "Rank: " + p.getRank() + "\n" +
                 "Credits: " + p.getCredits() + "\n" +
                 "Dollars: " + p.getDollars() + "\n" +
                 "Practice Chips: " + p.getPracticeChips() + "\n");
+
+    }
+
+    public void quitGame() {
+        displayMessage("Your loss! Enjoy not being a world-renown thespian.");
+        System.exit(0); // TODO -- this should probably be "setGameActive(false)" or something
     }
 }

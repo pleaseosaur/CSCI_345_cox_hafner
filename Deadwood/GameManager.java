@@ -28,16 +28,23 @@ public class GameManager {
         // TODO - implement turn logic -- may need to be in Deadwood
     }
 
-    public void move(Location location) {
-        currentPlayer.setLocation(location);
+    public void move(String location) {
+        currentPlayer.setLocation(currentPlayer.getLocation().getNeighbor(location));
     }
 
     public void upgrade(int rank) {
         currentPlayer.setRank(rank);
     }
 
-    public void takeRole(Role role) {
-        currentPlayer.setRole(role);
+    public void takeRole(String r) {
+        Set set = (Set) currentPlayer.getLocation();
+        List<Role> allRoles = set.getRoles();
+        allRoles.addAll(set.getScene().getRoles());
+        for (Role role : allRoles) {
+            if (role.getName().equals(r)) {
+                currentPlayer.setRole(role);
+            }
+        }
     }
 
     public void rehearse() {
@@ -135,12 +142,12 @@ public class GameManager {
                 List<Role> offCardRoles = set.getRoles();
                 List<Role> onCardRoles = set.getScene().getRoles();
                 for(Role role : offCardRoles) {
-                    if(!(role.isTaken()) && role.getRank() <= currentPlayer.getRank()){
+                    if(!(role.isTaken())){
                         availableRoles.add(role.getName() + "(rank " + role.getRank() + " - off card)");
                     }
                 }
                 for(Role role : onCardRoles) {
-                    if(!(role.isTaken()) && role.getRank() <= currentPlayer.getRank()){
+                    if(!(role.isTaken())){
                         availableRoles.add(role.getName() + "(rank " + role.getRank() + " - on card)");
                     }
                 }
@@ -148,5 +155,30 @@ public class GameManager {
 
         }
         return availableRoles;
+    }
+
+    public List<String> getAvailableUpgrades() {
+        List<String> availableUpgrades = new ArrayList<>();
+        int rank = currentPlayer.getRank();
+
+        if(currentPlayer.getLocation() instanceof CastingOffice office) {
+
+            List<Upgrade> upgrades = office.getUpgrades();
+            for (Upgrade upgrade : upgrades) {
+                if (upgrade.getRank() > rank) {
+                    if((upgrade.getCurrency().equals("dollars")) && (upgrade.getPrice() <= currentPlayer.getDollars())) {
+                        availableUpgrades.add(String.valueOf(upgrade.getRank()) + ": " + String.valueOf(upgrade.getPrice()) + " " + upgrade.getCurrency());
+                    }
+                    else if((upgrade.getCurrency().equals("credits")) && (upgrade.getPrice() <= currentPlayer.getCredits())) {
+                        availableUpgrades.add(String.valueOf(upgrade.getRank()) + ": " + String.valueOf(upgrade.getPrice()) + " " + upgrade.getCurrency());
+                    }
+                    availableUpgrades.add(String.valueOf(upgrade.getRank()) + ": " + String.valueOf(upgrade.getPrice()) + " " + upgrade.getCurrency());
+                }
+            }
+        }
+        if(availableUpgrades.size() == 0) {
+            availableUpgrades.add("You cannot afford any upgrades at this time.");
+        }
+        return availableUpgrades;
     }
 }

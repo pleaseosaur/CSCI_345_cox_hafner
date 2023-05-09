@@ -232,16 +232,18 @@ public class GameData {
 
         // iterate through upgrade nodes
         for(int i = 0; i < upgradeNodes.getLength(); i++) {
+
             Node upgradeNode = upgradeNodes.item(i); // get upgrade node
 
             if (upgradeNode.getNodeType() == Node.ELEMENT_NODE) {
+
                 Element upgradeElement = (Element) upgradeNode; // cast node to element
                 int level = Integer.parseInt(upgradeElement.getAttribute("level")); // get upgrade level
                 String currency = upgradeElement.getAttribute("currency"); // get upgrade currency
                 int amount = Integer.parseInt(upgradeElement.getAttribute("amt")); // get upgrade amount
                 Area upgradeArea = getArea((Element) upgradeElement.getElementsByTagName("area").item(0)); // get upgrade area
 
-                Upgrade upgrade = new Upgrade(level, currency, amount, upgradeArea); // create upgrade
+                Upgrade upgrade = new Upgrade(level, currency + "s", amount, upgradeArea); // create upgrade
                 upgrades.add(upgrade); // add upgrade to list
             }
         }
@@ -249,12 +251,12 @@ public class GameData {
         return new CastingOffice("Casting Office", officeNeighbors, officeArea, upgrades); // create office
     }
 
-    private static Area getArea(Element areaElement) {
+    private static Area getArea(Element area) {
 
-        int x = Integer.parseInt(areaElement.getAttribute("x")); // get x coordinate
-        int y = Integer.parseInt(areaElement.getAttribute("y")); // get y coordinate
-        int h = Integer.parseInt(areaElement.getAttribute("h")); // get height
-        int w = Integer.parseInt(areaElement.getAttribute("w")); // get width
+        int x = Integer.parseInt(area.getAttribute("x")); // get x coordinate
+        int y = Integer.parseInt(area.getAttribute("y")); // get y coordinate
+        int h = Integer.parseInt(area.getAttribute("h")); // get height
+        int w = Integer.parseInt(area.getAttribute("w")); // get width
 
         return new Area(x, y, h, w); // create area
     }

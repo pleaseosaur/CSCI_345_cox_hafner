@@ -58,27 +58,47 @@ public class Deadwood {
     }
 
     public void startTurn(Player player) {
-        List<String> availableRoles;
+        ui.startTurnMessage(player);
+        List<String> availableRoles = new ArrayList<>();
         if (!(player.hasRole())) {
             availableRoles = manager.getAvailableRoles();
             if (availableRoles.size() == 0) {
                 availableRoles.add("Unfortunately, all available roles have been taken");
             }
+        }
 
-            String playerAction = ui.getPlayerAction(player, availableRoles);
-            // TODO -- implement player action logic
+        String action = ui.getPlayerAction(player, availableRoles);
+        // TODO -- implement player action logic
+        playerAction(action, player, availableRoles);
+    }
+
+    public void playerAction(String action, Player player, List<String> availableRoles) {
+        switch (action) {
+            case "move" -> move(ui.promptMove(player));
+            case "take role" -> takeRole(ui.promptRole(availableRoles));
+            case "rehearse" -> rehearse();
+            case "act" -> act();
+            case "upgrade" -> upgrade(ui.promptUpgrade(manager.getAvailableUpgrades()));
+            case "end turn" -> endTurn();
+            case "end" -> endGame();
+            default -> {
+            }
         }
     }
 
-    public void move(Location location) {
-        // move logic
+    public void move(String location) {
+        manager.move(location);
     }
 
-    public void upgrade(int rank) {
-        manager.upgrade(rank);
+    public void upgrade(String rank) {
+
+        //TODO -- need to convert first char of string to int
+        //TODO -- need to handle cases where the string is empty or there is no int to be converted
+
+        manager.upgrade(Integer.parseInt(rank));
     }
 
-    public void takeRole(Role role) {
+    public void takeRole(String role) {
         manager.takeRole(role);
     }
 

@@ -37,6 +37,15 @@ public abstract class Location {
         this.neighbors = n;
     }
 
+    public Location getNeighbor(String name){
+        for (Location neighbor : getNeighbors()) {
+            if (neighbor.getName().equals(name)) {
+                return neighbor;
+            }
+        }
+        return null;
+    }
+
     public void setArea(Area a){
         this.area = a;
     }
@@ -46,10 +55,6 @@ public abstract class Location {
     }
 
     public boolean isSet() {
-        if(getName().equals("Trailer") || getName().equals("Casting Office")) {
-            return false;
-        }
-
-        return true;
+        return !getName().equals("Trailer") && !getName().equals("Casting Office");
     }
 }
