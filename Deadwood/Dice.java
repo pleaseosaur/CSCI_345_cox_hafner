@@ -5,9 +5,11 @@ import java.util.Random;
 
 public class Dice {
     private int sides;
+    private Random rand;
 
     public Dice(int sides) {
         setSides(sides);
+        this.rand = new Random();
     }
 
     public void setSides(int num) {
@@ -19,7 +21,6 @@ public class Dice {
     }
 
     public int rollDie() {
-        Random rand = new Random();
         int dieRoll = rand.nextInt(sides)+1;
         return dieRoll;
     }
