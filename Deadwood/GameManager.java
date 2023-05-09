@@ -143,12 +143,12 @@ public class GameManager {
                 List<Role> onCardRoles = set.getScene().getRoles();
                 for(Role role : offCardRoles) {
                     if(!(role.isTaken())){
-                        availableRoles.add(role.getName() + "(rank " + role.getRank() + " - off card)");
+                        availableRoles.add(role.getName() + " (rank " + role.getRank() + " - off card)");
                     }
                 }
                 for(Role role : onCardRoles) {
                     if(!(role.isTaken())){
-                        availableRoles.add(role.getName() + "(rank " + role.getRank() + " - on card)");
+                        availableRoles.add(role.getName() + " (rank " + role.getRank() + " - on card)");
                     }
                 }
             }

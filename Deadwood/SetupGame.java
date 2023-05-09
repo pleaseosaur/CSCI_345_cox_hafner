@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class SetupGame {
@@ -16,8 +17,9 @@ public class SetupGame {
             this.data = new GameData("Deadwood/board.xml", "Deadwood/cards.xml");
             setPlayers(numPlayers);
             setDays(numPlayers);
-            setBoard();
             setDeck();
+            setBoard();
+            setupBoard();
         }
         catch (Exception e){
             System.out.println("Error loading Game Data.");
@@ -67,6 +69,18 @@ public class SetupGame {
 
     public void setBoard() {
         this.board = data.getBoard();
+    }
+
+    public void setupBoard() {
+        Map<String, Location> locations = board.getAllLocations();
+
+        for (Map.Entry<String, Location> entry : locations.entrySet()) {
+            if(entry.getKey().equals("Trailer") || entry.getKey().equals("Casting Office")) {
+                continue;
+            }
+            Set location = (Set) entry.getValue();
+            location.setScene(deck.drawScene());
+        }
     }
 
     public Board getBoard() {

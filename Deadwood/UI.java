@@ -85,6 +85,9 @@ public class UI {
         displayMessage("Your current location is: " + locationName);
         displayStats(player);
     }
+
+    //TODO -- remove "move" option when player has moved already
+    //TODO -- remove "upgrade" option when player has upgraded already
     public String getPlayerAction(Player player, List<String> availableRoles) {
 
         String locationName = player.getLocation().getName();
@@ -204,14 +207,6 @@ public class UI {
 
     public String getChoiceInput(Map<String, String> availableActions) {
         String choice = scanner.next().toLowerCase();
-
-
-        // print for testing
-        for(String key : availableActions.keySet()) {
-            displayMessage(key);
-            displayMessage(availableActions.get(key));
-        } // end print for testing
-
 
         if(choice.equals("quit")) {
             quitGame();
