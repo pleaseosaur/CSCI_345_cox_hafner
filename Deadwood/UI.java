@@ -101,127 +101,185 @@ public class UI {
     //TODO -- remove "upgrade" option when player has upgraded already
     public String getPlayerAction(Player player, List<String> availableRoles) {
 
-        String locationName = player.getLocation().getName();
-        Role playerRole = player.getRole();
-
-        StringBuilder prompt = new StringBuilder();
         Map<String, String> availableActions = new HashMap<>();
 
-        if (locationName.equals("Trailer")) {
-//          addTrailerActions();
-            if(!player.getHasMoved()) {
-                prompt.append("1. move\n");
-                availableActions.put("1", "move");
-            }
-            prompt.append("2. end turn\n");
-
-            availableActions.put("2", "end turn");
-            availableActions.put("end", "end turn");
-
-        } else if (locationName.equals("Casting Office")) {
-//            addOfficeActions();
-            if(player.getRank() < 6) {
-                if(!player.getHasMoved()) {
-                    prompt.append("1. move\n");
-                    availableActions.put("1", "move");
-                }
-                if(!player.getHasUpgraded()) {
-                    prompt.append("2. upgrade\n");
-                    availableActions.put("2", "upgrade");
-                }
-                prompt.append("3. end turn\n");
-
-                availableActions.put("3", "end turn");
-                availableActions.put("end", "end turn");
-
-            } else {
-                prompt.append("You are already at the highest rank. No upgrades are available.\n\n");
-                if(!player.getHasMoved()) {
-                    prompt.append("1. move\n");
-                    availableActions.put("1", "move");
-                }
-                prompt.append("2. end turn\n");
-
-                availableActions.put("2", "end turn");
-                availableActions.put("end", "end turn");
-            }
-
-        } else if (player.hasRole()) {
-            displayMessage("You are currently playing the role of " + playerRole + ".\n");
-
-            if (playerRole.isOnCard()) {
-
-                if(!player.getHasRehearsed()) {
-                    prompt.append("1. rehearse\n");
-                    availableActions.put("1", "rehearse");
-                }
-                if(!player.getHasActed()) {
-                    prompt.append("2. act\n");
-                    availableActions.put("2", "act");
-                }
-                prompt.append("3. end turn\n");
-
-                availableActions.put("3", "end turn");
-                availableActions.put("end", "end turn");
-
-            } else {
-
-                if(!player.getHasActed()) {
-                    prompt.append("1. act\n");
-                    availableActions.put("1", "act");
-                }
-                prompt.append("2. end turn\n");
-
-                availableActions.put("2", "end turn");
-                availableActions.put("end", "end turn");
-
-            }
-        } else {
-            prompt.append("You are not currently playing a role.\n\n");
-
-            if ((availableRoles.size() == 1) && (availableRoles.contains("available"))) {
-
-                for (String role : availableRoles) {
-                    displayMessage(role);
-                }
-
-                if(!player.getHasMoved()) {
-                    prompt.append("1. move\n");
-                    availableActions.put("1", "move");
-                }
-
-                prompt.append("2. end turn\n");
-
-                availableActions.put("2", "end turn");
-                availableActions.put("end", "end turn");
-
-            } else {
-                prompt.append("The available roles are: \n");
-
-                for (String role : availableRoles) {
-                    prompt.append(role).append("\n");
-                }
-
-                if(!player.getHasMoved()) {
-                    prompt.append("1. move\n");
-                    availableActions.put("1", "move");
-                }
-                if(!player.hasRole()) {
-                    prompt.append("2. take role\n");
-                    availableActions.put("2", "take role");
-                    availableActions.put("role", "take role");
-                }
-
-                prompt.append("3. end turn\n");
-
-                availableActions.put("3", "end turn");
-                availableActions.put("end", "end turn");
-            }
+        switch (player.getLocation().getName()) {
+            case "Trailer" -> trailerActions(player, availableActions);
+            case "Casting Office" -> officeActions(player, availableActions);
+            default -> setActions(player, availableActions, availableRoles);
         }
 
-        displayMessage(prompt.toString());
+//        String locationName = player.getLocation().getName();
+//        Role playerRole = player.getRole();
+//
+//        StringBuilder prompt = new StringBuilder();
+//        Map<String, String> availableActions = new HashMap<>();
+//
+//        if (locationName.equals("Trailer")) {
+//
+//            if(!player.getHasMoved()) {
+//                prompt.append("1. move\n");
+//                availableActions.put("1", "move");
+//            }
+//            prompt.append("2. end turn\n");
+//
+//            availableActions.put("2", "end turn");
+//            availableActions.put("end", "end turn");
+//
+//        } else if (locationName.equals("Casting Office")) {
+//
+//            if(player.getRank() < 6) {
+//                if(!player.getHasMoved()) {
+//                    prompt.append("1. move\n");
+//                    availableActions.put("1", "move");
+//                }
+//                if(!player.getHasUpgraded()) {
+//                    prompt.append("2. upgrade\n");
+//                    availableActions.put("2", "upgrade");
+//                }
+//                prompt.append("3. end turn\n");
+//
+//                availableActions.put("3", "end turn");
+//                availableActions.put("end", "end turn");
+//
+//            } else {
+//                prompt.append("You are already at the highest rank. No upgrades are available.\n\n");
+//                if(!player.getHasMoved()) {
+//                    prompt.append("1. move\n");
+//                    availableActions.put("1", "move");
+//                }
+//                prompt.append("2. end turn\n");
+//
+//                availableActions.put("2", "end turn");
+//                availableActions.put("end", "end turn");
+//            }
+//
+//        } else if (player.hasRole()) {
+//            displayMessage("You are currently playing the role of " + playerRole + ".\n");
+//
+//            if (playerRole.isOnCard()) {
+//
+//                if(!player.getHasRehearsed()) {
+//                    prompt.append("1. rehearse\n");
+//                    availableActions.put("1", "rehearse");
+//                }
+//                if(!player.getHasActed()) {
+//                    prompt.append("2. act\n");
+//                    availableActions.put("2", "act");
+//                }
+//                prompt.append("3. end turn\n");
+//
+//                availableActions.put("3", "end turn");
+//                availableActions.put("end", "end turn");
+//
+//            } else {
+//
+//                if(!player.getHasActed()) {
+//                    prompt.append("1. act\n");
+//                    availableActions.put("1", "act");
+//                }
+//                prompt.append("2. end turn\n");
+//
+//                availableActions.put("2", "end turn");
+//                availableActions.put("end", "end turn");
+//
+//            }
+//        } else {
+//            prompt.append("You are not currently playing a role.\n\n");
+//
+//            if ((availableRoles.size() == 1) && (availableRoles.contains("available"))) {
+//
+//                for (String role : availableRoles) {
+//                    displayMessage(role);
+//                }
+//
+//                if(!player.getHasMoved()) {
+//                    prompt.append("1. move\n");
+//                    availableActions.put("1", "move");
+//                }
+//
+//                prompt.append("2. end turn\n");
+//
+//                availableActions.put("2", "end turn");
+//                availableActions.put("end", "end turn");
+//
+//            } else {
+//                prompt.append("The available roles are: \n");
+//
+//                for (String role : availableRoles) {
+//                    prompt.append(role).append("\n");
+//                }
+//
+//                if(!player.getHasMoved()) {
+//                    prompt.append("1. move\n");
+//                    availableActions.put("1", "move");
+//                }
+//                if(!player.hasRole()) {
+//                    prompt.append("2. take role\n");
+//                    availableActions.put("2", "take role");
+//                    availableActions.put("role", "take role");
+//                }
+//
+//                prompt.append("3. end turn\n");
+//
+//                availableActions.put("3", "end turn");
+//                availableActions.put("end", "end turn");
+//            }
+//        }
+
+        displayMessage(buildPrompt(availableActions));
 
         return getChoiceInput(availableActions);
+    }
+
+    private void trailerActions(Player player, Map<String, String> availableActions) {
+        buildActions(availableActions, "move", player.getHasMoved());
+        buildActions(availableActions, "end turn");
+    }
+
+    private void officeActions(Player player, Map<String, String> availableActions) {
+        if(player.getRank() < 6) {
+            buildActions(availableActions, "move", player.getHasMoved());
+            buildActions(availableActions, "upgrade", player.getHasUpgraded());
+
+        } else {
+            displayMessage("You are already at the highest rank. No upgrades are available.\n\n");
+            buildActions(availableActions, "move", player.getHasMoved());
+
+        }
+        buildActions(availableActions, "end turn");
+    }
+
+    private void setActions(Player player, Map<String, String> availableActions, List<String> availableRoles) {
+        if(player.hasRole()) {
+            if(player.getRole().isOnCard()) {
+                buildActions(availableActions, "rehearse", player.getHasRehearsed());
+            }
+            buildActions(availableActions, "act", player.getHasActed());
+        } else if(!availableRoles.contains("available")) {
+            buildActions(availableActions, "take role", player.hasRole());
+        }
+        buildActions(availableActions, "end turn");
+    }
+
+    private void buildActions(Map<String, String> availableActions, String action, boolean alreadyDone) {
+        if(!alreadyDone) {
+            int i = availableActions.size() + 1;
+            availableActions.put(String.valueOf(i), action);
+        }
+    }
+
+    private void buildActions(Map<String, String> availableActions, String action) {
+        buildActions(availableActions, action, false);
+    }
+
+    public String buildPrompt(Map<String, String> availableActions) {
+        StringBuilder prompt = new StringBuilder();
+
+        for(Map.Entry<String, String> input : availableActions.entrySet()) {
+            prompt.append(input.getKey()).append(". ").append(input.getValue()).append("\n");
+        }
+        return prompt.toString();
     }
 
     public String getChoiceInput(Map<String, String> availableActions) {
