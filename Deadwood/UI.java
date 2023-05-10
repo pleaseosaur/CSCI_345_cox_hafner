@@ -13,7 +13,19 @@ public class UI {
     }
 
     public void displayMessage(String message){
-        System.out.println(message);
+        for(char c : message.toCharArray()){
+//            System.out.print(c);
+//            System.out.flush();
+            try {
+                System.out.print(c);
+                System.out.flush();
+                Thread.sleep(35);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println();
     }
 
     public void displayWelcomeMessage() {
@@ -236,6 +248,7 @@ public class UI {
             options.put(Integer.toString(i), neighbor.getName());
             i++;
         }
+        prompt.append("\nPlease enter the name or number of the location you would like to move to: ");
         displayMessage(prompt.toString());
 
         return getChoiceInput(options);
