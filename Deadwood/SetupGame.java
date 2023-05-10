@@ -15,18 +15,16 @@ public class SetupGame {
     private GameData data;
     private List<Player> players;
     private int days;
-    private Board board;
     private Deck deck;
 
     // constructor
     public SetupGame(int numPlayers) {
         // Exception catch
         try{
-            this.data = new GameData("xml/board.xml", "xml/cards.xml");
+            GameData.initializeGameData("xml/board.xml", "xml/cards.xml");
             setPlayers(numPlayers);
             setDays(numPlayers);
-            setDeck();
-            setBoard();
+            this.deck = Deck.getInstance();
             setupBoard();
         }
         catch (Exception e){
@@ -76,12 +74,8 @@ public class SetupGame {
         return days;
     }
 
-    public void setBoard() {
-        this.board = data.getBoard();
-    }
-
     public void setupBoard() {
-        Map<String, Location> locations = board.getAllLocations();
+        Map<String, Location> locations = Board.getInstance().getAllLocations();
 
         for (Map.Entry<String, Location> entry : locations.entrySet()) {
             if(entry.getKey().equals("Trailer") || entry.getKey().equals("Casting Office")) {
@@ -92,15 +86,4 @@ public class SetupGame {
         }
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
-    public void setDeck() {
-        this.deck = data.getDeck();
-    }
-
-    public Deck getDeck() {
-        return deck;
-    }
 }

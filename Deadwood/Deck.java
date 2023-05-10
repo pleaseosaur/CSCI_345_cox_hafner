@@ -10,18 +10,29 @@ import java.util.List;
 
 public class Deck {
     // fields
-    private List<Scene> cards;
+    private static Deck deck;
+    private final List<Scene> cards;
     private int nextCard;
 
     // constructor
-    public Deck(List<Scene> c){
-        setCards(c);
+    private Deck(List<Scene> c){
+        this.cards = c;
         this.nextCard = 0;
     }
 
     // getters and setters
-    public void setCards(List<Scene> c){
-        this.cards = c;
+    public static void initializeDeck(List<Scene> c){
+        if(deck != null){
+            throw new IllegalStateException("Deck has already been initialized");
+        }
+        deck = new Deck(c);
+    }
+
+    public static Deck getInstance(){
+        if(deck == null){
+            throw new IllegalStateException("Deck has not been initialized");
+        }
+        return deck;
     }
 
     public List<Scene> getCards(){

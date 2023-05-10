@@ -19,16 +19,23 @@ import org.w3c.dom.NodeList;
 
 
 public class GameData {
-    // fields
-    private Board board;
-    private Deck deck;
+
+    private static GameData data;
 
     // constructor
-    public GameData(String boardFile, String cardFile) throws ParserConfigurationException{
+    private GameData(String boardFile, String cardFile) throws ParserConfigurationException{
         Document boardDoc = getDocFromFile(boardFile);
         Document cardDoc = getDocFromFile(cardFile);
         createBoard(boardDoc);
         createDeck(cardDoc);
+    }
+
+// initializeGameData: initializes game data
+    public static void initializeGameData(String boardFile, String cardFile) throws ParserConfigurationException {
+        if(data != null) {
+            throw new IllegalStateException("Game data already initialized");
+        }
+        data = new GameData(boardFile, cardFile);
     }
 
     // getDocFromFile: gets doc for parsing
@@ -76,7 +83,7 @@ public class GameData {
         // TODO - there may be a better way to do this
         Map<String, Location> locations = constructGraph(tempLocations); // create map of locations
 
-        this.board = new Board(boardName, locations, 10); // create board
+        Board.initializeBoard(boardName, locations, 10); // create board
         // printBoard(); // calls printBoard to print list of board's locations and their neighbors for debugging purposes
     }
 
@@ -102,10 +109,6 @@ public class GameData {
         return locations; // return map of locations
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
     // createDeck: creates deck from XML doc
     public void createDeck(Document d) {
         d.getDocumentElement().normalize(); // normalize document
@@ -125,7 +128,7 @@ public class GameData {
             }
         }
 
-        this.deck = new Deck(cards); // create deck
+        Deck.initializeDeck(cards); // create deck
     }
 
     // createCard: creates Scene card
@@ -139,10 +142,6 @@ public class GameData {
         List<Role> roles = createRoles(cardElement.getElementsByTagName("part")); // get part/role nodes
 
         return new Scene(cardName, sceneNumber, sceneDescription, budget, roles, false); // create card;
-    }
-
-    public Deck getDeck() {
-        return deck;
     }
 
     // createSet: creates Set location
@@ -290,10 +289,10 @@ public class GameData {
 
     // printBoard: prints board for debugging purposes
     private void printBoard(){
-        Map<String, Location> locations = board.getAllLocations();
+        Map<String, Location> locations = Board.getInstance().getAllLocations();
         for(String location : locations.keySet()) {
             System.out.println(location);
-            List<Location> neighbors = board.getLocation(location).getNeighbors();
+            List<Location> neighbors = Board.getInstance().getLocation(location).getNeighbors();
             for(Location n: neighbors){
                 System.out.println("     "+n.getName());
             }

@@ -5,20 +5,34 @@
  */
 
 // imports
-import java.util.List;
 import java.util.Map;
 
 public class Board {
     // fields
+    private static Board board;
     private final String name;
-    private Map<String, Location> locations;
+    private final Map<String, Location> locations;
     private int openScenes;
 
     // constructor
-    public Board(String n, Map<String, Location> l, int o){
+    private Board(String n, Map<String, Location> l, int o){
         this.name = n;
-        setLocations(l);
+        this.locations = l;
         setOpenScenes(o);
+    }
+
+    public static Board getInstance() {
+        if(board == null) {
+            throw new IllegalStateException("Board has not been initialized");
+        }
+        return board;
+    }
+
+    public static void initializeBoard(String n, Map<String, Location> l, int o) {
+        if(board != null) {
+            throw new IllegalStateException("Board has already been initialized");
+        }
+        board = new Board(n, l, o);
     }
 
     // getters and setters
@@ -34,21 +48,12 @@ public class Board {
         return this.locations;
     }
 
-    public void setLocations(Map<String, Location> l){
-        this.locations = l;
-    }
-
     public int getOpenScenes(){
         return this.openScenes;
     }
 
     public void setOpenScenes(int o){
         this.openScenes = o;
-    }
-
-    // TODO maybe remove this
-    public void updatePlayerLocation(Player p, Location l){
-        // do move logic
     }
 
     public boolean checkEndDay(){

@@ -27,8 +27,8 @@ public class GameManager {
         setPlayers(setup.getPlayers());
         setDays(setup.getDays());
         setCurrentPlayer();
-        setBoard(setup.getBoard());
-        setDeck(setup.getDeck());
+        this.board = Board.getInstance();
+        this.deck = Deck.getInstance();
         setStartingLocation();
     }
 
@@ -116,22 +116,6 @@ public class GameManager {
 
     public int getDays() {
         return this.days;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
-    public Board getBoard() {
-        return this.board;
-    }
-
-    public void setDeck(Deck deck) {
-        this.deck = deck;
-    }
-
-    public Deck getDeck() {
-        return this.deck;
     }
 
     public boolean endDay() {
