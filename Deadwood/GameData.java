@@ -70,6 +70,7 @@ public class GameData {
         Map<String, Location> locations = constructGraph(tempLocations); // create map of locations
 
         this.board = new Board(boardName, locations, 10); // create board
+        // printBoard(); Prints Board for debugging purposes
     }
 
     private Map<String,Location> constructGraph(List<Location> tempLocations) {
@@ -259,6 +260,17 @@ public class GameData {
         int w = Integer.parseInt(area.getAttribute("w")); // get width
 
         return new Area(x, y, h, w); // create area
+    }
+
+    private void printBoard(){
+        Map<String, Location> locations = board.getAllLocations();
+        for(String location : locations.keySet()) {
+            System.out.println(location);
+            List<Location> neighbors = board.getLocation(location).getNeighbors();
+            for(Location n: neighbors){
+                System.out.println("     "+n.getName());
+            }
+        }
     }
 
 }
