@@ -62,6 +62,10 @@ public class GameManager {
     public void endTurn() {
         int currentIndex = getPlayers().indexOf(currentPlayer);
         int nextIndex = (currentIndex + 1) % getPlayers().size();
+        currentPlayer.setHasMoved(false);
+        currentPlayer.setHasUpgraded(false);
+        currentPlayer.setHasActed(false);
+        currentPlayer.setHasRehearsed(false);
         setCurrentPlayer(getPlayers().get(nextIndex));
     }
 
