@@ -157,7 +157,14 @@ public class GameData {
 
             if (neighborNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element neighborElement = (Element) neighborNode; // cast node to element
-                neighbors.add(neighborElement.getAttribute("name")); // add neighbor name to list
+                if (neighborElement.getAttribute("name").equals("office")) {
+                    neighbors.add("Casting Office"); // add office to list
+                }
+                else if (neighborElement.getAttribute("name").equals("trailer")) {
+                    neighbors.add("Trailer"); // add trailer to list
+                }
+                else {
+                    neighbors.add(neighborElement.getAttribute("name")); // add neighbor name to list
             }
         }
         return neighbors;
