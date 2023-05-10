@@ -14,8 +14,6 @@ public class UI {
 
     public void displayMessage(String message){
         for(char c : message.toCharArray()){
-//            System.out.print(c);
-//            System.out.flush();
             try {
                 System.out.print(c);
                 System.out.flush();
@@ -109,38 +107,44 @@ public class UI {
         Map<String, String> availableActions = new HashMap<>();
 
         if (locationName.equals("Trailer")) {
+//          addTrailerActions();
+            if(!player.getHasMoved()) {
+                prompt.append("1. move\n");
+                availableActions.put("1", "move");
+            }
+            if(!player.getHasUpgraded()) {
+                prompt.append("2. upgrade\n");
+                availableActions.put("2", "upgrade");
+            }
+            prompt.append("3. end turn\n");
 
-            prompt.append("""
-                    Your available actions are:\s
-                    1. move
-                    2. end turn""");
-
-            availableActions.put("1", "move");
             availableActions.put("2", "end turn");
             availableActions.put("end", "end turn");
 
         } else if (locationName.equals("Casting Office")) {
-
+//            addOfficeActions();
             if(player.getRank() < 6) {
-                prompt.append("""
-                        Your available actions are:\s
-                        1. move
-                        2. upgrade
-                        3. end turn""");
+                if(!player.getHasMoved()) {
+                    prompt.append("1. move\n");
+                    availableActions.put("1", "move");
+                }
+                if(!player.getHasUpgraded()) {
+                    prompt.append("2. upgrade\n");
+                    availableActions.put("2", "upgrade");
+                }
+                prompt.append("3. end turn\n");
 
-                availableActions.put("1", "move");
-                availableActions.put("2", "upgrade");
                 availableActions.put("3", "end turn");
                 availableActions.put("end", "end turn");
 
             } else {
-                prompt.append("You are already at the highest rank. No upgrades are available.\n");
-                prompt.append("""
-                        Your available actions are:\s
-                        1. move
-                        2. end turn""");
+                prompt.append("You are already at the highest rank. No upgrades are available.\n\n");
+                if(!player.getHasMoved()) {
+                    prompt.append("1. move\n");
+                    availableActions.put("1", "move");
+                }
+                prompt.append("2. end turn\n");
 
-                availableActions.put("1", "move");
                 availableActions.put("2", "end turn");
                 availableActions.put("end", "end turn");
             }
@@ -150,31 +154,32 @@ public class UI {
 
             if (playerRole.isOnCard()) {
 
-                prompt.append("""
-                        Your available actions are:\s
-                        1. rehearse
-                        2. act
-                        3. end turn""");
+                if(!player.getHasRehearsed()) {
+                    prompt.append("1. rehearse\n");
+                    availableActions.put("1", "rehearse");
+                }
+                if(!player.getHasActed()) {
+                    prompt.append("2. act\n");
+                    availableActions.put("2", "act");
+                }
+                prompt.append("3. end turn\n");
 
-                availableActions.put("1", "rehearse");
-                availableActions.put("2", "act");
                 availableActions.put("3", "end turn");
                 availableActions.put("end", "end turn");
 
             } else {
 
-                prompt.append("""
-                        Your available actions are:\s
-                        1. act
-                        2. end turn""");
+                if(!player.getHasActed()) {
+                    prompt.append("1. act\n");
+                    availableActions.put("1", "act");
+                }
 
-                availableActions.put("1", "act");
                 availableActions.put("2", "end turn");
                 availableActions.put("end", "end turn");
 
             }
         } else {
-            prompt.append("You are not currently playing a role.\n");
+            prompt.append("You are not currently playing a role.\n\n");
 
             if ((availableRoles.size() == 1) && (availableRoles.contains("available"))) {
 
@@ -182,12 +187,11 @@ public class UI {
                     displayMessage(role);
                 }
 
-                prompt.append("""
-                            Your available actions are:\s
-                            1. move
-                            2. end turn""");
+                if(!player.getHasMoved()) {
+                    prompt.append("1. move\n");
+                    availableActions.put("1", "move");
+                }
 
-                availableActions.put("1", "move");
                 availableActions.put("2", "end turn");
                 availableActions.put("end", "end turn");
 
@@ -198,15 +202,16 @@ public class UI {
                     prompt.append(role).append("\n");
                 }
 
-                prompt.append("""
-                        Your available actions are:\s
-                        1. move
-                        2. take role
-                        3. end turn""");
+                if(!player.getHasMoved()) {
+                    prompt.append("1. move\n");
+                    availableActions.put("1", "move");
+                }
+                if(!player.hasRole()) {
+                    prompt.append("2. take role\n");
+                    availableActions.put("2", "take role");
+                    availableActions.put("role", "take role");
+                }
 
-                availableActions.put("1", "move");
-                availableActions.put("2", "take role");
-                availableActions.put("role", "take role");
                 availableActions.put("3", "end turn");
                 availableActions.put("end", "end turn");
             }

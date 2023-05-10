@@ -8,6 +8,10 @@ public class Player {
     private Role role;
     private int practiceChips;
     private Location location;
+    private boolean hasMoved;
+    private boolean hasUpgraded;
+    private boolean hasActed;
+    private boolean hasRehearsed;
 
     public Player(String name, int rank, int credits, int dollars){
         setName(name);
@@ -16,7 +20,13 @@ public class Player {
         setDollars(dollars);
         setRole();
         setPracticeChips(0);
+        setHasMoved(false);
+        setHasUpgraded(false);
+        setHasActed(false);
+        setHasRehearsed(false);
+
     }
+
 
     public boolean hasRole() {
         return this.role != null;
@@ -84,5 +94,37 @@ public class Player {
 
     public Location getLocation() {
         return location;
+    }
+
+    public void setHasMoved(boolean hasMoved) {
+        this.hasMoved = hasMoved;
+    }
+
+    public boolean getHasMoved() {
+        return hasMoved;
+    }
+
+    public void setHasUpgraded(boolean hasUpgraded) {
+        this.hasUpgraded = hasUpgraded;
+    }
+
+    public boolean getHasUpgraded() {
+        return hasUpgraded;
+    }
+
+    public void setHasActed(boolean hasActed) {
+        this.hasActed = hasActed;
+    }
+
+    public boolean getHasActed() {
+        return hasActed;
+    }
+
+    public void setHasRehearsed(boolean hasRehearsed) {
+        this.hasRehearsed = hasRehearsed;
+    }
+
+    public boolean getHasRehearsed() {
+        return hasRehearsed;
     }
 }
