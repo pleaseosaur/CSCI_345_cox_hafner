@@ -52,9 +52,8 @@ public class Deadwood {
                 // get next player
             }
                 // when open scenes = 1, end the day
-            }
-            // when days = 0, end the game
         }
+            // when days = 0, end the game
     }
 
     public void startTurn(Player player) {
