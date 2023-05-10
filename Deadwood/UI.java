@@ -19,7 +19,7 @@ public class UI {
             try {
                 System.out.print(c);
                 System.out.flush();
-                Thread.sleep(35);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
