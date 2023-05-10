@@ -33,7 +33,7 @@ public class Board {
     }
 
     public void setOpenScenes(int o){
-        this.openScenes = 0;
+        this.openScenes = o;
     }
 
     public void updatePlayerLocation(Player p, Location l){

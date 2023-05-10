@@ -51,6 +51,7 @@ public class GameManager {
 
     public void rehearse() {
         currentPlayer.setPracticeChips();
+        currentPlayer.setHasRehearsed(true);
     }
 
     public void act() {
