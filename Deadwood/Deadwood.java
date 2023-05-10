@@ -50,7 +50,6 @@ public class Deadwood {
                 // if player chooses end turn, end the turn
                 // if end turn is the only available option, end turn automatically
                 // get next player
-                endTurn();
             }
                 // when open scenes = 1, end the day
             }

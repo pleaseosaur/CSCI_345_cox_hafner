@@ -113,11 +113,7 @@ public class UI {
                 prompt.append("1. move\n");
                 availableActions.put("1", "move");
             }
-            if(!player.getHasUpgraded()) {
-                prompt.append("2. upgrade\n");
-                availableActions.put("2", "upgrade");
-            }
-            prompt.append("3. end turn\n");
+            prompt.append("2. end turn\n");
 
             availableActions.put("2", "end turn");
             availableActions.put("end", "end turn");
