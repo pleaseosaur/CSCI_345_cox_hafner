@@ -29,6 +29,7 @@ public class UI {
     public void displayWelcomeMessage() {
         displayMessage("Welcome to Deadwood!"); // basic - add more later if desired
         displayMessage("You may type 'quit' at any time to terminate the game.");
+        displayMessage(" ");
     }
 
     public int getPlayerCount() {
@@ -75,7 +76,7 @@ public class UI {
 
     public String getPlayerName(String name) {
 
-        displayMessage("Please enter new name for " + name + ": ");
+        displayMessage("\nPlease enter new name for " + name + ": ");
         String newName;
 
         try {
@@ -92,7 +93,7 @@ public class UI {
         String locationName = player.getLocation().getName();
 
         displayMessage("It is " + playerName + "'s turn.");
-        displayMessage("Your current location is: " + locationName);
+        displayMessage("\nYour current location is: " + locationName + "\n");
         displayStats(player);
     }
 

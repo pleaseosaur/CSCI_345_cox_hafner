@@ -30,10 +30,12 @@ public class GameManager {
 
     public void move(String location) {
         currentPlayer.setLocation(currentPlayer.getLocation().getNeighbor(location));
+        currentPlayer.setHasMoved(true);
     }
 
     public void upgrade(int rank) {
         currentPlayer.setRank(rank);
+        currentPlayer.setHasUpgraded(true);
     }
 
     public void takeRole(String r) {
