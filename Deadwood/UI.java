@@ -174,6 +174,7 @@ public class UI {
                     prompt.append("1. act\n");
                     availableActions.put("1", "act");
                 }
+                prompt.append("2. end turn\n");
 
                 availableActions.put("2", "end turn");
                 availableActions.put("end", "end turn");
@@ -192,6 +193,8 @@ public class UI {
                     prompt.append("1. move\n");
                     availableActions.put("1", "move");
                 }
+
+                prompt.append("2. end turn\n");
 
                 availableActions.put("2", "end turn");
                 availableActions.put("end", "end turn");
@@ -212,6 +215,8 @@ public class UI {
                     availableActions.put("2", "take role");
                     availableActions.put("role", "take role");
                 }
+
+                prompt.append("3. end turn\n");
 
                 availableActions.put("3", "end turn");
                 availableActions.put("end", "end turn");

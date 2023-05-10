@@ -77,7 +77,7 @@ public class Deadwood {
             case "move" -> move(ui.promptMove(player));
             case "take role" -> takeRole(ui.promptRole(availableRoles));
             case "rehearse" -> rehearse();
-            case "act" -> act();
+            case "act" -> act(); // TODO -- need act logic + dice rolling
             case "upgrade" -> upgrade(ui.promptUpgrade(manager.getAvailableUpgrades()));
             case "end turn" -> endTurn();
             case "end" -> endGame();

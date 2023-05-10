@@ -56,6 +56,7 @@ public class GameManager {
 
     public void act() {
         // TODO - implement act
+        currentPlayer.setHasActed(true);
     }
 
     public void endTurn() {
