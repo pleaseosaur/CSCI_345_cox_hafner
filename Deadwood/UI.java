@@ -17,7 +17,7 @@ public class UI {
             try {
                 System.out.print(c);
                 System.out.flush();
-                Thread.sleep(20);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
