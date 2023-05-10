@@ -1,11 +1,19 @@
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: Set: Set object
+ */
+
+// imports
 import java.util.List;
 
 public class Set extends Location{
-
+    // fields
     private Scene scene;
     private List<Take> takes;
     private List<Role> roles;
 
+    // constructor
     public Set(String name, List<String> neighbors, Area area, Scene scene, List<Take> takes, List<Role> roles) {
         super(name, neighbors, area);
         setScene(scene);
@@ -13,6 +21,7 @@ public class Set extends Location{
         setRoles(roles);
     }
 
+    // getters and setters
     public void setScene(Scene s){
         this.scene = s;
     }

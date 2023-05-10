@@ -1,16 +1,24 @@
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: SetupGame: Handles initial setup for game
+ */
+
+// imports
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 
 public class SetupGame {
-
+    // fields
     private GameData data;
     private List<Player> players;
     private int days;
     private Board board;
     private Deck deck;
 
+    // constructor
     public SetupGame(int numPlayers) {
         // Exception catch
         try{
@@ -27,6 +35,7 @@ public class SetupGame {
         }
     }
 
+    // getters and setters
     public void setPlayers(int numPlayers) {
 
         List<Player> players = new ArrayList<>();

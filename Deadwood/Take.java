@@ -1,12 +1,22 @@
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: Take: Take object
+ */
+
+// imports
 public class Take {
+    // fields
     private int number;
     private Area area;
 
+    // constructor
     public Take(int n, Area a){
         setNumber(n);
         setArea(a);
     }
 
+    // getters and setters
     public void setNumber(int n){
         this.number = n;
     }

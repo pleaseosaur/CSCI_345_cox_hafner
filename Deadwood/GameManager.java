@@ -1,19 +1,27 @@
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: GameManager: handles player interface and game tracking
+ */
+
+// imports
 import java.util.ArrayList;
 import java.util.List;
-// Player interface and game tracking
 
 public class GameManager {
-
+    // fields
     private List<Player> players;
     private Player currentPlayer;
     private int days;
     private Board board;
     private Deck deck;
 
+    // constructor
     public GameManager() {
 
     }
 
+    // setupGame: does game setup based on number of players
     public void setupGame(int numPlayers) {
         SetupGame setup = new SetupGame(numPlayers);
         setPlayers(setup.getPlayers());
@@ -24,10 +32,12 @@ public class GameManager {
         setStartingLocation();
     }
 
+    // TODO this may not be needed
     private void playerTurn(Player player) {
         // TODO - implement turn logic -- may need to be in Deadwood
     }
 
+    // player actions
     public void move(String location) {
         currentPlayer.setLocation(currentPlayer.getLocation().getNeighbor(location));
         currentPlayer.setHasMoved(true);
@@ -69,6 +79,7 @@ public class GameManager {
         setCurrentPlayer(getPlayers().get(nextIndex));
     }
 
+    // getters and setters
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
@@ -135,6 +146,7 @@ public class GameManager {
         // tally scores when endgame is triggered
     }
 
+    // getAvailableRoles: makes list of roles available for taking
     public List<String> getAvailableRoles() {
 
         Location playerLocation = currentPlayer.getLocation();
@@ -165,6 +177,7 @@ public class GameManager {
         return availableRoles;
     }
 
+    // getAvailableUpgrades: makes list of upgrades available for taking
     public List<String> getAvailableUpgrades() {
         List<String> availableUpgrades = new ArrayList<>();
         int rank = currentPlayer.getRank();

@@ -1,3 +1,10 @@
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: GameData: XML parsing and setup
+ */
+
+// imports
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,20 +19,19 @@ import org.w3c.dom.NodeList;
 
 
 public class GameData {
-
+    // fields
     private Board board;
     private Deck deck;
 
+    // constructor
     public GameData(String boardFile, String cardFile) throws ParserConfigurationException{
         Document boardDoc = getDocFromFile(boardFile);
         Document cardDoc = getDocFromFile(cardFile);
-
         createBoard(boardDoc);
         createDeck(cardDoc);
-
     }
 
-
+    // getDocFromFile: gets doc for parsing
     public Document getDocFromFile(String filename) throws ParserConfigurationException {
         {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance(); // create document builder factory
@@ -43,6 +49,7 @@ public class GameData {
         } // exception handling
     }
 
+    // createBoard: creates board from XML doc
     public void createBoard(Document d) {
         d.getDocumentElement().normalize(); // normalize document
 
@@ -70,9 +77,10 @@ public class GameData {
         Map<String, Location> locations = constructGraph(tempLocations); // create map of locations
 
         this.board = new Board(boardName, locations, 10); // create board
-        // printBoard(); Prints Board for debugging purposes
+        // printBoard(); // calls printBoard to print list of board's locations and their neighbors for debugging purposes
     }
 
+    // constructGraph: turns list of locations into a graph for traversals
     private Map<String,Location> constructGraph(List<Location> tempLocations) {
 
         Map<String, Location> locations = new HashMap<>(); // create map of locations
@@ -91,7 +99,6 @@ public class GameData {
 
             location.setNeighbors(neighborLocations); // set neighbors of location
         }
-
         return locations; // return map of locations
     }
 
@@ -99,6 +106,7 @@ public class GameData {
         return board;
     }
 
+    // createDeck: creates deck from XML doc
     public void createDeck(Document d) {
         d.getDocumentElement().normalize(); // normalize document
 
@@ -120,6 +128,7 @@ public class GameData {
         this.deck = new Deck(cards); // create deck
     }
 
+    // createCard: creates Scene card
     private Scene createCard(Element cardElement) {
 
         String cardName = cardElement.getAttribute("name"); // get card name
@@ -136,6 +145,7 @@ public class GameData {
         return deck;
     }
 
+    // createSet: creates Set location
     private Location createSet(Element setElement) {
 
         String locationName = setElement.getAttribute("name"); // get location name
@@ -147,6 +157,7 @@ public class GameData {
         return new Set(locationName, neighbors, locationArea, null, takes, roles); // create set location
     }
 
+    // createNeighbors: creates List of neighbors
     private List<String> createNeighbors(NodeList neighborNodes) {
 
         List<String> neighbors = new ArrayList<>(); // create list of neighbors
@@ -171,6 +182,7 @@ public class GameData {
         return neighbors;
     }
 
+    // createTakes: creates List of takes
     private List<Take> createTakes(NodeList takeNodes) {
 
         List<Take> takes = new ArrayList<>(); // create list of takes
@@ -188,6 +200,7 @@ public class GameData {
         return takes;
     }
 
+    // createTake: creates one Take from element
     private Take createTake(Element takeElement) {
 
         int takeNumber = Integer.parseInt(takeElement.getAttribute("number")); // get take number
@@ -196,6 +209,7 @@ public class GameData {
         return new Take(takeNumber, takeArea); // create take
     }
 
+    // createRoles: creates roles from list of parts
     private List<Role> createRoles(NodeList partNodes) {
 
         List<Role> roles = new ArrayList<>(); // create list of parts/roles
@@ -213,6 +227,7 @@ public class GameData {
         return roles;
     }
 
+    // createRole: creates one Role from element
     private Role createRole(Element partElement) {
 
         String partName = partElement.getAttribute("name"); // get part/role name
@@ -223,6 +238,7 @@ public class GameData {
         return new Role(partName, partLevel, partArea, partLine, false, false); // create role/part
     }
 
+    // createTrailer: creates trailer location
     private Trailer createTrailer(Element trailerElement) {
 
         List<String> trailerNeighbors = createNeighbors(trailerElement.getElementsByTagName("neighbor")); // get trailer neighbor nodes
@@ -231,6 +247,7 @@ public class GameData {
         return new Trailer("Trailer", trailerNeighbors, trailerArea); // create trailer
     }
 
+    // createOffice: creates office location
     private CastingOffice createOffice(Element officeElement) {
 
         List<String> officeNeighbors = createNeighbors(officeElement.getElementsByTagName("neighbor")); // get office neighbor nodes
@@ -260,6 +277,7 @@ public class GameData {
         return new CastingOffice("Casting Office", officeNeighbors, officeArea, upgrades); // create office
     }
 
+    // getArea: gets area object
     private static Area getArea(Element area) {
 
         int x = Integer.parseInt(area.getAttribute("x")); // get x coordinate
@@ -270,6 +288,7 @@ public class GameData {
         return new Area(x, y, h, w); // create area
     }
 
+    // printBoard: prints board for debugging purposes
     private void printBoard(){
         Map<String, Location> locations = board.getAllLocations();
         for(String location : locations.keySet()) {

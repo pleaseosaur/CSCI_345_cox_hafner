@@ -1,6 +1,14 @@
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: Scene: Scene object
+ */
+
+// imports
 import java.util.List;
 
 public class Scene {
+    // fields
     private String name;
     private int number;
     private String description;
@@ -8,6 +16,7 @@ public class Scene {
     private List<Role> roles;
     private boolean wrap;
 
+    // constructor
     public Scene(String n, int num, String d, int b, List<Role> r, boolean w) {
         setName(n);
         setNumber(num);
@@ -17,6 +26,7 @@ public class Scene {
         setWrap(w);
     }
 
+    // getters and setters
     public void setName(String n){
         this.name = n;
     }

@@ -1,17 +1,24 @@
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: Area: Store Area data for future use in GUI implementation
+ */
+
 public class Area {
 
+    // fields
     private int x;
     private int y;
     private int h;
     private int w;
 
-
+    // constructor
     public Area(int x, int y, int h, int w) {
         setCoordinates(x, y);
         setDimensions(h, w);
-
     }
 
+    // getters and setters
     public void setCoordinates(int x, int y) {
         this.x = x;
         this.y = y;

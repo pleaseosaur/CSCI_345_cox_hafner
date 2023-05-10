@@ -1,17 +1,27 @@
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: Board: Object representing game's board
+ */
+
+// imports
 import java.util.List;
 import java.util.Map;
 
 public class Board {
+    // fields
     private final String name;
     private Map<String, Location> locations;
     private int openScenes;
 
+    // constructor
     public Board(String n, Map<String, Location> l, int o){
         this.name = n;
         setLocations(l);
         setOpenScenes(o);
     }
 
+    // getters and setters
     public String getName(){
         return this.name;
     }
@@ -36,6 +46,7 @@ public class Board {
         this.openScenes = o;
     }
 
+    // TODO maybe remove this
     public void updatePlayerLocation(Player p, Location l){
         // do move logic
     }

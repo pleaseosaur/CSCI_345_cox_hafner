@@ -1,10 +1,17 @@
-public class Upgrade {
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: Upgrade: Upgrade object to store upgrade data
+ */
 
+public class Upgrade {
+    // fields
     private int rank;
     private String currency;
     private int price;
     private Area area;
 
+    // constructor
     public Upgrade(int r, String c, int p, Area a) {
         setRank(r);
         setCurrency(c);
@@ -12,6 +19,7 @@ public class Upgrade {
         setArea(a);
     }
 
+    // getters and setters
     public void setRank(int r) {
         this.rank = r;
     }

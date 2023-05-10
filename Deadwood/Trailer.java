@@ -1,3 +1,10 @@
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: Trailer: Location child object representing the trailer
+ */
+
+// imports
 import java.util.List;
 
 public class Trailer extends Location{

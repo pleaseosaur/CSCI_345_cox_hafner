@@ -1,17 +1,25 @@
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: UI: Handles output and player input
+ */
+
+// imports
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.List;
 
 public class UI {
-
+    // fields
     final Scanner scanner;
 
-
+    // constructor
     public UI() {
         this.scanner = new Scanner(System.in);
     }
 
+    // displayMessage: prints message to terminal
     public void displayMessage(String message){
         for(char c : message.toCharArray()){
             try {
@@ -26,12 +34,14 @@ public class UI {
         System.out.println();
     }
 
+    // displayWelcomeMessage: initial welcome prompt
     public void displayWelcomeMessage() {
         displayMessage("Welcome to Deadwood!"); // basic - add more later if desired
         displayMessage("You may type 'quit' at any time to terminate the game.");
         displayMessage(" ");
     }
 
+    // getPlayerCount: prompts for and gets player count from user
     public int getPlayerCount() {
         displayMessage("Please enter the number of players: ");
         try {
@@ -54,8 +64,8 @@ public class UI {
         }
     }
 
+    // promptRename: asks users if they want custom names
     public boolean promptRename(){
-
         Map<String, String> options = new HashMap<>();
         options.put("y", "yes");
         options.put("n", "no");
@@ -74,6 +84,7 @@ public class UI {
         }
     }
 
+    // getPlayerName: assigns player name for given player
     public String getPlayerName(String name) {
 
         displayMessage("\nPlease enter new name for " + name + ": ");
@@ -88,6 +99,7 @@ public class UI {
         return newName;
     }
 
+    // startTurnMessage: message at start of turn
     public void startTurnMessage(Player player) {
         String playerName = player.getName();
         String locationName = player.getLocation().getName();
@@ -97,6 +109,7 @@ public class UI {
         displayStats(player);
     }
 
+    // getPlayerAction: prompts user for action
     //TODO -- remove "move" option when player has moved already
     //TODO -- remove "upgrade" option when player has upgraded already
     public String getPlayerAction(Player player, List<String> availableRoles) {
@@ -232,11 +245,13 @@ public class UI {
         return getChoiceInput(availableActions);
     }
 
+    // trailerActions: gets actions for when player is at trailer
     private void trailerActions(Player player, Map<String, String> availableActions) {
         buildActions(availableActions, "move", player.getHasMoved());
         buildActions(availableActions, "end turn");
     }
 
+    // officeActions: gets actions for when player is at casting office
     private void officeActions(Player player, Map<String, String> availableActions) {
         if(player.getRank() < 6) {
             buildActions(availableActions, "move", player.getHasMoved());
@@ -250,6 +265,7 @@ public class UI {
         buildActions(availableActions, "end turn");
     }
 
+    // setActions: sets actions for player based on available actions
     private void setActions(Player player, Map<String, String> availableActions, List<String> availableRoles) {
         if(player.hasRole()) {
             if(player.getRole().isOnCard()) {
@@ -262,6 +278,7 @@ public class UI {
         buildActions(availableActions, "end turn");
     }
 
+    // builds hashmap connecting available actions to prompts
     private void buildActions(Map<String, String> availableActions, String action, boolean alreadyDone) {
         if(!alreadyDone) {
             int i = availableActions.size() + 1;
@@ -273,6 +290,7 @@ public class UI {
         buildActions(availableActions, action, false);
     }
 
+    // builds prompts for player to choose action
     public String buildPrompt(Map<String, String> availableActions) {
         StringBuilder prompt = new StringBuilder();
 
@@ -282,6 +300,7 @@ public class UI {
         return prompt.toString();
     }
 
+    // gets choice from player
     public String getChoiceInput(Map<String, String> availableActions) {
         String choice = scanner.next().toLowerCase();
 
@@ -299,6 +318,7 @@ public class UI {
         return getChoiceInput(availableActions);
     }
 
+    // gets destination locations when player chooses to move
     public String promptMove(Player player) {
         List<Location> neighbors = player.getLocation().getNeighbors();
         Map<String, String> options = new HashMap<>();
@@ -319,6 +339,7 @@ public class UI {
         return getChoiceInput(options);
     }
 
+    // gets available roles when player decides to take role
     public String promptRole(List<String> availableRoles) {
         Map<String, String> options = new HashMap<>();
         StringBuilder prompt = new StringBuilder();
@@ -338,6 +359,7 @@ public class UI {
         return getChoiceInput(options);
     }
 
+    // gets available ranks when player decides to upgrade
     // TODO -- additional options needed for upgrades -- may display same number w/ different price options
     // TODO -- need to handle case where player does not have enough money for any upgrades
     public String promptUpgrade(List<String> upgrades) {
@@ -359,12 +381,14 @@ public class UI {
         return getChoiceInput(options);
     }
 
+    // displays where each player is
     public void displayBoard(List<Player> players){
         for(Player player : players){
             displayMessage(player.getName() + " is at " + player.getLocation().getName());
         }
     }
 
+    // displays player's stats
     public void displayStats(Player p){
         displayMessage("Your current stats are: \n" +
                 "Rank: " + p.getRank() + "\n" +
@@ -374,6 +398,7 @@ public class UI {
 
     }
 
+    // quit game
     public void quitGame() {
         displayMessage("Your loss! Enjoy not being a world-renown thespian.");
         System.exit(0); // TODO -- this should probably be "setGameActive(false)" or something

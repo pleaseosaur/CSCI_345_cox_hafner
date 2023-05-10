@@ -1,4 +1,11 @@
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: Role: Role object
+ */
+
 public class Role {
+    // fields
     private String name;
     private String flavorText;
     private int rank;
@@ -6,6 +13,7 @@ public class Role {
     private boolean onCard;
     private boolean taken;
 
+    // constructor
     public Role(String n, int r, Area a, String f, boolean o, boolean t) {
         setName(n);
         setFlavorText(f);
@@ -15,6 +23,7 @@ public class Role {
         setArea(a);
     }
 
+    // getters and setters
     public String getName(){
         return name;
     }

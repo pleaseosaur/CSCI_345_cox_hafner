@@ -1,6 +1,14 @@
+/*
+ * Author: Peter Hafner and Andrew Cox
+ * Date: 10 May 2023
+ * Purpose: Player: Player object to store player data
+ */
+
+// imports
 import java.util.List;
 
 public class Player {
+    // fields
     private String name;
     private int rank;
     private int credits;
@@ -13,6 +21,7 @@ public class Player {
     private boolean hasActed;
     private boolean hasRehearsed;
 
+    // constructor
     public Player(String name, int rank, int credits, int dollars){
         setName(name);
         setRank(rank);
@@ -27,11 +36,12 @@ public class Player {
 
     }
 
-
+    // hasRole: checks to see if player has taken a role
     public boolean hasRole() {
         return this.role != null;
     }
 
+    // getters and setters
     public void setName(String name) {
         this.name = name;
     }
