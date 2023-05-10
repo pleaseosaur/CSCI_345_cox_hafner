@@ -165,6 +165,7 @@ public class GameData {
                 }
                 else {
                     neighbors.add(neighborElement.getAttribute("name")); // add neighbor name to list
+                }
             }
         }
         return neighbors;
