@@ -76,6 +76,7 @@ public class GameManager {
         currentPlayer.setHasUpgraded(false);
         currentPlayer.setHasActed(false);
         currentPlayer.setHasRehearsed(false);
+        currentPlayer.setHasTakenRole(false);
         setCurrentPlayer(getPlayers().get(nextIndex)); // set next player as current player
     }
 
