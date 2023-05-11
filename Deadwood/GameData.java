@@ -5,6 +5,7 @@
  */
 
 // imports
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,7 @@ public class GameData {
     private static GameData data;
 
     // constructor
-    private GameData(String boardFile, String cardFile) throws ParserConfigurationException{
+    private GameData(InputStream boardFile, InputStream cardFile) throws ParserConfigurationException{
         Document boardDoc = getDocFromFile(boardFile);
         Document cardDoc = getDocFromFile(cardFile);
         createBoard(boardDoc);
@@ -31,7 +32,7 @@ public class GameData {
     }
 
 // initializeGameData: initializes game data
-    public static void initializeGameData(String boardFile, String cardFile) throws ParserConfigurationException {
+    public static void initializeGameData(InputStream boardFile, InputStream cardFile) throws ParserConfigurationException {
         if(data != null) {
             throw new IllegalStateException("Game data already initialized");
         }
@@ -39,7 +40,7 @@ public class GameData {
     }
 
     // getDocFromFile: gets doc for parsing
-    public Document getDocFromFile(String filename) throws ParserConfigurationException {
+    public Document getDocFromFile(InputStream filename) throws ParserConfigurationException {
         {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance(); // create document builder factory
             DocumentBuilder db = dbf.newDocumentBuilder(); // create document builder
