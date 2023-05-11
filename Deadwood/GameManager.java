@@ -6,7 +6,9 @@
 
 // imports
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameManager {
     // fields
@@ -14,7 +16,6 @@ public class GameManager {
     private Player currentPlayer;
     private int days;
     private Board board;
-    private Deck deck;
 
     // constructor
     public GameManager() {
@@ -29,11 +30,6 @@ public class GameManager {
         setCurrentPlayer();
         this.board = Board.getInstance();
         setStartingLocation();
-    }
-
-    // TODO this may not be needed
-    private void playerTurn(Player player) {
-        // TODO - implement turn logic -- may need to be in Deadwood
     }
 
     // player actions
@@ -53,7 +49,12 @@ public class GameManager {
         allRoles.addAll(set.getScene().getRoles());
         for (Role role : allRoles) {
             if (role.getName().equals(r)) {
-                currentPlayer.setRole(role);
+                if(currentPlayer.getRank() >= role.getRank()) {
+                    currentPlayer.setRole(role);
+                    currentPlayer.setHasTakenRole(true);
+                } else {
+                    System.out.println("\nYou do not have a high enough rank to take this role.");
+                }
             }
         }
     }
@@ -69,13 +70,13 @@ public class GameManager {
     }
 
     public void endTurn() {
-        int currentIndex = getPlayers().indexOf(currentPlayer);
-        int nextIndex = (currentIndex + 1) % getPlayers().size();
-        currentPlayer.setHasMoved(false);
+        int currentIndex = getPlayers().indexOf(currentPlayer); // get index of current player
+        int nextIndex = (currentIndex + 1) % getPlayers().size(); // get index of next player
+        currentPlayer.setHasMoved(false); // reset player actions
         currentPlayer.setHasUpgraded(false);
         currentPlayer.setHasActed(false);
         currentPlayer.setHasRehearsed(false);
-        setCurrentPlayer(getPlayers().get(nextIndex));
+        setCurrentPlayer(getPlayers().get(nextIndex)); // set next player as current player
     }
 
     // getters and setters
@@ -91,17 +92,20 @@ public class GameManager {
         player.setName(name);
     }
 
+    // setCurrentPlayer: sets current player to first player in list
     public void setCurrentPlayer() {
         this.currentPlayer = getPlayers().get(0);
     }
 
+    // setCurrentPlayer: sets current player to given player
     public void setCurrentPlayer(Player player) {
         this.currentPlayer = player;
     }
 
+    // setStartingLocation: sets all players to starting location
     public void setStartingLocation() {
         for (Player player : getPlayers()) {
-            player.setLocation(board.getLocation("Trailer"));
+            player.setLocation(board.getLocation("Trailer")); // set all players to trailer
         }
     }
 
@@ -118,7 +122,17 @@ public class GameManager {
     }
 
     public boolean endDay() {
-        return board.checkEndDay();
+        if(board.checkEndDay()) {
+            setStartingLocation();
+            board.setOpenScenes(10);
+            board.dealCards();
+            setDays(getDays() - 1); // decrement days
+            if(checkEndGame()) {
+                scoreGame();
+            }
+            return true;
+        }
+        return false;
     }
 
     private boolean checkEndGame() {
@@ -130,28 +144,32 @@ public class GameManager {
     }
 
     // getAvailableRoles: makes list of roles available for taking
-    public List<String> getAvailableRoles() {
+    public Map<String, String> getAvailableRoles() {
 
-        Location playerLocation = currentPlayer.getLocation();
-        List<String> availableRoles = new ArrayList<>();
+        Location playerLocation = currentPlayer.getLocation(); // get player location
+        Map<String, String> availableRoles = new HashMap<>(); // create map of available roles
 
-        if(playerLocation.isSet()){
-            Set set = (Set) playerLocation;
 
-            if(set.getScene().isWrapped()){
-                availableRoles.add("Scene is wrapped. No roles are available.");
+        if(playerLocation.isSet()){ // if player is on a set
+            Set set = (Set) playerLocation; // cast player location to set
+
+            if(set.getScene().isWrapped()){ // if scene is wrapped, no roles are available
+                availableRoles.put("0", "Scene is wrapped. No roles are available.");
             }
-            else {
-                List<Role> offCardRoles = set.getRoles();
-                List<Role> onCardRoles = set.getScene().getRoles();
-                for(Role role : offCardRoles) {
-                    if(!(role.isTaken())){
-                        availableRoles.add(role.getName() + " (rank " + role.getRank() + " - off card)");
+
+            else { // if scene is not wrapped, add available roles to map
+                List<Role> offCardRoles = set.getRoles(); // get off card roles
+                List<Role> onCardRoles = set.getScene().getRoles(); // get on card roles
+
+                for(Role role : offCardRoles) { // add off card roles to map
+                    if(!role.isTaken()){ // if role is not taken
+                        availableRoles.put(role.getName(), "(rank " + role.getRank() + " - off card)"); // add role to map
                     }
                 }
-                for(Role role : onCardRoles) {
-                    if(!(role.isTaken())){
-                        availableRoles.add(role.getName() + " (rank " + role.getRank() + " - on card)");
+
+                for(Role role : onCardRoles) { // add on card roles to map
+                    if(!role.isTaken()){ // if role is not taken
+                        availableRoles.put(role.getName(), "(rank " + role.getRank() + " - on card)"); // add role to map
                     }
                 }
             }
@@ -171,12 +189,12 @@ public class GameManager {
             for (Upgrade upgrade : upgrades) {
                 if (upgrade.getRank() > rank) {
                     if((upgrade.getCurrency().equals("dollars")) && (upgrade.getPrice() <= currentPlayer.getDollars())) {
-                        availableUpgrades.add(String.valueOf(upgrade.getRank()) + ": " + String.valueOf(upgrade.getPrice()) + " " + upgrade.getCurrency());
+                        availableUpgrades.add(upgrade.getRank() + ": " + upgrade.getPrice() + " " + upgrade.getCurrency());
                     }
                     else if((upgrade.getCurrency().equals("credits")) && (upgrade.getPrice() <= currentPlayer.getCredits())) {
-                        availableUpgrades.add(String.valueOf(upgrade.getRank()) + ": " + String.valueOf(upgrade.getPrice()) + " " + upgrade.getCurrency());
+                        availableUpgrades.add(upgrade.getRank() + ": " + upgrade.getPrice() + " " + upgrade.getCurrency());
                     }
-                    availableUpgrades.add(String.valueOf(upgrade.getRank()) + ": " + String.valueOf(upgrade.getPrice()) + " " + upgrade.getCurrency());
+                    availableUpgrades.add(upgrade.getRank() + ": " + upgrade.getPrice() + " " + upgrade.getCurrency());
                 }
             }
         }

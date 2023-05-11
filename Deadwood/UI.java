@@ -59,6 +59,11 @@ public class UI {
         displayMessage("'quit' - ends the game\n");
     }
 
+    public void startDayMessage(int days) {
+        displayMessage("\nA new day has begun!");
+        displayMessage("There are " + days + " days remaining.");
+    }
+
     // getPlayerCount: prompts for and gets player count from user
     public int getPlayerCount() {
         displayPrompt("Please enter the number of players: ");
@@ -127,7 +132,7 @@ public class UI {
     }
 
     // getPlayerAction: prompts user for action
-    public String getPlayerAction(Player player, List<String> availableRoles) {
+    public String getPlayerAction(Player player, Map<String, String> availableRoles) {
 
         Map<String, String> availableActions = new HashMap<>();
 
@@ -165,13 +170,13 @@ public class UI {
     }
 
     // setActions: sets actions for player based on available actions
-    private void setActions(Player player, Map<String, String> availableActions, List<String> availableRoles) {
-        if(player.hasRole()) {
+    private void setActions(Player player, Map<String, String> availableActions, Map<String, String> availableRoles) {
+        if(player.hasRole() && !player.getHasActed() && !player.getHasTakenRole()) {
             if(player.getRole().isOnCard()) {
                 buildActions(availableActions, "rehearse", player.getHasRehearsed());
             }
             buildActions(availableActions, "act", player.getHasActed());
-        } else if(!availableRoles.contains("available")) {
+        } else if(!availableRoles.containsKey("0")) {
             buildActions(availableActions, "take role", player.hasRole());
         }
         buildActions(availableActions, "end turn");
@@ -249,7 +254,7 @@ public class UI {
     }
 
     // gets available roles when player decides to take role
-    public String promptRole(List<String> availableRoles) {
+    public String promptRole(Map<String, String> availableRoles) {
         Map<String, String> options = new HashMap<>();
         StringBuilder prompt = new StringBuilder();
 
@@ -257,9 +262,9 @@ public class UI {
 
         prompt.append("\nThe available roles are: \n");
 
-        for(String role : availableRoles) {
-            prompt.append(i).append(". ").append(role).append("\n");
-            options.put(Integer.toString(i), role);
+        for(Map.Entry<String, String> role : availableRoles.entrySet()) {
+            prompt.append(i).append(". ").append(role.getKey()).append(role.getValue()).append("\n");
+            options.put(Integer.toString(i), role.getKey());
             i++;
         }
 

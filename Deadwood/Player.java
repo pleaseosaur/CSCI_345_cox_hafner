@@ -20,6 +20,7 @@ public class Player {
     private boolean hasUpgraded;
     private boolean hasActed;
     private boolean hasRehearsed;
+    private boolean hasTakenRole;
 
     // constructor
     public Player(String name, int rank, int credits, int dollars){
@@ -33,7 +34,7 @@ public class Player {
         setHasUpgraded(false);
         setHasActed(false);
         setHasRehearsed(false);
-
+        setHasTakenRole(false);
     }
 
     // hasRole: checks to see if player has taken a role
@@ -136,5 +137,13 @@ public class Player {
 
     public boolean getHasRehearsed() {
         return hasRehearsed;
+    }
+
+    public void setHasTakenRole(boolean b) {
+        this.hasTakenRole = b;
+    }
+
+    public boolean getHasTakenRole() {
+        return hasTakenRole;
     }
 }

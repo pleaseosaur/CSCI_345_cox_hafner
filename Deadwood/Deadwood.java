@@ -5,9 +5,7 @@
  */
 
 // imports
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Deadwood {
     // fields
@@ -45,22 +43,28 @@ public class Deadwood {
     public void runGame() {
         // while game is active (no. days > 0)
         while(getGameActive()) {
+            ui.startDayMessage(manager.getDays());
             // while day is active (no. open Scenes > 1)
-            while(!manager.endDay()) {
+            while(!endDay()) {
                 // while current player is active
                 Player currentPlayer = manager.getCurrentPlayer();
                 ui.startTurnMessage(currentPlayer);
                 // display available actions (end turn should always be an option)
                 boolean turnActive = true;
                 while(turnActive) {
-                    List<String> availableRoles = getAvailableRoles(currentPlayer);
+                    Map<String, String> availableRoles = getAvailableRoles(currentPlayer);
                     String action = ui.getPlayerAction(currentPlayer, availableRoles);
                     switch (action) {
                         case "move" -> {
                             move(ui.promptMove(currentPlayer));
                             ui.displayMessage("\nYou have moved to: " + currentPlayer.getLocation().getName());
                         }
-                        case "take role" -> takeRole(ui.promptRole(availableRoles)); // TODO -- this needs work
+                        case "take role" -> {
+                            takeRole(ui.promptRole(availableRoles));
+                            if(currentPlayer.getHasTakenRole()) {
+                                ui.displayMessage("\nYou have taken the role of: " + currentPlayer.getRole().getName());
+                            }
+                        }
                         case "rehearse" -> rehearse();
                         case "act" -> act(); // TODO -- need act logic + dice rolling
                         case "upgrade" -> upgrade(ui.promptUpgrade(manager.getAvailableUpgrades())); // TODO -- this needs work too
@@ -83,12 +87,12 @@ public class Deadwood {
             // end day will check no. of days and trigger end game if necessary
     }
 
-    public List<String> getAvailableRoles(Player player) {
-        List<String> availableRoles = new ArrayList<>();
+    public Map<String, String> getAvailableRoles(Player player) {
+        Map<String, String> availableRoles = new HashMap<>();
         if(!player.hasRole()) {
             availableRoles = manager.getAvailableRoles();
             if(availableRoles.size() == 0) {
-                availableRoles.add("Unfortunately, all available roles have been taken");
+                availableRoles.put("0", "Unfortunately, all available roles have been taken");
             }
         }
         return availableRoles;
@@ -101,8 +105,7 @@ public class Deadwood {
 
     // upgrade: do upgrade for active player
     public void upgrade(String rank) {
-        //TODO -- need to convert first char of string to int
-        //TODO -- need to handle cases where the string is empty or there is no int to be converted
+        //TODO -- could probably handle similar to role selection
 
         manager.upgrade(Integer.parseInt(rank));
     }
@@ -129,8 +132,8 @@ public class Deadwood {
 
     // endDay: ends current day
     // TODO need to implement this
-    public void endDay() {
-        // end day logic
+    public boolean endDay() {
+        return manager.endDay();
     }
 
     // endGame: calculates score and allows premature end
