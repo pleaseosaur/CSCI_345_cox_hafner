@@ -56,7 +56,10 @@ public class Deadwood {
                     List<String> availableRoles = getAvailableRoles(currentPlayer);
                     String action = ui.getPlayerAction(currentPlayer, availableRoles);
                     switch (action) {
-                        case "move" -> move(ui.promptMove(currentPlayer));
+                        case "move" -> {
+                            move(ui.promptMove(currentPlayer));
+                            ui.displayMessage("\nYou have moved to: " + currentPlayer.getLocation().getName());
+                        }
                         case "take role" -> takeRole(ui.promptRole(availableRoles)); // TODO -- this needs work
                         case "rehearse" -> rehearse();
                         case "act" -> act(); // TODO -- need act logic + dice rolling

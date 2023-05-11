@@ -34,6 +34,18 @@ public class UI {
         System.out.println();
     }
 
+    public void displayPrompt(String message){
+        for(char c : message.toCharArray()){
+            try {
+                System.out.print(c);
+                System.out.flush();
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     // displayWelcomeMessage: initial welcome prompt
     public void displayWelcomeMessage() {
         displayMessage("Welcome to Deadwood!\n"); // basic - add more later if desired
@@ -49,7 +61,7 @@ public class UI {
 
     // getPlayerCount: prompts for and gets player count from user
     public int getPlayerCount() {
-        displayMessage("Please enter the number of players: ");
+        displayPrompt("Please enter the number of players: ");
         try {
             String numPlayersInput = scanner.next().toLowerCase();
             int numPlayers = 0;
@@ -76,7 +88,7 @@ public class UI {
         options.put("y", "yes");
         options.put("n", "no");
 
-        displayMessage("Would you like to create custom names? (y/n): ");
+        displayPrompt("Would you like to create custom names? (y/n): ");
 
         String choice = scanner.next().toLowerCase();
 
@@ -93,7 +105,7 @@ public class UI {
     // getPlayerName: assigns player name for given player
     public String getPlayerName(String name) {
 
-        displayMessage("\nPlease enter new name for " + name + ": ");
+        displayPrompt("\nPlease enter new name for " + name + ": ");
         String newName;
 
         try {
@@ -110,7 +122,7 @@ public class UI {
         String playerName = player.getName();
         String locationName = player.getLocation().getName();
 
-        displayMessage("It is " + playerName + "'s turn.");
+        displayMessage("\nIt is " + playerName + "'s turn.");
         displayMessage("\nYour current location is: " + locationName + "\n");
     }
 
@@ -126,6 +138,8 @@ public class UI {
         }
 
         displayMessage(buildPrompt(availableActions));
+
+        displayPrompt("Please enter your desired action: ");
 
         return getChoiceInput(availableActions);
     }
@@ -179,6 +193,8 @@ public class UI {
     public String buildPrompt(Map<String, String> availableActions) {
         StringBuilder prompt = new StringBuilder();
 
+        prompt.append("\nYour available actions are:\n");
+
         for(Map.Entry<String, String> input : availableActions.entrySet()) {
             prompt.append(input.getKey()).append(". ").append(input.getValue()).append("\n");
         }
@@ -218,15 +234,16 @@ public class UI {
 
         int i = 1;
 
-        prompt.append("The available locations are: \n");
+        prompt.append("\nThe available locations are: \n");
 
         for(Location neighbor : neighbors) {
             prompt.append(i).append(". ").append(neighbor.getName()).append("\n");
             options.put(Integer.toString(i), neighbor.getName());
             i++;
         }
-        prompt.append("\nPlease enter the name or number of the location you would like to move to: ");
+
         displayMessage(prompt.toString());
+        displayPrompt("\nPlease enter the name or number of the location you would like to move to: ");
 
         return getChoiceInput(options);
     }
@@ -238,7 +255,7 @@ public class UI {
 
         int i = 1;
 
-        prompt.append("The available roles are: \n");
+        prompt.append("\nThe available roles are: \n");
 
         for(String role : availableRoles) {
             prompt.append(i).append(". ").append(role).append("\n");
@@ -247,6 +264,7 @@ public class UI {
         }
 
         displayMessage(prompt.toString());
+        displayPrompt("\nPlease enter the number of the role you would like to take: ");
 
         return getChoiceInput(options);
     }
@@ -261,7 +279,7 @@ public class UI {
         int i = 1;
 
         // TODO -- duplicate code - refactor
-        prompt.append("The available upgrades are: \n");
+        prompt.append("\nThe available upgrades are: \n");
         for(String upgrade : upgrades) {
             prompt.append(i).append(". ").append(upgrade).append("\n");
             options.put(Integer.toString(i), upgrade);
@@ -283,7 +301,7 @@ public class UI {
     // displays player's stats
     public void displayStats(Player p){
         if(p.hasRole()) {
-            displayMessage("Here are your current stats: \n" +
+            displayMessage("\nHere are your current stats: \n" +
                     "Location: " + p.getLocation().getName() + "\n" +
                     "Role: " + p.getRole().getName() + "\n" +
                     "Rank: " + p.getRank() + "\n" +
@@ -291,7 +309,7 @@ public class UI {
                     "Dollars: " + p.getDollars() + "\n" +
                     "Practice Chips: " + p.getPracticeChips() + "\n");
         } else {
-            displayMessage("Here are your current stats: \n" +
+            displayMessage("\nHere are your current stats: \n" +
                     "Location: " + p.getLocation().getName() + "\n" +
                     "Rank: " + p.getRank() + "\n" +
                     "Credits: " + p.getCredits() + "\n" +
@@ -302,7 +320,7 @@ public class UI {
 
     // quit game
     public void quitGame() {
-        displayMessage("Your loss! Enjoy not being a world-renown thespian.");
+        displayMessage("\nYour loss! Enjoy not being a world-renown thespian.");
         System.exit(0); // TODO -- this should probably be "setGameActive(false)" or something
     }
 }
