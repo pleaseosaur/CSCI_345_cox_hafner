@@ -179,6 +179,7 @@ public class UI {
         } else if(!availableRoles.containsKey("0")) { // check if there are available roles
             buildActions(availableActions, "take role", player.hasRole()); // add take role action
         }
+        buildActions(availableActions, "move", player.getHasMoved()); // add move action
         buildActions(availableActions, "end turn"); // add end turn action
     }
 
@@ -217,8 +218,8 @@ public class UI {
             return getChoiceInput(availableActions);
         } else if(choice.equals("stats")) {
             return "stats";
-        } else if (choice.equals("cancel")) {
-            return "cancel";
+        } else if (choice.equals("back")) {
+            return "back";
         } else if (availableActions.containsKey(choice)) { // if choice is key
             return availableActions.get(choice); // return action
         } else if (availableActions.containsValue(choice)) { // if choice is value

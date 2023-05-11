@@ -73,7 +73,10 @@ public class Deadwood {
                             turnActive = false;
                         }
                         case "end" -> endGame(); // TODO -- not implemented yet
-                        case "cancel" -> ui.getPlayerAction(currentPlayer, availableRoles); // TODO -- cancel doesn't work correctly
+                        case "back" -> { // TODO -- current setup doesn't allow for this to be called
+                            ui.displayMessage("\nNo problem!");
+                            ui.getPlayerAction(currentPlayer, availableRoles);
+                        }
                         case "stats" -> ui.displayStats(currentPlayer);
                         default -> {
                             ui.displayMessage("Invalid action");
