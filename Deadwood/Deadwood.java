@@ -88,7 +88,7 @@ public class Deadwood {
                 availableRoles.add("Unfortunately, all available roles have been taken");
             }
         }
-        return manager.getAvailableRoles();
+        return availableRoles;
     }
 
     // move: do movement for active player
