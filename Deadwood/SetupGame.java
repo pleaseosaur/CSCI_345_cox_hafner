@@ -12,20 +12,17 @@ import java.util.Map;
 
 public class SetupGame {
     // fields
-    private GameData data;
     private List<Player> players;
     private int days;
-    private Deck deck;
 
     // constructor
     public SetupGame(int numPlayers) {
         // Exception catch
         try{
-            GameData.initializeGameData(getClass().getClassLoader().getResourceAsStream("xml/board.xml"), getClass().getClassLoader().getResourceAsStream("xml/cards.xml"));
+            GameData.initializeGameData(getClass().getClassLoader().getResourceAsStream("xml/board.xml"),
+                                        getClass().getClassLoader().getResourceAsStream("xml/cards.xml"));
             setPlayers(numPlayers);
             setDays(numPlayers);
-            this.deck = Deck.getInstance();
-            setupBoard();
         }
         catch (Exception e){
             System.out.println("Error loading Game Data.");
@@ -74,16 +71,16 @@ public class SetupGame {
         return days;
     }
 
-    public void setupBoard() {
-        Map<String, Location> locations = Board.getInstance().getAllLocations();
-
-        for (Map.Entry<String, Location> entry : locations.entrySet()) {
-            if(entry.getKey().equals("Trailer") || entry.getKey().equals("Casting Office")) {
-                continue;
-            }
-            Set location = (Set) entry.getValue();
-            location.setScene(deck.drawScene());
-        }
-    }
+//    public void setupBoard() { TODO -- remove this at some point
+//        Map<String, Location> locations = Board.getInstance().getAllLocations();
+//
+//        for (Map.Entry<String, Location> entry : locations.entrySet()) {
+//            if(entry.getKey().equals("Trailer") || entry.getKey().equals("Casting Office")) {
+//                continue;
+//            }
+//            Set location = (Set) entry.getValue();
+//            location.setScene(deck.drawScene());
+//        }
+//    }
 
 }

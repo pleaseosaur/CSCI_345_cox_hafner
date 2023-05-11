@@ -36,9 +36,15 @@ public class UI {
 
     // displayWelcomeMessage: initial welcome prompt
     public void displayWelcomeMessage() {
-        displayMessage("Welcome to Deadwood!"); // basic - add more later if desired
-        displayMessage("You may type 'quit' at any time to terminate the game.");
-        displayMessage(" ");
+        displayMessage("Welcome to Deadwood!\n"); // basic - add more later if desired
+        displayMessage("Once the game has started, you may type any of the following commands at any time:\n");
+        helpMessage();
+    }
+
+    public void helpMessage() {
+        displayMessage("'help' - displays this message");
+        displayMessage("'stats' - displays your current stats");
+        displayMessage("'quit' - ends the game\n");
     }
 
     // getPlayerCount: prompts for and gets player count from user
@@ -106,12 +112,9 @@ public class UI {
 
         displayMessage("It is " + playerName + "'s turn.");
         displayMessage("\nYour current location is: " + locationName + "\n");
-        displayStats(player);
     }
 
     // getPlayerAction: prompts user for action
-    //TODO -- remove "move" option when player has moved already
-    //TODO -- remove "upgrade" option when player has upgraded already
     public String getPlayerAction(Player player, List<String> availableRoles) {
 
         Map<String, String> availableActions = new HashMap<>();
@@ -121,124 +124,6 @@ public class UI {
             case "Casting Office" -> officeActions(player, availableActions);
             default -> setActions(player, availableActions, availableRoles);
         }
-
-//        String locationName = player.getLocation().getName();
-//        Role playerRole = player.getRole();
-//
-//        StringBuilder prompt = new StringBuilder();
-//        Map<String, String> availableActions = new HashMap<>();
-//
-//        if (locationName.equals("Trailer")) {
-//
-//            if(!player.getHasMoved()) {
-//                prompt.append("1. move\n");
-//                availableActions.put("1", "move");
-//            }
-//            prompt.append("2. end turn\n");
-//
-//            availableActions.put("2", "end turn");
-//            availableActions.put("end", "end turn");
-//
-//        } else if (locationName.equals("Casting Office")) {
-//
-//            if(player.getRank() < 6) {
-//                if(!player.getHasMoved()) {
-//                    prompt.append("1. move\n");
-//                    availableActions.put("1", "move");
-//                }
-//                if(!player.getHasUpgraded()) {
-//                    prompt.append("2. upgrade\n");
-//                    availableActions.put("2", "upgrade");
-//                }
-//                prompt.append("3. end turn\n");
-//
-//                availableActions.put("3", "end turn");
-//                availableActions.put("end", "end turn");
-//
-//            } else {
-//                prompt.append("You are already at the highest rank. No upgrades are available.\n\n");
-//                if(!player.getHasMoved()) {
-//                    prompt.append("1. move\n");
-//                    availableActions.put("1", "move");
-//                }
-//                prompt.append("2. end turn\n");
-//
-//                availableActions.put("2", "end turn");
-//                availableActions.put("end", "end turn");
-//            }
-//
-//        } else if (player.hasRole()) {
-//            displayMessage("You are currently playing the role of " + playerRole + ".\n");
-//
-//            if (playerRole.isOnCard()) {
-//
-//                if(!player.getHasRehearsed()) {
-//                    prompt.append("1. rehearse\n");
-//                    availableActions.put("1", "rehearse");
-//                }
-//                if(!player.getHasActed()) {
-//                    prompt.append("2. act\n");
-//                    availableActions.put("2", "act");
-//                }
-//                prompt.append("3. end turn\n");
-//
-//                availableActions.put("3", "end turn");
-//                availableActions.put("end", "end turn");
-//
-//            } else {
-//
-//                if(!player.getHasActed()) {
-//                    prompt.append("1. act\n");
-//                    availableActions.put("1", "act");
-//                }
-//                prompt.append("2. end turn\n");
-//
-//                availableActions.put("2", "end turn");
-//                availableActions.put("end", "end turn");
-//
-//            }
-//        } else {
-//            prompt.append("You are not currently playing a role.\n\n");
-//
-//            if ((availableRoles.size() == 1) && (availableRoles.contains("available"))) {
-//
-//                for (String role : availableRoles) {
-//                    displayMessage(role);
-//                }
-//
-//                if(!player.getHasMoved()) {
-//                    prompt.append("1. move\n");
-//                    availableActions.put("1", "move");
-//                }
-//
-//                prompt.append("2. end turn\n");
-//
-//                availableActions.put("2", "end turn");
-//                availableActions.put("end", "end turn");
-//
-//            } else {
-//                prompt.append("The available roles are: \n");
-//
-//                for (String role : availableRoles) {
-//                    prompt.append(role).append("\n");
-//                }
-//
-//                if(!player.getHasMoved()) {
-//                    prompt.append("1. move\n");
-//                    availableActions.put("1", "move");
-//                }
-//                if(!player.hasRole()) {
-//                    prompt.append("2. take role\n");
-//                    availableActions.put("2", "take role");
-//                    availableActions.put("role", "take role");
-//                }
-//
-//                prompt.append("3. end turn\n");
-//
-//                availableActions.put("3", "end turn");
-//                availableActions.put("end", "end turn");
-//            }
-//        }
 
         displayMessage(buildPrompt(availableActions));
 
@@ -306,9 +191,16 @@ public class UI {
 
         if(choice.equals("quit")) {
             quitGame();
-        } else if(availableActions.containsKey(choice)) {
+        } else if (choice.equals("help")) {
+            helpMessage();
+            return getChoiceInput(availableActions);
+        } else if(choice.equals("stats")) {
+            return "stats";
+        } else if (choice.equals("cancel")) {
+            return "cancel";
+        } else if (availableActions.containsKey(choice)) {
             return availableActions.get(choice);
-        } else if(availableActions.containsValue(choice)) {
+        } else if (availableActions.containsValue(choice)) {
             return choice;
         }
 
@@ -390,12 +282,22 @@ public class UI {
 
     // displays player's stats
     public void displayStats(Player p){
-        displayMessage("Your current stats are: \n" +
-                "Rank: " + p.getRank() + "\n" +
-                "Credits: " + p.getCredits() + "\n" +
-                "Dollars: " + p.getDollars() + "\n" +
-                "Practice Chips: " + p.getPracticeChips() + "\n");
-
+        if(p.hasRole()) {
+            displayMessage("Here are your current stats: \n" +
+                    "Location: " + p.getLocation().getName() + "\n" +
+                    "Role: " + p.getRole().getName() + "\n" +
+                    "Rank: " + p.getRank() + "\n" +
+                    "Credits: " + p.getCredits() + "\n" +
+                    "Dollars: " + p.getDollars() + "\n" +
+                    "Practice Chips: " + p.getPracticeChips() + "\n");
+        } else {
+            displayMessage("Here are your current stats: \n" +
+                    "Location: " + p.getLocation().getName() + "\n" +
+                    "Rank: " + p.getRank() + "\n" +
+                    "Credits: " + p.getCredits() + "\n" +
+                    "Dollars: " + p.getDollars() + "\n" +
+                    "Practice Chips: " + p.getPracticeChips() + "\n");
+            }
     }
 
     // quit game

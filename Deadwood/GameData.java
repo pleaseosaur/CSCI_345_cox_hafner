@@ -27,8 +27,9 @@ public class GameData {
     private GameData(InputStream boardFile, InputStream cardFile) throws ParserConfigurationException{
         Document boardDoc = getDocFromFile(boardFile);
         Document cardDoc = getDocFromFile(cardFile);
-        createBoard(boardDoc);
         createDeck(cardDoc);
+        createBoard(boardDoc);
+
     }
 
 // initializeGameData: initializes game data

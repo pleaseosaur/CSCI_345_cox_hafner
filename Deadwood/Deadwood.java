@@ -46,51 +46,49 @@ public class Deadwood {
         // while game is active (no. days > 0)
         while(getGameActive()) {
             // while day is active (no. open Scenes > 1)
-            while(!(manager.endDay())) {
+            while(!manager.endDay()) {
                 // while current player is active
-                startTurn(manager.getCurrentPlayer());
+                Player currentPlayer = manager.getCurrentPlayer();
+                ui.startTurnMessage(currentPlayer);
                 // display available actions (end turn should always be an option)
-                // if player chooses move, display available locations
-                // perform player action choice
-                // display available actions again
-                // if player chooses end turn, end the turn
-                // if end turn is the only available option, end turn automatically
-                // get next player
+                boolean turnActive = true;
+                while(turnActive) {
+                    List<String> availableRoles = getAvailableRoles(currentPlayer);
+                    String action = ui.getPlayerAction(currentPlayer, availableRoles);
+                    switch (action) {
+                        case "move" -> move(ui.promptMove(currentPlayer));
+                        case "take role" -> takeRole(ui.promptRole(availableRoles)); // TODO -- this needs work
+                        case "rehearse" -> rehearse();
+                        case "act" -> act(); // TODO -- need act logic + dice rolling
+                        case "upgrade" -> upgrade(ui.promptUpgrade(manager.getAvailableUpgrades())); // TODO -- this needs work too
+                        case "end turn" -> {
+                            endTurn();
+                            turnActive = false;
+                        }
+                        case "end" -> endGame(); // TODO -- not implemented yet
+                        case "cancel" -> ui.getPlayerAction(currentPlayer, availableRoles); // TODO -- cancel doesn't work correctly
+                        case "stats" -> ui.displayStats(currentPlayer);
+                        default -> {
+                            ui.displayMessage("Invalid action");
+                        }
+                    }
+                }
+                // end turn will check no. of open scenes and trigger end day if necessary
             }
-                // when open scenes = 1, end the day
+
         }
-            // when days = 0, end the game
+            // end day will check no. of days and trigger end game if necessary
     }
 
-    // startTurn: starts turn
-    public void startTurn(Player player) {
-        ui.startTurnMessage(player);
+    public List<String> getAvailableRoles(Player player) {
         List<String> availableRoles = new ArrayList<>();
-        if (!(player.hasRole())) {
+        if(!player.hasRole()) {
             availableRoles = manager.getAvailableRoles();
-            if (availableRoles.size() == 0) {
+            if(availableRoles.size() == 0) {
                 availableRoles.add("Unfortunately, all available roles have been taken");
             }
         }
-
-        String action = ui.getPlayerAction(player, availableRoles);
-        // TODO -- implement player action logic
-        playerAction(action, player, availableRoles);
-    }
-
-    // playerAction: make action based on player's input
-    public void playerAction(String action, Player player, List<String> availableRoles) {
-        switch (action) {
-            case "move" -> move(ui.promptMove(player));
-            case "take role" -> takeRole(ui.promptRole(availableRoles));
-            case "rehearse" -> rehearse();
-            case "act" -> act(); // TODO -- need act logic + dice rolling
-            case "upgrade" -> upgrade(ui.promptUpgrade(manager.getAvailableUpgrades()));
-            case "end turn" -> endTurn();
-            case "end" -> endGame();
-            default -> {
-            }
-        }
+        return manager.getAvailableRoles();
     }
 
     // move: do movement for active player
@@ -138,7 +136,7 @@ public class Deadwood {
         // end game logic
     }
 
-    // rename player loop
+    // rename player loop -- currently allows duplicate names
     public void renamePlayers(){
         for(Player player : manager.getPlayers()){
             String name = ui.getPlayerName(player.getName());

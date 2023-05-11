@@ -13,12 +13,15 @@ public class Board {
     private final String name;
     private final Map<String, Location> locations;
     private int openScenes;
+    private final Deck deck;
 
     // constructor
-    private Board(String n, Map<String, Location> l, int o){
+    private Board(String n, Map<String, Location> l, int o) {
         this.name = n;
         this.locations = l;
         setOpenScenes(o);
+        this.deck = Deck.getInstance();
+        dealCards();
     }
 
     public static Board getInstance() {
@@ -44,6 +47,7 @@ public class Board {
         return getAllLocations().get(name);
     }
 
+    // TODO -- can leave getAllLocations for testing, but should remove before submitting
     public Map<String, Location> getAllLocations(){
         return this.locations;
     }
@@ -58,5 +62,13 @@ public class Board {
 
     public boolean checkEndDay(){
         return getOpenScenes() == 1;
+    }
+
+    public void dealCards() {
+        for (Location location : locations.values()) {
+            if (location instanceof Set set) {
+                set.setScene(deck.drawScene());
+            }
+        }
     }
 }

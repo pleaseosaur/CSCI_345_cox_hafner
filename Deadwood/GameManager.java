@@ -28,7 +28,6 @@ public class GameManager {
         setDays(setup.getDays());
         setCurrentPlayer();
         this.board = Board.getInstance();
-        this.deck = Deck.getInstance();
         setStartingLocation();
     }
 
