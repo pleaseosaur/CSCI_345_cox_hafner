@@ -21,7 +21,7 @@ public class SetupGame {
     public SetupGame(int numPlayers) {
         // Exception catch
         try{
-            GameData.initializeGameData(getClass().getClassLoader().getResourceAsStream("board.xml"), getClass().getClassLoader().getResourceAsStream("cards.xml"));
+            GameData.initializeGameData(getClass().getClassLoader().getResourceAsStream("xml/board.xml"), getClass().getClassLoader().getResourceAsStream("xml/cards.xml"));
             setPlayers(numPlayers);
             setDays(numPlayers);
             this.deck = Deck.getInstance();
