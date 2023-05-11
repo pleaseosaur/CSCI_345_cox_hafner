@@ -49,6 +49,7 @@ public class UI {
     // displayWelcomeMessage: initial welcome prompt
     public void displayWelcomeMessage() {
         displayMessage("Welcome to Deadwood!\n"); // basic - add more later if desired
+        displayMessage("When available actions/selections are displayed, please enter the number corresponding to your choice.");
         displayMessage("Once the game has started, you may type any of the following commands at any time:\n");
         helpMessage();
     }
@@ -209,7 +210,7 @@ public class UI {
 
     // gets choice from player
     public String getChoiceInput(Map<String, String> availableActions) {
-        String choice = scanner.next().toLowerCase(); // get choice
+        String choice = scanner.next(); // get choice
 
         if(choice.equals("quit")) {
             quitGame(); // quit game
