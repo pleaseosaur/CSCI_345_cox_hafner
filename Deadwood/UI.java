@@ -57,6 +57,7 @@ public class UI {
     public void helpMessage() {
         displayMessage("'help' - displays this message");
         displayMessage("'stats' - displays your current stats");
+        displayMessage("'board' or 'view' - displays the board");
         displayMessage("'quit' - ends the game\n");
     }
 
@@ -221,6 +222,8 @@ public class UI {
             return "stats";
         } else if (choice.equals("back")) {
             return "back";
+        } else if(choice.equals("view") || choice.equals("board")) {
+            return "view";
         } else if (availableActions.containsKey(choice)) { // if choice is key
             return availableActions.get(choice); // return action
         } else if (availableActions.containsValue(choice)) { // if choice is value

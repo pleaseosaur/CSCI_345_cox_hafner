@@ -204,4 +204,8 @@ public class GameManager {
         }
         return availableUpgrades;
     }
+
+    public void displayBoard() {
+        board.displayBoard();
+    }
 }

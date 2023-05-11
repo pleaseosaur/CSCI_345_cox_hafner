@@ -78,6 +78,7 @@ public class Deadwood {
                             ui.getPlayerAction(currentPlayer, availableRoles);
                         }
                         case "stats" -> ui.displayStats(currentPlayer);
+                        case "view" -> manager.displayBoard();
                         default -> {
                             ui.displayMessage("Invalid action");
                         }
