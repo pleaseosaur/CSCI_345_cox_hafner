@@ -104,11 +104,38 @@ public class GameManager {
         
         //payout
         if(currentPlayer.getRole().isOnCard()){
-            //actPay(true, isSuccess);
+            actPay(true, isSuccess);
         } else {
-            //actPay(false, isSuccess);
+            actPay(false, isSuccess);
         }
         currentPlayer.setHasActed(true);
+    }
+
+    public void actPay(Boolean onCard, Boolean isSuccess){
+        if(onCard) { // if star
+            if(isSuccess) {
+                // do ON CARD SUCCESS stuff
+                //remove a shot counter
+                //take two credits
+                currentPlayer.setCredits(currentPlayer.getCredits()+2);
+            } else {
+                // do ON CARD FAILURE stuff
+                // do NOTHING
+            }
+        } else { // if extra
+            if(isSuccess) {
+                // do OFF CARD SUCCESS stuff
+                //remove a shot counter
+                //take one dollar
+                currentPlayer.setDollars(currentPlayer.getDollars()+1);
+                //take one credit
+                currentPlayer.setCredits(currentPlayer.getCredits()+1);
+            } else {
+                // do OFF CARD FAILURE stuff
+                //take one dollar
+                currentPlayer.setDollars(currentPlayer.getDollars()+1);
+            }
+        }
     }
 
     public void endTurn() {
