@@ -37,14 +37,8 @@ public class GameManager {
 
     // player actions
     public void move(String location) {
-        if(location.equals("stats") || location.equals("view") || location.equals("board")){
-            System.out.println("You can't do that now. Try again."); // TODO probably a better way to do this, but this prevents crash
-        } else if (location.equals("back")) {
-            System.out.println("Going back."); // TODO same as above, workaround but probably not best way to fix
-        } else{
             currentPlayer.setLocation(currentPlayer.getLocation().getNeighbor(location));
             currentPlayer.setHasMoved(true);
-        }
     }
 
     public void upgrade(int rank) {
