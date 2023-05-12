@@ -27,8 +27,8 @@ public class GameManager {
     // setupGame: does game setup based on number of players
     public void setupGame(int numPlayers) {
         SetupGame setup = new SetupGame(numPlayers);
-        setPlayers(setup.getPlayers());
-        setDays(setup.getDays());
+        this.players = setup.setPlayers(numPlayers);
+        setDays(setup.setDays(numPlayers));
         setCurrentPlayer();
         this.board = Board.getInstance();
         this.dice = new Dice(6);
@@ -118,9 +118,8 @@ public class GameManager {
             if(isSuccess) {
                 // TODO remove a shot counter
                 currentPlayer.setCredits(currentPlayer.getCredits()+2);
-            } else {
-                // do NOTHING
-            }
+            }  // do NOTHING
+
         } else { // if extra
             if(isSuccess) {
                 // TODO remove a shot counter

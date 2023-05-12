@@ -7,13 +7,9 @@
 // imports
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class SetupGame {
-    // fields
-    private List<Player> players;
-    private int days;
 
     // constructor
     public SetupGame(int numPlayers) {
@@ -31,7 +27,7 @@ public class SetupGame {
     }
 
     // getters and setters
-    public void setPlayers(int numPlayers) {
+    public List<Player> setPlayers(int numPlayers) {
 
         List<Player> players = new ArrayList<>();
 
@@ -52,35 +48,16 @@ public class SetupGame {
             players.add(player);
         }
 
-        this.players = players;
-    }
-
-    public List<Player> getPlayers() {
         return players;
     }
 
-    public void setDays(int numPlayers) {
+    public int setDays(int numPlayers) {
+        int days = 0;
         if(numPlayers == 2 || numPlayers == 3) {
-            this.days = 3;
+            days = 3;
         } else {
-            this.days = 4;
+            days = 4;
         }
-    }
-
-    public int getDays() {
         return days;
     }
-
-//    public void setupBoard() { TODO -- remove this at some point
-//        Map<String, Location> locations = Board.getInstance().getAllLocations();
-//
-//        for (Map.Entry<String, Location> entry : locations.entrySet()) {
-//            if(entry.getKey().equals("Trailer") || entry.getKey().equals("Casting Office")) {
-//                continue;
-//            }
-//            Set location = (Set) entry.getValue();
-//            location.setScene(deck.drawScene());
-//        }
-//    }
-
 }
