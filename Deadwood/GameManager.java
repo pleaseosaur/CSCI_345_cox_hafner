@@ -84,10 +84,8 @@ public class GameManager {
 
     public void act() {
         // TODO - implement act
-        int budget = Integer.MAX_VALUE;
-        if(currentPlayer.getLocation() instanceof Set set){
-            budget = set.getScene().getBudget();
-        }
+        Set set = (Set) currentPlayer.getLocation();
+        int budget = set.getScene().getBudget();
         int diceResult = dice.rollDie();
         System.out.println("\nBudget is "+budget+".");
         System.out.print("You rolled a "+diceResult+". ");
