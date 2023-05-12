@@ -96,7 +96,7 @@ public class Deadwood {
                             endTurn();
                             turnActive = false;
                         }
-                        case "end" -> endGame(); // TODO -- not implemented yet
+                        case "end" -> endGame();
                         case "stats" -> ui.displayStats(currentPlayer);
                         case "view" -> manager.displayBoard();
                         default -> {
@@ -166,11 +166,13 @@ public class Deadwood {
         LinkedList<String> winners = manager.scoreGame();
         if(winners.size()==1){
             System.out.println(winners.get(0)+" wins!");
+            System.exit(0);
         } else {
             for(int i = 0; i < winners.size()-1; i++) {
                 System.out.print(winners.get(i)+", ");
             }
             System.out.println("and "+winners.get(winners.size()-1)+" win!");
+            System.exit(0);
         }
     }
 

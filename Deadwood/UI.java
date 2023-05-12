@@ -215,7 +215,7 @@ public class UI {
         String choice = scanner.next(); // get choice
 
         if(choice.equals("quit")) {
-            quitGame(); // quit game
+            return quitGame(); // quit game
         } else if (choice.equals("help")) {
             helpMessage(); // display help message
             return getChoiceInput(availableActions);
@@ -330,8 +330,8 @@ public class UI {
     }
 
     // quit game
-    public void quitGame() {
+    public String quitGame() {
         displayMessage("\nYour loss! Enjoy not being a world-renown thespian.");
-        System.exit(0); // TODO -- this should probably be "setGameActive(false)" or something
+        return "end";
     }
 }
