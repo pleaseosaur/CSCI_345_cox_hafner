@@ -56,27 +56,47 @@ public class Deadwood {
                     String action = ui.getPlayerAction(currentPlayer, availableRoles);
                     switch (action) {
                         case "move" -> {
-                            move(ui.promptMove(currentPlayer));
-                            ui.displayMessage("\nYou have moved to: " + currentPlayer.getLocation().getName());
+                            String choice = ui.promptMove(currentPlayer);
+                            switch (choice) {
+                                case "back" -> ui.displayMessage("\nNo problem!");
+                                case "stats" -> ui.displayStats(currentPlayer);
+                                case "view", "board" -> manager.displayBoard();
+                                default -> {
+                                    move(ui.promptMove(currentPlayer));
+                                    ui.displayMessage("\nYou have moved to: " + currentPlayer.getLocation().getName());
+                                }
+                            }
                         }
                         case "take role" -> {
-                            takeRole(ui.promptRole(availableRoles));
-                            if(currentPlayer.getHasTakenRole()) {
-                                ui.displayMessage("\nYou have taken the role of: " + currentPlayer.getRole().getName());
+                            String choice = ui.promptRole(availableRoles);
+                            if (choice.equals("back")) {
+                                ui.displayMessage("\nNo problem!");
+                            } else {
+                                takeRole(ui.promptRole(availableRoles));
+                                if (currentPlayer.getHasTakenRole()) {
+                                    ui.displayMessage("\nYou have taken the role of: " + currentPlayer.getRole().getName());
+                                }
                             }
                         }
                         case "rehearse" -> rehearse();
                         case "act" -> act(); // TODO -- need act logic + dice rolling
-                        case "upgrade" -> upgrade(ui.promptUpgrade(manager.getAvailableUpgrades())); // TODO -- this needs work too
+                        case "upgrade" -> {
+                            String choice = ui.promptUpgrade(manager.getAvailableUpgrades());
+                            switch (choice) {
+                                case "back" -> ui.displayMessage("\nNo problem!");
+                                case "stats" -> ui.displayStats(currentPlayer);
+                                case "view", "board" -> manager.displayBoard();
+                                default -> {
+                                    upgrade(ui.promptUpgrade(manager.getAvailableUpgrades()));
+                                    ui.displayMessage("\nYou have upgraded to: " + currentPlayer.getRank());
+                                }
+                            }
+                        }
                         case "end turn" -> {
                             endTurn();
                             turnActive = false;
                         }
                         case "end" -> endGame(); // TODO -- not implemented yet
-                        case "back" -> { // TODO -- current setup doesn't allow for this to be called
-                            ui.displayMessage("\nNo problem!");
-                            ui.getPlayerAction(currentPlayer, availableRoles);
-                        }
                         case "stats" -> ui.displayStats(currentPlayer);
                         case "view" -> manager.displayBoard();
                         default -> {

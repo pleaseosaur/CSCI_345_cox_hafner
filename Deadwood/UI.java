@@ -58,6 +58,7 @@ public class UI {
         displayMessage("'help' - displays this message");
         displayMessage("'stats' - displays your current stats");
         displayMessage("'board' or 'view' - displays the board");
+        displayMessage("'back' - returns to the actions menu");
         displayMessage("'quit' - ends the game\n");
     }
 
