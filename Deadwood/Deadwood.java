@@ -165,15 +165,14 @@ public class Deadwood {
         // end game logic
         LinkedList<String> winners = manager.scoreGame();
         if(winners.size()==1){
-            System.out.println(winners.get(0)+" wins!");
-            System.exit(0);
+            ui.displayMessage(winners.get(0)+" wins!");
         } else {
             for(int i = 0; i < winners.size()-1; i++) {
-                System.out.print(winners.get(i)+", ");
+                ui.displayPrompt(winners.get(i)+", ");
             }
-            System.out.println("and "+winners.get(winners.size()-1)+" win!");
-            System.exit(0);
+            ui.displayMessage("and "+winners.get(winners.size()-1)+" win!");
         }
+        System.exit(0);
     }
 
     // rename player loop -- currently allows duplicate names
