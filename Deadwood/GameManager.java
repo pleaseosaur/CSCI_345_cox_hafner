@@ -7,6 +7,7 @@
 // imports
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -202,8 +203,25 @@ public class GameManager {
         return getDays() == 0;
     }
 
-    private void scoreGame() {
+    public LinkedList<String> scoreGame() {
         // tally scores when endgame is triggered
+        LinkedList<String> winners = new LinkedList<>();
+        int topScore = Integer.MIN_VALUE;
+
+        for(Player player : players) {
+            int score = player.getDollars() + player.getCredits() + (player.getRank()*5);
+            System.out.println(player.getName()+" has a score of "+score+".");
+            // update top score if higher
+            if(score > topScore) {
+                winners.clear();
+                winners.add(player.getName());
+                topScore = score;
+            } else if (score == topScore) {
+                winners.add(player.getName());
+            }
+        }
+
+        return winners;
     }
 
     // getAvailableRoles: makes list of roles available for taking

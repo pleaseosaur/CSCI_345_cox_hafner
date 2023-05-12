@@ -135,15 +135,23 @@ public class Deadwood {
     }
 
     // endDay: ends current day
-    // TODO need to implement this
     public boolean endDay() {
         return manager.endDay();
     }
 
     // endGame: calculates score and allows premature end
-    // TODO need to implement this
+    // TODO make sure this is called
     public void endGame() {
         // end game logic
+        LinkedList<String> winners = manager.scoreGame();
+        if(winners.size()==1){
+            System.out.println(winners.get(0)+" wins!");
+        } else {
+            for(int i = 0; i < winners.size()-1; i++) {
+                System.out.print(winners.get(i)+", ");
+            }
+            System.out.println("and "+winners.get(winners.size()-1)+" win!");
+        }
     }
 
     // rename player loop -- currently allows duplicate names
