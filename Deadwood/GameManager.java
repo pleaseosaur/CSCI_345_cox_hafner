@@ -34,8 +34,12 @@ public class GameManager {
 
     // player actions
     public void move(String location) {
-        currentPlayer.setLocation(currentPlayer.getLocation().getNeighbor(location));
-        currentPlayer.setHasMoved(true);
+        if(location.equals("stats") || location.equals("view")){
+            System.out.print("You can't do that now. Try again."); //TODO probably a better way to do this, but this prevents crash
+        } else{
+            currentPlayer.setLocation(currentPlayer.getLocation().getNeighbor(location));
+            currentPlayer.setHasMoved(true);
+        }
     }
 
     public void upgrade(int rank) {
