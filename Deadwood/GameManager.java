@@ -66,8 +66,18 @@ public class GameManager {
     }
 
     public void rehearse() {
-        currentPlayer.setPracticeChips();
-        currentPlayer.setHasRehearsed(true);
+        // ensure can't rehearse if act is guaranteed
+        int budget = Integer.MAX_VALUE;
+        if(currentPlayer.getLocation() instanceof Set set){
+            budget = set.getScene().getBudget();
+        }
+        if(!(currentPlayer.getPracticeChips() >= budget)){ // if act not guaranteed
+            currentPlayer.setPracticeChips();
+            currentPlayer.setHasRehearsed(true);
+        } else { // if act is guaranteed
+            System.out.println("\nYou have enough practice chips to guarantee act. Acting instead.");
+            act();
+        }
     }
 
     public void act() {
