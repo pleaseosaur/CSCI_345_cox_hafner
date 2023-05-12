@@ -126,7 +126,7 @@ public class Deadwood {
 
     // act: active player acts
     public void act() {
-        // TODO act logic
+        manager.act();
     }
 
     // endTurn: ends current turn

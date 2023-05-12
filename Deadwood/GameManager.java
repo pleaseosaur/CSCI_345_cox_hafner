@@ -16,6 +16,7 @@ public class GameManager {
     private Player currentPlayer;
     private int days;
     private Board board;
+    private Dice dice;
 
     // constructor
     public GameManager() {
@@ -29,13 +30,14 @@ public class GameManager {
         setDays(setup.getDays());
         setCurrentPlayer();
         this.board = Board.getInstance();
+        this.dice = new Dice(6);
         setStartingLocation();
     }
 
     // player actions
     public void move(String location) {
         if(location.equals("stats") || location.equals("view") || location.equals("board")){
-            System.out.print("You can't do that now. Try again."); // TODO probably a better way to do this, but this prevents crash
+            System.out.println("You can't do that now. Try again."); // TODO probably a better way to do this, but this prevents crash
         } else if (location.equals("back")) {
             System.out.println("Going back."); // TODO same as above, workaround but probably not best way to fix
         } else{
@@ -82,6 +84,32 @@ public class GameManager {
 
     public void act() {
         // TODO - implement act
+        int budget = Integer.MAX_VALUE;
+        if(currentPlayer.getLocation() instanceof Set set){
+            budget = set.getScene().getBudget();
+        }
+        int diceResult = dice.rollDie();
+        System.out.println("\nBudget is "+budget+".");
+        System.out.print("You rolled a "+diceResult+". ");
+        if(currentPlayer.getPracticeChips() != 0){
+            diceResult += currentPlayer.getPracticeChips();
+            System.out.println("With practice chips, the result is "+diceResult+".");
+        }
+
+        boolean isSuccess = false;
+        if(diceResult >= budget){ // acting success
+            System.out.println("\nYour act was a success!");
+            isSuccess = true;
+        } else { // acting failure
+            System.out.println("\nYour act was not successful.");
+        }
+        
+        //payout
+        if(currentPlayer.getRole().isOnCard()){
+            //actPay(true, isSuccess);
+        } else {
+            //actPay(false, isSuccess);
+        }
         currentPlayer.setHasActed(true);
     }
 

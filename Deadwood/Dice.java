@@ -37,11 +37,11 @@ public class Dice {
     }
 
     // actRoll: logic for acting
-    // TODO need to implement this
-    public int actRoll(){
-        // do acting calculations
-        return -1;
-    }
+    // // TODO remove this
+    // public int actRoll(){
+    //     // do acting calculations
+    //     return -1;
+    // }
 
     // wrapRoll: loop to get all dice rolls for scene wrap
     public List<Integer> wrapRoll(int budget){
