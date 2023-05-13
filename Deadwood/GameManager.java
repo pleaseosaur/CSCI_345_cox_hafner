@@ -51,6 +51,7 @@ public class GameManager {
         allRoles.addAll(set.getScene().getRoles());
         for (Role role : allRoles) {
             if (role.getName().equals(r)) {
+                // TODO check if role is already taken
                 if(currentPlayer.getRank() >= role.getRank()) {
                     currentPlayer.setRole(role);
                     currentPlayer.setHasTakenRole(true);
