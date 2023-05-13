@@ -179,16 +179,19 @@ public class UI {
 
     // setActions: sets actions for player based on available actions
     private void setActions(Player player, Map<String, String> availableActions, Map<String, String> availableRoles) {
-        if(player.hasRole() && !player.getHasActed() && !player.getHasTakenRole()) { // check if player has role and has not acted or taken role
+        if(player.hasRole() && !player.getHasActed() && !player.getHasTakenRole() && !player.getHasRehearsed()) { // check if player has role and has not acted or taken role
             if(player.getRole().isOnCard()) { // check if role is on card
                 buildActions(availableActions, "rehearse", player.getHasRehearsed()); // add rehearse action
             }
             buildActions(availableActions, "act", player.getHasActed()); // add act action
-        } else if(!availableRoles.containsKey("0")) { // check if there are available roles
+        } else if(!availableRoles.containsKey("0")) {
             buildActions(availableActions, "take role", player.hasRole()); // add take role action
-        } else {
+        }
+
+        if(!player.getHasMoved() && !player.hasRole()) { // check if player has not moved
             buildActions(availableActions, "move", player.getHasMoved()); // add move action
         }
+
         buildActions(availableActions, "end turn"); // add end turn action
     }
 
