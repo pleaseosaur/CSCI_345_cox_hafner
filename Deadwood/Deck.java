@@ -18,7 +18,7 @@ public class Deck {
     private Deck(List<Scene> c){
         this.cards = c;
         this.nextCard = 0;
-        Collections.shuffle(cards);
+        // Collections.shuffle(cards);
     }
 
     // getters and setters

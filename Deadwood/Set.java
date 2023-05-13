@@ -12,8 +12,7 @@ public class Set extends Location{
     private Scene scene;
     private List<Take> takes;
     private List<Role> roles;
-    private int numTakes;
-
+    private Take currentTake;
 
     // constructor
     public Set(String name, List<String> neighbors, Area area, Scene scene, List<Take> takes, List<Role> roles) {
@@ -40,15 +39,19 @@ public class Set extends Location{
         return this.takes;
     }
 
-    // TODO -- this is a hacky way to do this -- should probably implement a better method
-    public void decrementTakes(){
-        this.numTakes -= 1;
+    public void decrementTakes() {
+        int currentIndex = this.takes.indexOf(currentTake);
+        int nextIndex = (currentIndex + 1) % this.takes.size();
+    
+        if(currentIndex == takes.size() -1) {
+            this.scene.setWrap(true);
+        }
+    
+        currentTake = takes.get(nextIndex);
     } // decrements the number of takes left
-    public int getNumTakes() {
-        return this.numTakes;
-    } // returns the number of takes left
+
     public void resetTakes() {
-        this.numTakes = this.takes.size();
+        currentTake = takes.get(0);
     } // resets the number of takes to the original number of takes
 
     public void setRoles(List<Role> r){

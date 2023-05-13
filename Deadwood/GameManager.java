@@ -103,9 +103,9 @@ public class GameManager {
         //payout
         actPay(currentPlayer.getRole().isOnCard(), isSuccess);
         currentPlayer.setHasActed(true);
-
-        if(set.getNumTakes() == 0) { // if no more takes left
-            wrapScene(set); // wrap scene
+        
+        if(set.getScene().isWrapped()){
+            wrapScene(set);
         }
     }
 
