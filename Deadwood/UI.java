@@ -188,7 +188,7 @@ public class UI {
             buildActions(availableActions, "take role", player.hasRole()); // add take role action
         }
 
-        if(!player.getHasMoved() && !player.hasRole()) { // check if player has not moved
+        if(!player.getHasMoved() && !player.hasRole() && !player.getHasActed()) { // check if player has not moved
             buildActions(availableActions, "move", player.getHasMoved()); // add move action
         }
 
