@@ -5,11 +5,7 @@
  */
 
 // imports
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameManager {
     // fields
@@ -19,10 +15,12 @@ public class GameManager {
     private Board board;
     private Dice dice;
 
+
     // constructor
     public GameManager() {
 
     }
+
 
     // setupGame: does game setup based on number of players
     public void setupGame(int numPlayers) {
@@ -34,6 +32,7 @@ public class GameManager {
         this.dice = new Dice(6);
         setStartingLocation();
     }
+
 
     // player actions
     public void move(String location) {
@@ -69,7 +68,7 @@ public class GameManager {
             budget = set.getScene().getBudget();
         }
         if(!(currentPlayer.getPracticeChips() >= budget)){ // if act not guaranteed
-            currentPlayer.setPracticeChips();
+            currentPlayer.addPracticeChips();
             currentPlayer.setHasRehearsed(true);
         } else { // if act is guaranteed
             System.out.println("\nYou have enough practice chips to guarantee act. Acting instead.");
@@ -79,15 +78,16 @@ public class GameManager {
 
     public void act() {
         // TODO - implement act
-        Set set = (Set) currentPlayer.getLocation();
-        int budget = set.getScene().getBudget();
-        int diceResult = dice.rollDie();
+        Set set = (Set) currentPlayer.getLocation(); // get current set
+        int budget = set.getScene().getBudget(); // get budget
+
+        int diceResult = dice.rollDie(); // roll die
+
         System.out.println("\nBudget is "+budget+".");
         System.out.print("You rolled a "+diceResult+". ");
-        if(currentPlayer.getPracticeChips() != 0){
-            diceResult += currentPlayer.getPracticeChips();
-            System.out.println("With practice chips, the result is "+diceResult+".");
-        }
+
+        diceResult += currentPlayer.getPracticeChips(); // add practice chips
+        System.out.println("With practice chips, the result is "+diceResult+".");
 
         boolean isSuccess = false;
         if(diceResult >= budget){ // acting success
@@ -98,49 +98,112 @@ public class GameManager {
         }
         
         //payout
-        if(currentPlayer.getRole().isOnCard()){
-            actPay(true, isSuccess);
-        } else {
-            actPay(false, isSuccess);
-        }
+        actPay(currentPlayer.getRole().isOnCard(), isSuccess);
         currentPlayer.setHasActed(true);
+
+        set.decrementTakes(); // decrement takes
+
+        if(set.getNumTakes() == 0) { // if no more takes left
+            wrapScene(set); // wrap scene
+        }
     }
 
     public void actPay(Boolean onCard, Boolean isSuccess){
-        Set set = (Set) currentPlayer.getLocation();
+        Set set = (Set) currentPlayer.getLocation(); // get current set
         if(onCard) { // if star
             if(isSuccess) {
-                // TODO remove a shot counter
-                currentPlayer.setCredits(currentPlayer.getCredits()+2);
+                currentPlayer.addCredits(2); // add 2 credits
             }  // do NOTHING
 
         } else { // if extra
             if(isSuccess) {
-                // TODO remove a shot counter
-                currentPlayer.setDollars(currentPlayer.getDollars()+1);
-                currentPlayer.setCredits(currentPlayer.getCredits()+1);
+                currentPlayer.addDollars(1); // add 1 dollar
+                currentPlayer.addCredits(1); // add 1 credit
             } else {
-                currentPlayer.setDollars(currentPlayer.getDollars()+1);
+                currentPlayer.addDollars(1); // add 1 dollar
             }
+        }
+    }
+
+    public void wrapScene(Set set) {
+
+        Location location = currentPlayer.getLocation(); // get current location
+
+        List<Player> allPlayers = new ArrayList<>(); // list of all players
+        List<Player> onCardPlayers = new ArrayList<Player>(); // list of on card players
+        List<Player> offCardPlayers = new ArrayList<Player>(); // list of off card players
+        List<Role> onCardRoles = new ArrayList<Role>(); // list of on card roles
+
+        for(Player player : getPlayers()) { // for each player
+            if(player.getLocation().equals(location)) { // if player is on current location
+                if(player.getRole().isOnCard()) { // if on card
+                    onCardPlayers.add(player); // add to on card players
+                    onCardRoles.add(player.getRole()); // add to on card roles
+                    allPlayers.add(player); // add to all players
+                }
+                else {
+                    offCardPlayers.add(player); // add to off card players
+                    allPlayers.add(player); // add to all players
+                }
+            }
+        }
+
+        if(onCardPlayers.size() != 0) { // if there are on card players
+            wrapBonus(onCardPlayers, offCardPlayers, onCardRoles); // roll for wrap bonuses
+        }
+
+        for(Player player : allPlayers) { // for each player
+            player.setRole(null); // remove role from all players
+            player.resetPracticeChips(); // reset practice chips for all players
+        }
+
+        set.getScene().setWrap(true); // set scene to wrapped
+
+    }
+
+    public void wrapBonus(List<Player> onCardPlayers, List<Player> offCardPlayers, List<Role> onCardRoles) {
+        Scene scene = ((Set) currentPlayer.getLocation()).getScene(); // get scene
+        List<Integer> results = dice.wrapRoll(scene.getBudget()); // roll number of dice equal to budget
+
+        // I had to look all these up
+        onCardRoles.sort(Comparator.comparing(Role::getRank).reversed()); // sorts roles by rank
+        Iterator<Integer> resultIterator = results.iterator(); // iterator for results
+        Iterator<Role> roleIterator = onCardRoles.iterator(); // iterator for roles
+
+        while(resultIterator.hasNext()) { // while there are more results
+            if(!roleIterator.hasNext()) { // if there are no more roles
+                roleIterator = onCardRoles.iterator(); // reset role iterator
+            }
+
+            Role role = roleIterator.next(); // get next role
+            int result = resultIterator.next(); // get next result
+
+            for(Player player : onCardPlayers) { // for each on card player
+                if(player.getRole().equals(role)) { // if player has role
+                    player.addDollars(result); // add dollars to player
+                }
+            }
+        }
+
+        for(Player player : offCardPlayers) { // for each off card player
+            player.addDollars(player.getRole().getRank()); // add dollars = role rank to player
         }
     }
 
     public void endTurn() {
         int currentIndex = getPlayers().indexOf(currentPlayer); // get index of current player
         int nextIndex = (currentIndex + 1) % getPlayers().size(); // get index of next player
+
         currentPlayer.setHasMoved(false); // reset player actions
         currentPlayer.setHasUpgraded(false);
         currentPlayer.setHasActed(false);
         currentPlayer.setHasRehearsed(false);
         currentPlayer.setHasTakenRole(false);
+
         setCurrentPlayer(getPlayers().get(nextIndex)); // set next player as current player
     }
 
     // getters and setters
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
@@ -173,7 +236,6 @@ public class GameManager {
     public void setDays(int n) {
         this.days = n;
     }
-
     public int getDays() {
         return this.days;
     }
@@ -276,9 +338,11 @@ public class GameManager {
             availableUpgrades.add("You cannot afford any upgrades at this time.");
         }
         return availableUpgrades;
-    }
+    } // TODO -- refactor to be similar to getAvailableRoles
 
     public void displayBoard() {
         board.displayBoard();
     }
+
+
 }

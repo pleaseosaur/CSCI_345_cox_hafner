@@ -12,6 +12,8 @@ public class Set extends Location{
     private Scene scene;
     private List<Take> takes;
     private List<Role> roles;
+    private int numTakes;
+
 
     // constructor
     public Set(String name, List<String> neighbors, Area area, Scene scene, List<Take> takes, List<Role> roles) {
@@ -19,32 +21,40 @@ public class Set extends Location{
         setScene(scene);
         setTakes(takes);
         setRoles(roles);
+        resetTakes();
     }
+
 
     // getters and setters
     public void setScene(Scene s){
         this.scene = s;
     }
-
     public Scene getScene(){
         return this.scene;
     }
 
     public void setTakes(List<Take> t){
         this.takes = t;
-    }
-
+    } // sets up the take objects
     public List<Take> getTakes(){
         return this.takes;
     }
 
+    // TODO -- this is a hacky way to do this -- should probably implement a better method
+    public void decrementTakes(){
+        this.numTakes -= 1;
+    } // decrements the number of takes left
+    public int getNumTakes() {
+        return this.numTakes;
+    } // returns the number of takes left
+    public void resetTakes() {
+        this.numTakes = this.takes.size();
+    } // resets the number of takes to the original number of takes
+
     public void setRoles(List<Role> r){
         this.roles = r;
     }
-
     public List<Role> getRoles(){
         return this.roles;
     }
-
-
 }

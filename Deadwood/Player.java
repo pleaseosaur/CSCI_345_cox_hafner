@@ -5,7 +5,6 @@
  */
 
 // imports
-import java.util.List;
 
 public class Player {
     // fields
@@ -22,6 +21,7 @@ public class Player {
     private boolean hasRehearsed;
     private boolean hasTakenRole;
 
+
     // constructor
     public Player(String name, int rank, int credits, int dollars){
         setName(name);
@@ -29,7 +29,7 @@ public class Player {
         setCredits(credits);
         setDollars(dollars);
         setRole();
-        setPracticeChips(0);
+        resetPracticeChips();
         setHasMoved(false);
         setHasUpgraded(false);
         setHasActed(false);
@@ -37,112 +37,114 @@ public class Player {
         setHasTakenRole(false);
     }
 
-    // hasRole: checks to see if player has taken a role
-    public boolean hasRole() {
-        return this.role != null;
-    }
 
     // getters and setters
     public void setName(String name) {
         this.name = name;
     }
-
     public String getName() {
         return name;
     }
 
+
     public void setRank(int rank) {
         this.rank = rank;
     }
-
     public int getRank() {
         return rank;
     }
 
+
     public void setCredits(int credits) {
         this.credits = credits;
     }
-
     public int getCredits() {
         return credits;
     }
+    public void addCredits(int credits) {
+        setCredits(getCredits() + credits);
+    }
+
 
     public void setDollars(int dollars) {
         this.dollars = dollars;
     }
-
     public int getDollars() {
         return dollars;
     }
+    public void addDollars(int dollars) {
+        setDollars(getDollars() + dollars);
+    }
+
 
     public void setRole() {
         this.role = null;
     }
-
     public void setRole(Role role) {
         this.role = role;
     }
-
     public Role getRole() {
         return role;
     }
+    public boolean hasRole() {
+        return this.role != null;
+    }
 
-    public void setPracticeChips() {
+
+    public void addPracticeChips() {
         this.practiceChips += 1;
     }
-
-    public void setPracticeChips(int practiceChips) {
-        this.practiceChips = practiceChips;
+    public void resetPracticeChips() {
+        this.practiceChips = 0;
     }
-
     public int getPracticeChips() {
         return practiceChips;
     }
 
+
     public void setLocation(Location location) {
         this.location = location;
     }
-
     public Location getLocation() {
         return location;
     }
 
+
     public void setHasMoved(boolean hasMoved) {
         this.hasMoved = hasMoved;
     }
-
     public boolean getHasMoved() {
         return hasMoved;
     }
 
+
     public void setHasUpgraded(boolean hasUpgraded) {
         this.hasUpgraded = hasUpgraded;
     }
-
     public boolean getHasUpgraded() {
         return hasUpgraded;
     }
 
+
     public void setHasActed(boolean hasActed) {
         this.hasActed = hasActed;
     }
-
     public boolean getHasActed() {
         return hasActed;
     }
 
+
     public void setHasRehearsed(boolean hasRehearsed) {
         this.hasRehearsed = hasRehearsed;
     }
-
     public boolean getHasRehearsed() {
         return hasRehearsed;
     }
 
+
     public void setHasTakenRole(boolean b) {
         this.hasTakenRole = b;
     }
-
     public boolean getHasTakenRole() {
         return hasTakenRole;
     }
