@@ -93,6 +93,7 @@ public class GameManager {
         if(diceResult >= budget){ // acting success
             System.out.println("\nYour act was a success!");
             isSuccess = true;
+            set.decrementTakes(); // decrement takes
         } else { // acting failure
             System.out.println("\nYour act was not successful.");
         }
@@ -100,8 +101,6 @@ public class GameManager {
         //payout
         actPay(currentPlayer.getRole().isOnCard(), isSuccess);
         currentPlayer.setHasActed(true);
-
-        set.decrementTakes(); // decrement takes
 
         if(set.getNumTakes() == 0) { // if no more takes left
             wrapScene(set); // wrap scene
@@ -113,7 +112,7 @@ public class GameManager {
         if(onCard) { // if star
             if(isSuccess) {
                 currentPlayer.addCredits(2); // add 2 credits
-            }  // do NOTHING
+            }
 
         } else { // if extra
             if(isSuccess) {
