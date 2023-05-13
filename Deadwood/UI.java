@@ -14,10 +14,12 @@ public class UI {
     // fields
     final Scanner scanner;
 
+
     // constructor
     public UI() {
         this.scanner = new Scanner(System.in);
     }
+
 
     // displayMessage: prints message to terminal
     public void displayMessage(String message){
@@ -33,7 +35,7 @@ public class UI {
 
         System.out.println();
     }
-
+    // displayPrompt: prints message to terminal without newline
     public void displayPrompt(String message){
         for(char c : message.toCharArray()){ // iterate through each character in message
             try {
@@ -45,7 +47,6 @@ public class UI {
             }
         }
     }
-
     // displayWelcomeMessage: initial welcome prompt
     public void displayWelcomeMessage() {
         displayMessage("Welcome to Deadwood!\n"); // basic - add more later if desired
@@ -53,7 +54,7 @@ public class UI {
         displayMessage("Once the game has started, you may type any of the following commands at any time:\n");
         helpMessage();
     }
-
+    // helpMessage: displays help message
     public void helpMessage() {
         displayMessage("'help' - displays this message");
         displayMessage("'stats' - displays your current stats");
@@ -61,11 +62,22 @@ public class UI {
         displayMessage("'back' - returns to the actions menu");
         displayMessage("'quit' - ends the game\n");
     }
-
+    // startDayMessage: displays message at start of each day
     public void startDayMessage(int days) {
         displayMessage("\nA new day has begun!");
         displayMessage("There are " + days + " days remaining.");
     }
+    // startTurnMessage: displays message at start of each turn
+    public void startTurnMessage(Player player) {
+        String playerName = player.getName(); // get player name
+        String locationName = player.getLocation().getName(); // get player location name
+
+        displayMessage("\nIt is " + playerName + "'s turn.");
+        displayMessage("\nYour current location is: " + locationName + "\n");
+    }
+
+
+
 
     // getPlayerCount: prompts for and gets player count from user
     public int getPlayerCount() {
@@ -125,14 +137,6 @@ public class UI {
         return newName;
     }
 
-    // startTurnMessage: message at start of turn
-    public void startTurnMessage(Player player) {
-        String playerName = player.getName(); // get player name
-        String locationName = player.getLocation().getName(); // get player location name
-
-        displayMessage("\nIt is " + playerName + "'s turn.");
-        displayMessage("\nYour current location is: " + locationName + "\n");
-    }
 
     // getPlayerAction: prompts user for action
     public String getPlayerAction(Player player, Map<String, String> availableRoles) {
@@ -151,6 +155,7 @@ public class UI {
 
         return getChoiceInput(availableActions); // get input
     }
+
 
     // trailerActions: gets actions for when player is at trailer
     private void trailerActions(Player player, Map<String, String> availableActions) {
@@ -181,10 +186,12 @@ public class UI {
             buildActions(availableActions, "act", player.getHasActed()); // add act action
         } else if(!availableRoles.containsKey("0")) { // check if there are available roles
             buildActions(availableActions, "take role", player.hasRole()); // add take role action
+        } else {
+            buildActions(availableActions, "move", player.getHasMoved()); // add move action
         }
-        buildActions(availableActions, "move", player.getHasMoved()); // add move action
         buildActions(availableActions, "end turn"); // add end turn action
     }
+
 
     // builds hashmap connecting available actions to prompts
     private void buildActions(Map<String, String> availableActions, String action, boolean alreadyDone) {
@@ -198,6 +205,7 @@ public class UI {
         buildActions(availableActions, action, false); // default to false
     }
 
+
     // builds prompts for player to choose action
     public String buildPrompt(Map<String, String> availableActions) {
         StringBuilder prompt = new StringBuilder(); // initialize prompt
@@ -209,6 +217,7 @@ public class UI {
         }
         return prompt.toString(); // return prompt
     }
+
 
     // gets choice from player
     public String getChoiceInput(Map<String, String> availableActions) {
@@ -236,6 +245,7 @@ public class UI {
 
         return getChoiceInput(availableActions); // try again
     }
+
 
     // gets destination locations when player chooses to move
     public String promptMove(Player player) {

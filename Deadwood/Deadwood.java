@@ -62,7 +62,7 @@ public class Deadwood {
                                 case "stats" -> ui.displayStats(currentPlayer);
                                 case "view", "board" -> manager.displayBoard();
                                 default -> {
-                                    move(ui.promptMove(currentPlayer));
+                                    move(choice);
                                     ui.displayMessage("\nYou have moved to: " + currentPlayer.getLocation().getName());
                                 }
                             }
@@ -72,7 +72,7 @@ public class Deadwood {
                             if (choice.equals("back")) {
                                 ui.displayMessage("\nNo problem!");
                             } else {
-                                takeRole(ui.promptRole(availableRoles));
+                                takeRole(choice);
                                 if (currentPlayer.getHasTakenRole()) {
                                     ui.displayMessage("\nYou have taken the role of: " + currentPlayer.getRole().getName());
                                 }
