@@ -5,18 +5,20 @@
  */
 
 // imports
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 
 public class GameData {
@@ -141,7 +143,7 @@ public class GameData {
         int sceneNumber = Integer.parseInt(sceneNode.getAttribute("number")); //get scene number
         int budget = Integer.parseInt(cardElement.getAttribute("budget")); // get card budget
         String sceneDescription = cardElement.getElementsByTagName("scene").item(0).getTextContent(); // get scene description
-        List<Role> roles = createRoles(cardElement.getElementsByTagName("part")); // get part/role nodes
+        List<Role> roles = createRoles(cardElement.getElementsByTagName("part"), true); // get part/role nodes
 
         return new Scene(cardName, sceneNumber, sceneDescription, budget, roles, false); // create card;
     }
@@ -153,7 +155,7 @@ public class GameData {
         List<String> neighbors = createNeighbors(setElement.getElementsByTagName("neighbor")); // get neighbor nodes
         Area locationArea = getArea((Element) setElement.getElementsByTagName("area").item(0)); // get location area
         List<Take> takes = createTakes(setElement.getElementsByTagName("take")); // get take nodes
-        List<Role> roles = createRoles(setElement.getElementsByTagName("part")); // get part/role nodes
+        List<Role> roles = createRoles(setElement.getElementsByTagName("part"), false); // get part/role nodes
 
         return new Set(locationName, neighbors, locationArea, null, takes, roles); // create set location
     }
@@ -211,7 +213,7 @@ public class GameData {
     }
 
     // createRoles: creates roles from list of parts
-    private List<Role> createRoles(NodeList partNodes) {
+    private List<Role> createRoles(NodeList partNodes, boolean onCard) {
 
         List<Role> roles = new ArrayList<>(); // create list of parts/roles
 
@@ -221,7 +223,7 @@ public class GameData {
 
             if(partNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element partElement = (Element) partNode; // cast node to element
-                Role role = createRole(partElement); // create role/part
+                Role role = createRole(partElement, onCard); // create role/part
                 roles.add(role); // add part/role to list
             }
         }
@@ -229,14 +231,14 @@ public class GameData {
     }
 
     // createRole: creates one Role from element
-    private Role createRole(Element partElement) {
+    private Role createRole(Element partElement, boolean onCard) {
 
         String partName = partElement.getAttribute("name"); // get part/role name
         int partLevel = Integer.parseInt(partElement.getAttribute("level")); // get part/role level
         Area partArea = getArea((Element) partElement.getElementsByTagName("area").item(0)); // get area
         String partLine = partElement.getAttribute("line"); // get part/role line
 
-        return new Role(partName, partLevel, partArea, partLine, false, false); // create role/part
+        return new Role(partName, partLevel, partArea, partLine, onCard, false); // create role/part
     }
 
     // createTrailer: creates trailer location
