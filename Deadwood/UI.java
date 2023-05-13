@@ -305,12 +305,16 @@ public class UI {
         // TODO -- duplicate code - refactor
         prompt.append("\nThe available upgrades are: \n"); // add header
         for(Map.Entry<Integer, List<String>> upgrade : upgrades.entrySet()) {
-            for(String option : upgrade.getValue()) { // for each upgrade
-                String choices = "Rank " + upgrade.getKey() + " - " + option; // build choice
-                prompt.append(i).append(". ").append(choices).append("\n"); // add upgrade
-                options.put(Integer.toString(i), choices); // add upgrade to options
-                i++;
-            }
+//            for(String option : upgrade.getValue()) { // for each upgrade
+//                String choices = "Rank " + upgrade.getKey() + " - " + option; // build choice
+//                prompt.append(i).append(". ").append(choices).append("\n"); // add upgrade
+//                options.put(Integer.toString(i), choices); // add upgrade to options
+//                i++;
+//            }
+            String choices = "Rank " + upgrade.getKey() + " - " + String.join(" or ", upgrade.getValue()); // build choice
+            prompt.append(i).append(". ").append(choices).append("\n"); // add upgrade
+            options.put(Integer.toString(i), choices); // add upgrade to options
+            i++;
         }
 
         displayMessage(prompt.toString()); // display prompt

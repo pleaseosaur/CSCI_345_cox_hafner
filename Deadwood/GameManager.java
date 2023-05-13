@@ -299,13 +299,13 @@ public class GameManager {
 
                 for(Role role : offCardRoles) { // add off card roles to map
                     if(!role.isTaken()){ // if role is not taken
-                        availableRoles.put(role.getName(), "(rank " + role.getRank() + " - off card)"); // add role to map
+                        availableRoles.put(role.getName(), " (rank " + role.getRank() + " - off card)"); // add role to map
                     }
                 }
 
                 for(Role role : onCardRoles) { // add on card roles to map
                     if(!role.isTaken()){ // if role is not taken
-                        availableRoles.put(role.getName(), "(rank " + role.getRank() + " - on card)"); // add role to map
+                        availableRoles.put(role.getName(), " (rank " + role.getRank() + " - on card)"); // add role to map
                     }
                 }
             }

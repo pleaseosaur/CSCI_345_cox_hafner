@@ -78,7 +78,11 @@ public class Deadwood {
                                 }
                             }
                         }
-                        case "rehearse" -> rehearse();
+                        case "rehearse" -> {
+                            rehearse();
+                            ui.displayMessage("\nAnd a great rehearsal it was!");
+                            ui.displayMessage("\nYou now have " + currentPlayer.getPracticeChips() + " practice chips!");
+                        }
                         case "act" -> act(); // TODO -- need act logic + dice rolling
                         case "upgrade" -> {
                             String choice = ui.promptUpgrade(manager.getAvailableUpgrades());
