@@ -68,7 +68,7 @@ public class GameManager {
         if(currentPlayer.getLocation() instanceof Set set){
             budget = set.getScene().getBudget();
         }
-        if(!(currentPlayer.getPracticeChips() >= budget)){ // if act not guaranteed
+        if((currentPlayer.getPracticeChips() < (budget-1))){ // if act not guaranteed
             currentPlayer.addPracticeChips();
             currentPlayer.setHasRehearsed(true);
         } else { // if act is guaranteed
