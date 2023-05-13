@@ -32,16 +32,8 @@ public class Dice {
 
     // rollDie: signifies one dice roll
     public int rollDie() {
-        int dieRoll = rand.nextInt(sides)+1;
-        return dieRoll;
+        return rand.nextInt(sides)+1;
     }
-
-    // actRoll: logic for acting
-    // // TODO remove this
-    // public int actRoll(){
-    //     // do acting calculations
-    //     return -1;
-    // }
 
     // wrapRoll: loop to get all dice rolls for scene wrap
     public List<Integer> wrapRoll(int budget){
