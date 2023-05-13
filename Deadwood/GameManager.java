@@ -55,6 +55,7 @@ public class GameManager {
                 if(currentPlayer.getRank() >= role.getRank()) {
                     currentPlayer.setRole(role);
                     currentPlayer.setHasTakenRole(true);
+                    role.setTaken(true);
                 } else {
                     System.out.println("\nYou do not have a high enough rank to take this role.");
                 }

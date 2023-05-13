@@ -18,6 +18,7 @@ public class Deck {
     private Deck(List<Scene> c){
         this.cards = c;
         this.nextCard = 0;
+        Collections.shuffle(cards);
     }
 
     // getters and setters
@@ -37,11 +38,6 @@ public class Deck {
 
     public List<Scene> getCards(){
         return cards;
-    }
-
-    // shuffleDeck: randomizes card order
-    public static void shuffleDeck(List<Scene> cards) {
-        Collections.shuffle(cards);
     }
 
     // drawScene: draws scene card to be assigned to location
