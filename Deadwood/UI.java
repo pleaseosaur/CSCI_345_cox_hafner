@@ -296,7 +296,7 @@ public class UI {
     // gets available ranks when player decides to upgrade
     // TODO -- additional options needed for upgrades -- may display same number w/ different price options
     // TODO -- need to handle case where player does not have enough money for any upgrades
-    public String promptUpgrade(List<String> upgrades) {
+    public String promptUpgrade(Map<Integer, List<String>> upgrades) {
         Map<String, String> options = new HashMap<>(); // initialize options
         StringBuilder prompt = new StringBuilder(); // initialize prompt
 
@@ -304,10 +304,13 @@ public class UI {
 
         // TODO -- duplicate code - refactor
         prompt.append("\nThe available upgrades are: \n"); // add header
-        for(String upgrade : upgrades) { // for each upgrade
-            prompt.append(i).append(". ").append(upgrade).append("\n"); // add upgrade
-            options.put(Integer.toString(i), upgrade); // add upgrade to options
-            i++;
+        for(Map.Entry<Integer, List<String>> upgrade : upgrades.entrySet()) {
+            for(String option : upgrade.getValue()) { // for each upgrade
+                String choices = "Rank " + upgrade.getKey() + " - " + option; // build choice
+                prompt.append(i).append(". ").append(choices).append("\n"); // add upgrade
+                options.put(Integer.toString(i), choices); // add upgrade to options
+                i++;
+            }
         }
 
         displayMessage(prompt.toString()); // display prompt

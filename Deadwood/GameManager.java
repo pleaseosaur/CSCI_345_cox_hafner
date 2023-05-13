@@ -315,30 +315,32 @@ public class GameManager {
     }
 
     // getAvailableUpgrades: makes list of upgrades available for taking
-    public List<String> getAvailableUpgrades() {
-        List<String> availableUpgrades = new ArrayList<>();
+    public Map<Integer, List<String>> getAvailableUpgrades() {
+        Map<Integer, List<String>> availableUpgrades = new HashMap<>();
         int rank = currentPlayer.getRank();
 
         if(currentPlayer.getLocation() instanceof CastingOffice office) {
-
             List<Upgrade> upgrades = office.getUpgrades();
+
             for (Upgrade upgrade : upgrades) {
                 if (upgrade.getRank() > rank) {
-                    if((upgrade.getCurrency().equals("dollars")) && (upgrade.getPrice() <= currentPlayer.getDollars())) {
-                        availableUpgrades.add(upgrade.getRank() + ": " + upgrade.getPrice() + " " + upgrade.getCurrency());
+                    String options = upgrade.getPrice() + " " + upgrade.getCurrency();
+
+                    if(availableUpgrades.containsKey(upgrade.getRank())) {
+                        availableUpgrades.get(upgrade.getRank()).add(options);
+                    } else {
+                        List<String> newUpgrade = new ArrayList<>();
+                        newUpgrade.add(options);
+                        availableUpgrades.put(upgrade.getRank(), newUpgrade);
                     }
-                    else if((upgrade.getCurrency().equals("credits")) && (upgrade.getPrice() <= currentPlayer.getCredits())) {
-                        availableUpgrades.add(upgrade.getRank() + ": " + upgrade.getPrice() + " " + upgrade.getCurrency());
-                    }
-                    availableUpgrades.add(upgrade.getRank() + ": " + upgrade.getPrice() + " " + upgrade.getCurrency());
                 }
             }
         }
         if(availableUpgrades.size() == 0) {
-            availableUpgrades.add("You cannot afford any upgrades at this time.");
+            availableUpgrades.put(0, List.of("No upgrades available."));
         }
         return availableUpgrades;
-    } // TODO -- refactor to be similar to getAvailableRoles
+    }
 
     public void displayBoard() {
         board.displayBoard();
