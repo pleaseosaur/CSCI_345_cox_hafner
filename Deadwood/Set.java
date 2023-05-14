@@ -39,7 +39,7 @@ public class Set extends Location{
         return this.takes;
     }
 
-    public boolean decrementTakes() {
+    public void decrementTakes() {
         int currentIndex = this.takes.indexOf(currentTake);
         int nextIndex = (currentIndex + 1) % this.takes.size();
 
@@ -47,9 +47,6 @@ public class Set extends Location{
 
         currentTake = takes.get(nextIndex); // move to the next take
         getScene().setWrap(wrap);
-
-        // return true if we've gone through all takes, false otherwise
-        return wrap;
     }
 
 
