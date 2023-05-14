@@ -150,7 +150,7 @@ public class GameManager {
 
         for(Player player : getPlayers()) { // for each player
             if(player.getLocation().equals(location)) { // if player is on current location
-                if(player.getRole().isOnCard()) { // if on card
+                if(player.getRole()!=null && player.getRole().isOnCard()) { // if on card (checks that role is not null first, otherwise it crashes)
                     onCardPlayers.add(player); // add to on card players
                     onCardRoles.add(player.getRole()); // add to on card roles
                     allPlayers.add(player); // add to all players
