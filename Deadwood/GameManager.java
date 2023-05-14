@@ -94,8 +94,8 @@ public class GameManager {
         boolean isSuccess = false;
         if(diceResult >= budget){ // acting success
             System.out.println("\nYour act was a success!");
-            isSuccess = true;
-            set.decrementTakes(); // decrement takes
+            isSuccess = set.decrementTakes();
+            ; // decrement takes
         } else { // acting failure
             System.out.println("\nYour act was not successful.");
         }
@@ -104,29 +104,28 @@ public class GameManager {
         actPay(currentPlayer.getRole().isOnCard(), isSuccess);
         currentPlayer.setHasActed(true);
         
-        if(set.getScene().isWrapped()){
-            wrapScene(set);
+        if(isSuccess){
+            wrapScene();
         }
     }
 
     public void actPay(Boolean onCard, Boolean isSuccess){
         Set set = (Set) currentPlayer.getLocation(); // get current set
-        if(onCard) { // if star
-            if(isSuccess) {
+        if(isSuccess) {
+            if(onCard) { // if star
                 currentPlayer.addCredits(2); // add 2 credits
-            }
-
-        } else { // if extra
-            if(isSuccess) {
+            } else { // if extra
                 currentPlayer.addDollars(1); // add 1 dollar
                 currentPlayer.addCredits(1); // add 1 credit
-            } else {
-                currentPlayer.addDollars(1); // add 1 dollar
             }
+
+        } else if(!onCard) { // if unsuccessful and extra
+            currentPlayer.addDollars(1); // add 1 dollar
         }
     }
 
-    public void wrapScene(Set set) {
+
+    public void wrapScene() {
 
         Location location = currentPlayer.getLocation(); // get current location
 
@@ -157,9 +156,6 @@ public class GameManager {
             player.setRole(null); // remove role from all players
             player.resetPracticeChips(); // reset practice chips for all players
         }
-
-        set.getScene().setWrap(true); // set scene to wrapped
-
     }
 
     public void wrapBonus(List<Player> onCardPlayers, List<Player> offCardPlayers, List<Role> onCardRoles) {

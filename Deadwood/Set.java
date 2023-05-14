@@ -20,7 +20,7 @@ public class Set extends Location{
         setScene(scene);
         setTakes(takes);
         setRoles(roles);
-        resetTakes();
+        currentTake = this.takes.get(0);
     }
 
 
@@ -39,20 +39,19 @@ public class Set extends Location{
         return this.takes;
     }
 
-    public void decrementTakes() {
+    public boolean decrementTakes() {
         int currentIndex = this.takes.indexOf(currentTake);
         int nextIndex = (currentIndex + 1) % this.takes.size();
-    
-        if(currentIndex == takes.size() -1) {
-            this.scene.setWrap(true);
-        }
-    
-        currentTake = takes.get(nextIndex);
-    } // decrements the number of takes left
 
-    public void resetTakes() {
-        currentTake = takes.get(0);
-    } // resets the number of takes to the original number of takes
+        boolean wrap = (currentIndex == takes.size() - 1);
+
+        currentTake = takes.get(nextIndex); // move to the next take
+        getScene().setWrap(wrap);
+
+        // return true if we've gone through all takes, false otherwise
+        return wrap;
+    }
+
 
     public void setRoles(List<Role> r){
         this.roles = r;
