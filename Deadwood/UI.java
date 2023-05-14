@@ -265,9 +265,9 @@ public class UI {
                 Set set = (Set) neighbor;
                 if(set.getScene().isWrapped()) {
                     prompt.append(i).append(". ").append(neighbor.getName()).append(" (wrapped)").append("\n"); // add location
+                } else {
+                    prompt.append(i).append(". ").append(neighbor.getName()).append("\n"); // add location
                 }
-            } else {
-                prompt.append(i).append(". ").append(neighbor.getName()).append("\n"); // add location
             }
             options.put(Integer.toString(i), neighbor.getName()); // add location to options
             i++;
