@@ -113,7 +113,7 @@ public class GameManager {
         actPay(currentPlayer.getRole().isOnCard(), isSuccess);
         currentPlayer.setHasActed(true);
         
-        if(isSuccess){
+        if(set.getScene().isWrapped()){
             wrapScene();
         }
     }
