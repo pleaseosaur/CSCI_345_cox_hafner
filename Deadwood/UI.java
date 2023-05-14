@@ -268,6 +268,8 @@ public class UI {
                 } else {
                     prompt.append(i).append(". ").append(neighbor.getName()).append("\n"); // add location
                 }
+            } else {
+                prompt.append(i).append(". ").append(neighbor.getName()).append("\n"); // add location
             }
             options.put(Integer.toString(i), neighbor.getName()); // add location to options
             i++;
