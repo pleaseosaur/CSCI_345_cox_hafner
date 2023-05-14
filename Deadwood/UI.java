@@ -319,6 +319,7 @@ public class UI {
         }
 
         displayMessage(prompt.toString()); // display prompt
+        displayPrompt("\nPlease enter the rank you would like to upgrade to: ");
 
         return getChoiceInput(options); // get choice
     }
