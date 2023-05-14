@@ -187,6 +187,7 @@ public class Deadwood {
             ui.displayMessage("and "+winners.get(winners.size()-1)+" win!");
         }
         setGameActive(false);
+        System.exit(0); // added this back so I can quit without killing it, should be fixed proper later
     }
 
     // rename player loop -- currently allows duplicate names
