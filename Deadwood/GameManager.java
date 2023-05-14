@@ -40,7 +40,16 @@ public class GameManager {
             currentPlayer.setHasMoved(true);
     }
 
-    public void upgrade(int rank) {
+    public void upgrade(Upgrade upgrade, String currency) {
+        int rank = upgrade.getRank();
+        int price = upgrade.getPrice();
+
+        if(currency.equals("dollars")) {
+            currentPlayer.setDollars(currentPlayer.getDollars() - price);
+        } else {
+            currentPlayer.setCredits(currentPlayer.getCredits() - price);
+        }
+
         currentPlayer.setRank(rank);
         currentPlayer.setHasUpgraded(true);
     }

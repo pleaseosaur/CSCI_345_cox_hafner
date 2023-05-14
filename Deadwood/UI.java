@@ -305,17 +305,26 @@ public class UI {
         // TODO -- duplicate code - refactor
         prompt.append("\nThe available upgrades are: \n"); // add header
         for(Map.Entry<Integer, List<String>> upgrade : upgrades.entrySet()) {
-//            for(String option : upgrade.getValue()) { // for each upgrade
-//                String choices = "Rank " + upgrade.getKey() + " - " + option; // build choice
-//                prompt.append(i).append(". ").append(choices).append("\n"); // add upgrade
-//                options.put(Integer.toString(i), choices); // add upgrade to options
-//                i++;
-//            }
             String choices = "Rank " + upgrade.getKey() + " - " + String.join(" or ", upgrade.getValue()); // build choice
-            prompt.append(i).append(". ").append(choices).append("\n"); // add upgrade
-            options.put(Integer.toString(i), choices); // add upgrade to options
+            prompt.append(upgrade.getKey()).append(". ").append(choices).append("\n"); // add upgrade
+            options.put(Integer.toString(upgrade.getKey()), String.valueOf(upgrade.getKey())); // add upgrade to options
             i++;
         }
+
+        displayMessage(prompt.toString()); // display prompt
+
+        return getChoiceInput(options); // get choice
+    }
+
+    public String promptUpgradePayment() {
+        StringBuilder prompt = new StringBuilder(); // initialize prompt
+        Map<String, String> options = new HashMap<>(); // initialize options
+
+        prompt.append("\nPlease enter the number of the payment option you would like to use: \n"); // add header
+        prompt.append("1. Dollars\n");
+        prompt.append("2. Credits\n");
+        options.put("1", "dollars");
+        options.put("2", "credits");
 
         displayMessage(prompt.toString()); // display prompt
 

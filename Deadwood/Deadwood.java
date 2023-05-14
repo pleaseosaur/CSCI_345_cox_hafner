@@ -91,8 +91,19 @@ public class Deadwood {
                                 case "stats" -> ui.displayStats(currentPlayer);
                                 case "view", "board" -> manager.displayBoard();
                                 default -> {
-                                    upgrade(ui.promptUpgrade(manager.getAvailableUpgrades()));
-                                    ui.displayMessage("\nYou have upgraded to: " + currentPlayer.getRank());
+                                    String currency = ui.promptUpgradePayment();
+                                    CastingOffice office = (CastingOffice) currentPlayer.getLocation();
+                                    for(Upgrade upgrade : office.getUpgrades()) {
+                                        if(upgrade.getRank() == Integer.parseInt(choice)) {
+                                            if((upgrade.getCurrency().equals(currency) && upgrade.getPrice() > currentPlayer.getDollars()) ||
+                                                (upgrade.getCurrency().equals(currency) && upgrade.getPrice() > currentPlayer.getCredits())) {
+                                                ui.displayMessage("\nYou don't have enough " + currency + "!");
+                                            } else {
+                                                upgrade(upgrade, currency);
+                                                ui.displayMessage("\nYou have upgraded to rank " + upgrade.getRank());
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -112,7 +123,7 @@ public class Deadwood {
             }
 
         }
-            // end day will check no. of days and trigger end game if necessary
+        // end day will check no. of days and trigger end game if necessary
     }
 
     public Map<String, String> getAvailableRoles(Player player) {
@@ -132,10 +143,8 @@ public class Deadwood {
     }
 
     // upgrade: do upgrade for active player
-    public void upgrade(String rank) {
-        //TODO -- could probably handle similar to role selection
-
-        manager.upgrade(Integer.parseInt(rank));
+    public void upgrade(Upgrade upgrade, String currency) {
+        manager.upgrade(upgrade, currency);
     }
 
     // takeRole: active player takes role
@@ -176,7 +185,7 @@ public class Deadwood {
             }
             ui.displayMessage("and "+winners.get(winners.size()-1)+" win!");
         }
-        System.exit(0);
+        setGameActive(false);
     }
 
     // rename player loop -- currently allows duplicate names
