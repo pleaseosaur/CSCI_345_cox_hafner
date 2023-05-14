@@ -103,8 +103,8 @@ public class GameManager {
         boolean isSuccess = false;
         if(diceResult >= budget){ // acting success
             System.out.println("\nYour act was a success!");
-            isSuccess = set.decrementTakes();
-            ; // decrement takes
+            isSuccess = true;
+            set.decrementTakes(); // decrement takes
         } else { // acting failure
             System.out.println("\nYour act was not successful.");
         }
