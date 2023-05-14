@@ -170,7 +170,7 @@ public class UI {
             buildActions(availableActions, "upgrade", player.getHasUpgraded()); // add upgrade action
 
         } else { // player is at max rank
-            displayMessage("You are already at the highest rank. No upgrades are available.\n\n");
+            displayMessage("You are already at the highest rank. No remaining upgrades are available.\n\n");
             buildActions(availableActions, "move", player.getHasMoved()); // add move action
 
         }
@@ -267,7 +267,7 @@ public class UI {
         }
 
         displayMessage(prompt.toString()); // display prompt
-        displayPrompt("\nPlease enter the name or number of the location you would like to move to: ");
+        displayPrompt("\nPlease enter the location you would like to move to: ");
 
         return getChoiceInput(options); // get choice
     }
@@ -288,14 +288,12 @@ public class UI {
         }
 
         displayMessage(prompt.toString()); // display prompt
-        displayPrompt("\nPlease enter the number of the role you would like to take: ");
+        displayPrompt("\nPlease enter the role you would like to take: ");
 
         return getChoiceInput(options); // get choice
     }
 
     // gets available ranks when player decides to upgrade
-    // TODO -- additional options needed for upgrades -- may display same number w/ different price options
-    // TODO -- need to handle case where player does not have enough money for any upgrades
     public String promptUpgrade(Map<Integer, List<String>> upgrades) {
         Map<String, String> options = new HashMap<>(); // initialize options
         StringBuilder prompt = new StringBuilder(); // initialize prompt
@@ -320,7 +318,7 @@ public class UI {
         StringBuilder prompt = new StringBuilder(); // initialize prompt
         Map<String, String> options = new HashMap<>(); // initialize options
 
-        prompt.append("\nPlease enter the number of the payment option you would like to use: \n"); // add header
+        prompt.append("\nPlease enter the payment option you would like to use: \n"); // add header
         prompt.append("1. Dollars\n");
         prompt.append("2. Credits\n");
         options.put("1", "dollars");

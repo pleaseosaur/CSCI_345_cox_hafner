@@ -55,7 +55,7 @@ public class Deadwood {
                     Map<String, String> availableRoles = getAvailableRoles(currentPlayer);
                     String action = ui.getPlayerAction(currentPlayer, availableRoles);
                     switch (action) {
-                        case "move" -> {
+                        case "move" -> { // TODO -- need to add scene wrapped/no roles message
                             String choice = ui.promptMove(currentPlayer);
                             switch (choice) {
                                 case "back" -> ui.displayMessage("\nNo problem!");
@@ -69,12 +69,15 @@ public class Deadwood {
                         }
                         case "take role" -> {
                             String choice = ui.promptRole(availableRoles);
-                            if (choice.equals("back")) {
-                                ui.displayMessage("\nNo problem!");
-                            } else {
-                                takeRole(choice);
-                                if (currentPlayer.getHasTakenRole()) {
-                                    ui.displayMessage("\nYou have taken the role of: " + currentPlayer.getRole().getName());
+                            switch (choice) {
+                                case "back" -> ui.displayMessage("\nNo problem!");
+                                case "stats" -> ui.displayStats(currentPlayer);
+                                case "view", "board" -> manager.displayBoard();
+                                default -> {
+                                    takeRole(choice);
+                                    if (currentPlayer.getHasTakenRole()) {
+                                        ui.displayMessage("\nYou have taken the role of: " + currentPlayer.getRole().getName());
+                                    }
                                 }
                             }
                         }
@@ -83,7 +86,7 @@ public class Deadwood {
                             ui.displayMessage("\nAnd a great rehearsal it was!");
                             ui.displayMessage("\nYou now have " + currentPlayer.getPracticeChips() + " practice chips!");
                         }
-                        case "act" -> act(); // TODO -- need act logic + dice rolling
+                        case "act" -> act(); // TODO -- need to add scene wrap/payout messages
                         case "upgrade" -> {
                             String choice = ui.promptUpgrade(manager.getAvailableUpgrades());
                             switch (choice) {
@@ -101,6 +104,8 @@ public class Deadwood {
                                             } else {
                                                 upgrade(upgrade, currency);
                                                 ui.displayMessage("\nYou have upgraded to rank " + upgrade.getRank());
+                                                ui.displayMessage(upgrade.getPrice() + " " + currency + " have been deducted from your account");
+                                                ui.displayMessage("You now have " + currentPlayer.getDollars() + " dollars \nand " + currentPlayer.getCredits() + " credits");
                                             }
                                             break;
                                         }
