@@ -98,16 +98,18 @@ public class Deadwood {
                                     CastingOffice office = (CastingOffice) currentPlayer.getLocation();
                                     for(Upgrade upgrade : office.getUpgrades()) {
                                         if(upgrade.getRank() == Integer.parseInt(choice)) {
-                                            if((upgrade.getCurrency().equals(currency) && upgrade.getPrice() > currentPlayer.getDollars()) ||
-                                                (upgrade.getCurrency().equals(currency) && upgrade.getPrice() > currentPlayer.getCredits())) {
-                                                ui.displayMessage("\nYou don't have enough " + currency + "!");
-                                            } else {
-                                                upgrade(upgrade, currency);
-                                                ui.displayMessage("\nYou have upgraded to rank " + upgrade.getRank());
-                                                ui.displayMessage(upgrade.getPrice() + " " + currency + " have been deducted from your account");
-                                                ui.displayMessage("You now have " + currentPlayer.getDollars() + " dollars \nand " + currentPlayer.getCredits() + " credits");
+                                            if(upgrade.getCurrency().equals(currency)){
+                                                if((currency.equals("dollars") && upgrade.getPrice() > currentPlayer.getDollars()) ||
+                                                (currency.equals("credits") && upgrade.getPrice() > currentPlayer.getCredits())){
+                                                    ui.displayMessage("\nYou don't have enough " + currency + "!");
+                                                } else {
+                                                    upgrade(upgrade, currency);
+                                                    ui.displayMessage("\nYou have upgraded to rank " + upgrade.getRank());
+                                                    ui.displayMessage(upgrade.getPrice() + " " + currency + " have been deducted from your account");
+                                                    ui.displayMessage("You now have " + currentPlayer.getDollars() + " dollars \nand " + currentPlayer.getCredits() + " credits");
+                                                }
+                                                break;
                                             }
-                                            break;
                                         }
                                     }
                                 }
