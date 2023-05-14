@@ -56,4 +56,9 @@ public class Set extends Location{
     public List<Role> getRoles(){
         return this.roles;
     }
+
+    // used for debugging
+    public int getCurrentTakeIndex(){
+        return takes.indexOf(currentTake);
+    }
 }
