@@ -102,6 +102,7 @@ public class Deadwood {
                                                 upgrade(upgrade, currency);
                                                 ui.displayMessage("\nYou have upgraded to rank " + upgrade.getRank());
                                             }
+                                            break;
                                         }
                                     }
                                 }
