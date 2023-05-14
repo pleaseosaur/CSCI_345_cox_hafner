@@ -170,6 +170,9 @@ public class GameManager {
             player.setRole(null); // remove role from all players
             player.resetPracticeChips(); // reset practice chips for all players
         }
+        // decrement Open Scenes
+        board.setOpenScenes(board.getOpenScenes()-1);
+        System.out.println(board.getOpenScenes()+" open scenes remaining."); // TODO test print, remove this later
     }
 
     public void wrapBonus(List<Player> onCardPlayers, List<Player> offCardPlayers, List<Role> onCardRoles) {
