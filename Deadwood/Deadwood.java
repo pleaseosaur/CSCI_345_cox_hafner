@@ -88,6 +88,7 @@ public class Deadwood {
                         }
                         case "act" -> { // TODO -- temp message - should probably display payouts
                             if(act()) {
+                                ui.diceRollAnimation();
                                 ui.displayMessage("Scene is wrapped");
                             }
                         }
@@ -173,6 +174,7 @@ public class Deadwood {
 
     // act: active player acts
     public boolean act() {
+        ui.diceRollAnimation();
         return manager.act();
     }
 

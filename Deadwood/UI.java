@@ -75,6 +75,16 @@ public class UI {
         displayMessage("\nIt is " + playerName + "'s turn.");
         displayMessage("\nYour current location is: " + locationName + "\n");
     }
+    public void diceRollAnimation() {
+        for(int i = 3; i > 0; i--) {
+            displayPrompt(". ");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 
