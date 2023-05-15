@@ -30,7 +30,7 @@ public class GameManager {
         setCurrentPlayer();
         this.board = Board.getInstance();
         this.dice = new Dice(6);
-        setStartingLocation();
+        resetPlayers();
     }
 
 
@@ -246,9 +246,15 @@ public class GameManager {
     }
 
     // setStartingLocation: sets all players to starting location
-    public void setStartingLocation() {
+    public void resetPlayers() {
         for (Player player : getPlayers()) {
             player.setLocation(board.getLocation("Trailer")); // set all players to trailer
+            player.setHasActed(false); // reset player actions
+            player.setHasMoved(false);
+            player.setHasRehearsed(false);
+            player.setHasTakenRole(false);
+            player.setHasUpgraded(false);
+            player.setRole(null); // remove role from all players
         }
     }
 
@@ -264,13 +270,14 @@ public class GameManager {
     }
 
     public boolean endDay() {
+        setDays(getDays() - 1); // decrement days
         if(board.checkEndDay()) {
-            setStartingLocation();
-            board.setOpenScenes(10);
-            board.dealCards();
-            setDays(getDays() - 1); // decrement days
             if(checkEndGame()) {
                 scoreGame();
+            } else {
+                resetPlayers();
+                board.setOpenScenes(10);
+                board.dealCards(); // deal cards
             }
             return true;
         }
