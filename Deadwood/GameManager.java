@@ -87,7 +87,7 @@ public class GameManager {
         }
     }
 
-    public void act() {
+    public boolean act() {
         // TODO - implement act
         Set set = (Set) currentPlayer.getLocation(); // get current set
         int budget = set.getScene().getBudget(); // get budget
@@ -120,7 +120,9 @@ public class GameManager {
         
         if(set.getScene().isWrapped()){
             wrapScene();
+            return true;
         }
+        return false;
     }
 
     public void actPay(Boolean onCard, Boolean isSuccess){

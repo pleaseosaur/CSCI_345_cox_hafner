@@ -86,7 +86,11 @@ public class Deadwood {
                             ui.displayMessage("\nAnd a great rehearsal it was!");
                             ui.displayMessage("\nYou now have " + currentPlayer.getPracticeChips() + " practice chips!");
                         }
-                        case "act" -> act(); // TODO -- need to add scene wrap/payout messages
+                        case "act" -> { // TODO -- temp message - should probably display payouts
+                            if(act()) {
+                                ui.displayMessage("Scene is wrapped");
+                            }
+                        }
                         case "upgrade" -> {
                             String choice = ui.promptUpgrade(manager.getAvailableUpgrades());
                             switch (choice) {
@@ -127,7 +131,9 @@ public class Deadwood {
                         }
                     }
                 }
-                // end turn will check no. of open scenes and trigger end day if necessary
+                if(endDay()) {
+                    ui.displayMessage("The final scene has wrapped and the day is over!");
+                }
             }
 
         }
@@ -166,8 +172,8 @@ public class Deadwood {
     }
 
     // act: active player acts
-    public void act() {
-        manager.act();
+    public boolean act() {
+        return manager.act();
     }
 
     // endTurn: ends current turn
