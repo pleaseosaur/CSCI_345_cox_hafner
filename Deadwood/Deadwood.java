@@ -127,9 +127,7 @@ public class Deadwood {
                         case "end" -> endGame();
                         case "stats" -> ui.displayStats(currentPlayer);
                         case "view" -> manager.displayBoard();
-                        default -> {
-                            ui.displayMessage("Invalid action");
-                        }
+                        default -> ui.displayMessage("Invalid action");
                     }
                 }
                 if(endDay()) {
