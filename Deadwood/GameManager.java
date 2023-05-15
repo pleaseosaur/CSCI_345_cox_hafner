@@ -178,9 +178,16 @@ public class GameManager {
     public void wrapBonus(List<Player> onCardPlayers, List<Player> offCardPlayers, List<Role> onCardRoles) {
         Scene scene = ((Set) currentPlayer.getLocation()).getScene(); // get scene
         List<Integer> results = dice.wrapRoll(scene.getBudget()); // roll number of dice equal to budget
+        Map<Role, Integer> distribution = new HashMap<Role, Integer>(); // map of roles to results
 
-        // I had to look all these up
+        // I had to look this up
         onCardRoles.sort(Comparator.comparing(Role::getRank).reversed()); // sorts roles by rank
+
+        for(Role role : onCardRoles) { // for each on card role
+            distribution.put(role, 0); // add role to distribution map
+        }
+
+        // I had to look these up too
         Iterator<Integer> resultIterator = results.iterator(); // iterator for results
         Iterator<Role> roleIterator = onCardRoles.iterator(); // iterator for roles
 
@@ -192,11 +199,11 @@ public class GameManager {
             Role role = roleIterator.next(); // get next role
             int result = resultIterator.next(); // get next result
 
-            for(Player player : onCardPlayers) { // for each on card player
-                if(player.getRole().equals(role)) { // if player has role
-                    player.addDollars(result); // add dollars to player
-                }
-            }
+            distribution.put(role, distribution.get(role) + result); // add result to role in distribution map
+        }
+
+        for(Player player : onCardPlayers) {
+            player.addDollars(distribution.get(player.getRole())); // add dollars from distribution list to player
         }
 
         for(Player player : offCardPlayers) { // for each off card player
