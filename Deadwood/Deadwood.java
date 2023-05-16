@@ -131,7 +131,7 @@ public class Deadwood {
                     }
                 }
             }
-            ui.displayMessage("The final scene has wrapped and day "+manager.getDays()+" is over!");
+            ui.displayMessage("The final scene has wrapped and the day is over!");
             manager.decrementDay();
             if(manager.getDays()==0) { // end game if last day
                 endGame();
