@@ -76,14 +76,14 @@ public class UI {
         displayMessage("\nYour current location is: " + locationName + "\n");
     }
     public void diceRollAnimation() {
-        // for(int i = 3; i > 0; i--) {
-        //     displayPrompt(". ");
-        //     try {
-        //         Thread.sleep(500);
-        //     } catch (InterruptedException e) {
-        //         e.printStackTrace();
-        //     }
-        // }
+        for(int i = 3; i > 0; i--) {
+            displayPrompt(". ");
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
