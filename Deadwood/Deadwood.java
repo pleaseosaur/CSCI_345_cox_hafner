@@ -45,6 +45,9 @@ public class Deadwood {
         while(getGameActive()) {
             ui.startDayMessage(manager.getDays());
             // while day is active (no. open Scenes > 1)
+            if(manager.getDays() == 0) { // TODO -- this is kinda hacky but it works
+                endGame();
+            }
             while(!endDay()) {
                 // while current player is active
                 Player currentPlayer = manager.getCurrentPlayer();
@@ -133,10 +136,6 @@ public class Deadwood {
             }
             ui.displayMessage("The final scene has wrapped and the day is over!");
             manager.decrementDay();
-            if(manager.getDays()==0) { // end game if last day
-                endGame();
-            }
-
         }
         // end day will check no. of days and trigger end game if necessary
     }

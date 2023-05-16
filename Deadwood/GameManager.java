@@ -273,7 +273,7 @@ public class GameManager {
     public boolean endDay() {
         if(board.checkEndDay()) {
             if(checkEndGame()) {
-                scoreGame();
+                // do nothing
             } else {
                 resetPlayers();
                 board.setOpenScenes(10);
@@ -289,7 +289,7 @@ public class GameManager {
     }
 
     private boolean checkEndGame() {
-        return getDays() == 0;
+        return getDays() == 1; // TODO -- this ideally should be zero, but actually needs to be 1 as it's called before decrementing; can probably be fixed later
     }
 
     public LinkedList<String> scoreGame() {
