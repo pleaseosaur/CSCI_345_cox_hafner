@@ -70,6 +70,7 @@ public class Board {
     public void dealCards() {
         for (Location location : locations.values()) {
             if (location instanceof Set set) {
+                set.setScene(null); // TODO -- check to see if this fixes part of the role bug
                 set.setScene(deck.drawScene());
             }
         }
