@@ -41,7 +41,6 @@ public class Deck {
     }
 
     // drawScene: draws scene card to be assigned to location
-    //TODO - add functionality for assigning scenes to location
     public Scene drawScene(){
         if (nextCard < cards.size()) {
             Scene card = cards.get(nextCard);

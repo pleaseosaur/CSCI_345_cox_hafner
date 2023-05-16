@@ -270,7 +270,6 @@ public class GameManager {
     }
 
     public boolean endDay() {
-        setDays(getDays() - 1); // decrement days
         if(board.checkEndDay()) {
             if(checkEndGame()) {
                 scoreGame();
@@ -282,6 +281,10 @@ public class GameManager {
             return true;
         }
         return false;
+    }
+
+    public void decrementDay() {
+        setDays(getDays() - 1);
     }
 
     private boolean checkEndGame() {
