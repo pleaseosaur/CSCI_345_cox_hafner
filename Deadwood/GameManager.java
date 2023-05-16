@@ -62,6 +62,7 @@ public class GameManager {
         allRoles.removeAll(onCardRoles);
         allRoles.addAll(onCardRoles);
 
+        boolean rankCheck = false;
         for(Role role : allRoles) {
             if(!role.isTaken()) {
                 if(currentPlayer.getRank() >= role.getRank()) {
@@ -69,9 +70,13 @@ public class GameManager {
                     currentPlayer.setHasTakenRole(true);
                     role.setTaken(true);
                 } else {
-                    System.out.println("\nYou do not have a high enough rank to take this role."); // TODO -- this prints multiple times
+                    rankCheck = true;
                 }
             }
+        }
+
+        if(rankCheck) {
+            System.out.println("\nYou do not have a high enough rank to take this role.");
         }
     }
 
