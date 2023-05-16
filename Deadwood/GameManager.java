@@ -104,11 +104,12 @@ public class GameManager {
         if(diceResult >= budget){ // acting success
             System.out.println("\nYour act was a success!");
             isSuccess = true;
-            set.decrementTakes(); // decrement takes
 
             // TODO - maybe remove this? Used for debugging
-            int takesNum = set.getCurrentTakeIndex();
-            System.out.println((3-takesNum)+" takes remaining.");
+            int takesNum = set.getCurrentTakeIndex()+1;
+            System.out.println((set.getTakes().size()-takesNum)+" takes remaining.");
+
+            set.decrementTakes(); // decrement takes
 
         } else { // acting failure
             System.out.println("\nYour act was not successful.");
