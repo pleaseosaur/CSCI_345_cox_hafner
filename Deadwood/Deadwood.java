@@ -60,7 +60,7 @@ public class Deadwood {
                             switch (choice) {
                                 case "back" -> ui.displayMessage("\nNo problem!");
                                 case "stats" -> ui.displayStats(currentPlayer);
-                                case "view", "board" -> manager.displayBoard();
+                                case "view" -> manager.displayBoard();
                                 default -> {
                                     move(choice);
                                     ui.displayMessage("\nYou have moved to: " + currentPlayer.getLocation().getName());
@@ -72,7 +72,7 @@ public class Deadwood {
                             switch (choice) {
                                 case "back" -> ui.displayMessage("\nNo problem!");
                                 case "stats" -> ui.displayStats(currentPlayer);
-                                case "view", "board" -> manager.displayBoard();
+                                case "view" -> manager.displayBoard();
                                 default -> {
                                     takeRole(choice);
                                     if (currentPlayer.getHasTakenRole()) {
@@ -97,7 +97,7 @@ public class Deadwood {
                             switch (choice) {
                                 case "back" -> ui.displayMessage("\nNo problem!");
                                 case "stats" -> ui.displayStats(currentPlayer);
-                                case "view", "board" -> manager.displayBoard();
+                                case "view" -> manager.displayBoard();
                                 default -> {
                                     String currency = ui.promptUpgradePayment();
                                     CastingOffice office = (CastingOffice) currentPlayer.getLocation();
