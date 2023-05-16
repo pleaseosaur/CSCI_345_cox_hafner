@@ -56,11 +56,14 @@ public class GameManager {
 
     public void takeRole(String r) {
         Set set = (Set) currentPlayer.getLocation();
-        List<Role> allRoles = set.getRoles();
-        allRoles.addAll(set.getScene().getRoles());
-        for (Role role : allRoles) {
-            if (role.getName().equals(r)) {
-                // TODO check if role is already taken
+        List<Role> allRoles = new ArrayList<>(set.getRoles());
+        List<Role> onCardRoles = new ArrayList<>(set.getScene().getRoles());
+
+        allRoles.removeAll(onCardRoles);
+        allRoles.addAll(onCardRoles);
+
+        for(Role role : allRoles) {
+            if(!role.isTaken()) {
                 if(currentPlayer.getRank() >= role.getRank()) {
                     currentPlayer.setRole(role);
                     currentPlayer.setHasTakenRole(true);
