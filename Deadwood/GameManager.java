@@ -66,7 +66,7 @@ public class GameManager {
                     currentPlayer.setHasTakenRole(true);
                     role.setTaken(true);
                 } else {
-                    System.out.println("\nYou do not have a high enough rank to take this role.");
+                    System.out.println("\nYou do not have a high enough rank to take this role."); // TODO -- this prints multiple times
                 }
             }
         }
