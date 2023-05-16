@@ -1,6 +1,6 @@
 /*
  * Author: Peter Hafner and Andrew Cox
- * Date: 10 May 2023
+ * Date: 16 May 2023
  * Purpose: Board: Object representing game's board
  */
 
