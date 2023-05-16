@@ -27,7 +27,7 @@ public class UI {
             try {
                 System.out.print(c); // print each character
                 System.out.flush(); // flush buffer
-                Thread.sleep(0); // sleep for 10 milliseconds
+                Thread.sleep(10); // sleep for 10 milliseconds
             } catch (InterruptedException e) {
                 e.printStackTrace(); // print stack trace if interrupted
             }
@@ -41,7 +41,7 @@ public class UI {
             try {
                 System.out.print(c); // print each character
                 System.out.flush(); // flush buffer
-                Thread.sleep(0); // sleep for 10 milliseconds
+                Thread.sleep(10); // sleep for 10 milliseconds
             } catch (InterruptedException e) {
                 e.printStackTrace(); // print stack trace if interrupted
             }
