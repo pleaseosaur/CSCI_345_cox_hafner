@@ -43,10 +43,8 @@ public class Deck {
     // drawScene: draws scene card to be assigned to location
     public Scene drawScene(){
         if (nextCard < cards.size()) {
-            System.out.println("Drawing card " + nextCard);
             Scene card = cards.get(nextCard);
             nextCard++;
-            System.out.println("There are " + (cards.size() - nextCard) + " cards left in the deck");
             return card;
         } else {
             throw new IllegalStateException("No more cards in deck");
