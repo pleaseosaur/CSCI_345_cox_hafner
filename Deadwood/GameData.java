@@ -290,17 +290,4 @@ public class GameData {
 
         return new Area(x, y, h, w); // create area
     }
-
-    // printBoard: prints board for debugging purposes
-    private void printBoard(){
-        Map<String, Location> locations = Board.getInstance().getAllLocations();
-        for(String location : locations.keySet()) {
-            System.out.println(location);
-            List<Location> neighbors = Board.getInstance().getLocation(location).getNeighbors();
-            for(Location n: neighbors){
-                System.out.println("     "+n.getName());
-            }
-        }
-    }
-
 }
