@@ -17,8 +17,8 @@ public class Role {
     // constructor
     public Role(String n, int r, Area a, String f, boolean o, boolean t) {
         setName(n);
-        setFlavorText(f);
-        setRank(r);
+        this.flavorText = f;
+        this.rank = r;
         setOnCard(o);
         setTaken(t);
         setArea(a);
@@ -33,18 +33,8 @@ public class Role {
         this.name = n;
     }
 
-    public String getFlavorText(){
-        return flavorText;
-    }
-    public void setFlavorText(String f){
-        this.flavorText = f;
-    }
-
     public int getRank(){
         return rank;
-    }
-    public void setRank(int r){
-        this.rank = r;
     }
 
     public boolean isOnCard(){

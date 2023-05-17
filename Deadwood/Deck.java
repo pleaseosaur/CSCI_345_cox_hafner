@@ -36,10 +36,6 @@ public class Deck {
         return deck;
     }
 
-    public List<Scene> getCards(){
-        return cards;
-    }
-
     // drawScene: draws scene card to be assigned to location
     public Scene drawScene(){
         if (nextCard < cards.size()) {

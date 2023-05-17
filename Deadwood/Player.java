@@ -4,7 +4,6 @@
  * Purpose: Player: Player object to store player data
  */
 
-// imports
 
 public class Player {
     // fields

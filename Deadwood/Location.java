@@ -16,7 +16,7 @@ public abstract class Location {
 
     // constructor
     public Location(String name, List<String> temp, Area area){
-        setName(name);
+        this.name = name;
         this.temp = temp;
         setArea(area);
     }
@@ -24,9 +24,6 @@ public abstract class Location {
     // getters and setters
     public String getName(){
         return this.name;
-    }
-    public void setName(String n){
-        this.name = n;
     }
 
     public List<String> getTemp(){

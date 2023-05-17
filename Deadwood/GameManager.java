@@ -94,7 +94,6 @@ public class GameManager {
     }
 
     public boolean act() {
-        // TODO - implement act
         Set set = (Set) currentPlayer.getLocation(); // get current set
         int budget = set.getScene().getBudget(); // get budget
 
@@ -111,7 +110,7 @@ public class GameManager {
             System.out.println("\nYour act was a success!");
             isSuccess = true;
 
-            // TODO - maybe remove this? Used for debugging
+            // TODO -- move to UI for GUI implementation
             int takesNum = set.getCurrentTakeIndex()+1;
             System.out.println((set.getTakes().size()-takesNum)+" takes remaining.");
 
@@ -132,8 +131,8 @@ public class GameManager {
         return false;
     }
 
+    // actPay: pays players for acting
     public void actPay(Boolean onCard, Boolean isSuccess){
-        Set set = (Set) currentPlayer.getLocation(); // get current set
         if(isSuccess) {
             if(onCard) { // if star
                 currentPlayer.addCredits(2); // add 2 credits
@@ -147,10 +146,10 @@ public class GameManager {
         }
     }
 
-
+    // wrapScene: wraps scene and pays players
     public void wrapScene() {
 
-        Location location = currentPlayer.getLocation(); // get current location
+        Location location = currentPlayer.getLocation();
 
         List<Player> allPlayers = new ArrayList<>(); // list of all players
         List<Player> onCardPlayers = new ArrayList<Player>(); // list of on card players
@@ -182,22 +181,21 @@ public class GameManager {
         }
         // decrement Open Scenes
         board.setOpenScenes(board.getOpenScenes()-1);
-        System.out.println(board.getOpenScenes()+" open scenes remaining."); // TODO test print, remove this later
+        System.out.println(board.getOpenScenes()+" open scenes remaining."); // TODO -- move to UI for GUI implementation
     }
 
+    // wrapBonus: rolls for wrap bonuses if players are on card
     public void wrapBonus(List<Player> onCardPlayers, List<Player> offCardPlayers, List<Role> onCardRoles) {
-        Scene scene = ((Set) currentPlayer.getLocation()).getScene(); // get scene
+        Scene scene = ((Set) currentPlayer.getLocation()).getScene();
         List<Integer> results = dice.wrapRoll(scene.getBudget()); // roll number of dice equal to budget
-        Map<Role, Integer> distribution = new HashMap<Role, Integer>(); // map of roles to results
+        Map<Role, Integer> distribution = new HashMap<>(); // map of roles to results
 
-        // I had to look this up
         onCardRoles.sort(Comparator.comparing(Role::getRank).reversed()); // sorts roles by rank
 
-        for(Role role : onCardRoles) { // for each on card role
-            distribution.put(role, 0); // add role to distribution map
+        for(Role role : onCardRoles) {
+            distribution.put(role, 0); // add roles to distribution map
         }
 
-        // I had to look these up too
         Iterator<Integer> resultIterator = results.iterator(); // iterator for results
         Iterator<Role> roleIterator = onCardRoles.iterator(); // iterator for roles
 
@@ -213,7 +211,7 @@ public class GameManager {
         }
 
         for(Player player : onCardPlayers) {
-            player.addDollars(distribution.get(player.getRole())); // add dollars from distribution list to player
+            player.addDollars(distribution.get(player.getRole())); // distribute dollars to players
         }
 
         for(Player player : offCardPlayers) { // for each off card player
@@ -239,6 +237,7 @@ public class GameManager {
         return players;
     }
 
+    // renames player
     public void renamePlayer(Player player, String name){
         player.setName(name);
     }
@@ -262,10 +261,11 @@ public class GameManager {
             player.setHasRehearsed(false);
             player.setHasTakenRole(false);
             player.setHasUpgraded(false);
-            player.setRole(null); // remove role from all players
+            player.setRole(); // remove role from all players
         }
     }
 
+    // resetRoles: resets all off-card roles to be available for next day
     public void resetRoles() {
         // iterate through set locations and reset the default roles
         for(Location location : board.getAllLocations().values()) {
@@ -288,6 +288,7 @@ public class GameManager {
         return this.days;
     }
 
+    // endDay: checks if day is over and resets players and roles
     public boolean endDay() {
         if(board.checkEndDay()) {
             if(!checkEndGame()){
@@ -306,9 +307,10 @@ public class GameManager {
     }
 
     private boolean checkEndGame() {
-        return getDays() == 1; // TODO -- this ideally should be zero, but actually needs to be 1 as it's called before decrementing; can probably be fixed later
+        return getDays() == 1; // TODO -- decrements before checking -- change in GUI implementation
     }
 
+    // scoreGame: tallies scores and returns list of winners
     public LinkedList<String> scoreGame() {
         // tally scores when endgame is triggered
         LinkedList<String> winners = new LinkedList<>();
@@ -333,8 +335,8 @@ public class GameManager {
     // getAvailableRoles: makes list of roles available for taking
     public Map<String, String> getAvailableRoles() {
 
-        Location playerLocation = currentPlayer.getLocation(); // get player location
-        Map<String, String> availableRoles = new HashMap<>(); // create map of available roles
+        Location playerLocation = currentPlayer.getLocation();
+        Map<String, String> availableRoles = new HashMap<>();
 
 
         if(playerLocation.isSet()){ // if player is on a set
@@ -345,8 +347,8 @@ public class GameManager {
             }
 
             else { // if scene is not wrapped, add available roles to map
-                List<Role> offCardRoles = set.getRoles(); // get off card roles
-                List<Role> onCardRoles = set.getScene().getRoles(); // get on card roles
+                List<Role> offCardRoles = set.getRoles();
+                List<Role> onCardRoles = set.getScene().getRoles();
 
                 for(Role role : offCardRoles) { // add off card roles to map
                     if(!role.isTaken()){ // if role is not taken
@@ -393,9 +395,8 @@ public class GameManager {
         return availableUpgrades;
     }
 
+    // calls displayBoard method in Board class
     public void displayBoard() {
         board.displayBoard();
     }
-
-
 }

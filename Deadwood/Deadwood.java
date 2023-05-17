@@ -39,26 +39,27 @@ public class Deadwood {
         return this.gameActive;
     }
 
+
     // runGame: Main gameplay loop
     public void runGame() {
         // while game is active (no. days > 0)
-        while(getGameActive()) {
+        while(getGameActive()) { // TODO -- convert to a for loop for days in GUI version
             ui.startDayMessage(manager.getDays());
             // while day is active (no. open Scenes > 1)
-            if(manager.getDays() == 0) { // TODO -- this is kinda hacky but it works
+            if(manager.getDays() == 0) { // this is kinda hacky but it works
                 endGame();
             }
             while(!endDay()) {
                 // while current player is active
                 Player currentPlayer = manager.getCurrentPlayer();
                 ui.startTurnMessage(currentPlayer);
-                // display available actions (end turn should always be an option)
+                // display available actions (universal actions always available)
                 boolean turnActive = true;
                 while(turnActive) {
                     Map<String, String> availableRoles = getAvailableRoles(currentPlayer);
                     String action = ui.getPlayerAction(currentPlayer, availableRoles);
                     switch (action) {
-                        case "move" -> { // TODO -- need to add scene wrapped/no roles message
+                        case "move" -> {
                             String choice = ui.promptMove(currentPlayer);
                             switch (choice) {
                                 case "quit" -> endGame();
@@ -98,7 +99,7 @@ public class Deadwood {
                                 ui.displayMessage("\nYou now have " + currentPlayer.getPracticeChips() + " practice chips!");
                             }
                         }
-                        case "act" -> { // TODO -- temp message - should probably display payouts
+                        case "act" -> {
                             if(act()) {
                                 ui.diceRollAnimation();
                                 ui.displayMessage("Scene is wrapped");
@@ -199,8 +200,7 @@ public class Deadwood {
         return manager.endDay();
     }
 
-    // endGame: calculates score and allows premature end
-    // TODO make sure this is called
+    // endGame: calculates score and allows premature end of game
     public void endGame() {
         // end game logic
         LinkedList<String> winners = manager.scoreGame();
@@ -213,10 +213,10 @@ public class Deadwood {
             ui.displayMessage("and "+winners.get(winners.size()-1)+" win!");
         }
         setGameActive(false);
-        System.exit(0); // added this back so I can quit without killing it, should be fixed proper later
+        System.exit(0); // could be a better way to do this
     }
 
-    // rename player loop -- currently allows duplicate names
+    // rename player loop -- duplicate names okay
     public void renamePlayers(){
         for(Player player : manager.getPlayers()){
             String name = ui.getPlayerName(player.getName());

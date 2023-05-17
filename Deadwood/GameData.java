@@ -31,10 +31,9 @@ public class GameData {
         Document cardDoc = getDocFromFile(cardFile);
         createDeck(cardDoc);
         createBoard(boardDoc);
-
     }
 
-// initializeGameData: initializes game data
+    // initializeGameData: initializes game data
     public static void initializeGameData(InputStream boardFile, InputStream cardFile) throws ParserConfigurationException {
         if(data != null) {
             throw new IllegalStateException("Game data already initialized");
@@ -43,7 +42,7 @@ public class GameData {
     }
 
     // getDocFromFile: gets doc for parsing
-    public Document getDocFromFile(InputStream filename) throws ParserConfigurationException {
+    private Document getDocFromFile(InputStream filename) throws ParserConfigurationException {
         {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance(); // create document builder factory
             DocumentBuilder db = dbf.newDocumentBuilder(); // create document builder
@@ -61,7 +60,7 @@ public class GameData {
     }
 
     // createBoard: creates board from XML doc
-    public void createBoard(Document d) {
+    private void createBoard(Document d) {
         d.getDocumentElement().normalize(); // normalize document
 
         String boardName = d.getDocumentElement().getAttribute("name"); // get board name
@@ -77,14 +76,13 @@ public class GameData {
                 tempLocations.add(set); // add location to list
             }
         }
-        // TODO - could probably refactor further to allow createLocation to handle trailer and office
+
         Trailer trailer = createTrailer((Element) d.getElementsByTagName("trailer").item(0)); // get trailer location
         CastingOffice office = createOffice((Element) d.getElementsByTagName("office").item(0)); // get office location
 
         tempLocations.add(trailer); // add trailer to list
         tempLocations.add(office); // add office to list
 
-        // TODO - there may be a better way to do this
         Map<String, Location> locations = constructGraph(tempLocations); // create map of locations
 
         Board.initializeBoard(boardName, locations, 10); // create board
@@ -114,7 +112,7 @@ public class GameData {
     }
 
     // createDeck: creates deck from XML doc
-    public void createDeck(Document d) {
+    private void createDeck(Document d) {
         d.getDocumentElement().normalize(); // normalize document
 
         NodeList cardNodes = d.getElementsByTagName("card"); // get card nodes

@@ -7,15 +7,15 @@
 public class Upgrade {
     // fields
     private int rank;
-    private String currency;
-    private int price;
+    private final String currency;
+    private final int price;
     private Area area;
 
     // constructor
     public Upgrade(int r, String c, int p, Area a) {
         setRank(r);
-        setCurrency(c);
-        setPrice(p);
+        this.currency = c;
+        this.price = p;
         setArea(a);
     }
 
@@ -28,16 +28,8 @@ public class Upgrade {
         return rank;
     }
 
-    public void setCurrency(String c) {
-        this.currency = c;
-    }
-
     public String getCurrency() {
         return currency;
-    }
-
-    public void setPrice(int p) {
-        this.price = p;
     }
 
     public int getPrice() {

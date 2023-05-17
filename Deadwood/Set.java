@@ -18,8 +18,8 @@ public class Set extends Location{
     public Set(String name, List<String> neighbors, Area area, Scene scene, List<Take> takes, List<Role> roles) {
         super(name, neighbors, area);
         setScene(scene);
-        setTakes(takes);
-        setRoles(roles);
+        this.takes = takes;
+        this.roles = roles;
         currentTake = this.takes.get(0);
     }
 
@@ -32,15 +32,13 @@ public class Set extends Location{
         return this.scene;
     }
 
-    public void setTakes(List<Take> t){
-        this.takes = t;
-    } // sets up the take objects
     public List<Take> getTakes(){
         return this.takes;
     }
 
+    // decrementTakes: decrements the current take and wraps the scene if necessary
     public void decrementTakes() {
-        int currentIndex = this.takes.indexOf(currentTake);
+        int currentIndex = getCurrentTakeIndex();
         int nextIndex = (currentIndex + 1) % this.takes.size();
 
         boolean wrap = (currentIndex == takes.size() - 1);
@@ -49,15 +47,10 @@ public class Set extends Location{
         getScene().setWrap(wrap);
     }
 
-
-    public void setRoles(List<Role> r){
-        this.roles = r;
-    }
     public List<Role> getRoles(){
         return this.roles;
     }
 
-    // used for debugging
     public int getCurrentTakeIndex(){
         return takes.indexOf(currentTake);
     }

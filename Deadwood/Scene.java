@@ -19,49 +19,22 @@ public class Scene {
 
     // constructor
     public Scene(String n, int num, String d, int b, List<Role> r, boolean w) {
-        setName(n);
-        setNumber(num);
-        setDescription(d);
-        setBudget(b);
-        setRoles(r);
+        this.name = n;
+        this.number = num;
+        this.description = d;
+        this.budget = b;
+        this.roles = r;
         setWrap(w);
     }
 
 
     // getters and setters
-    public void setName(String n){
-        this.name = n;
-    }
-    public String getName(){
-        return name;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-    public int getNumber() {
-        return number;
-    }
-
-    public void setDescription(String d){
-        this.description = d;
-    }
-    public String getDescription(){
-        return description;
-    }
-
     public int getBudget(){
         return budget;
-    }
-    public void setBudget(int b){
-        this.budget = b;
     }
 
     public List<Role> getRoles(){
         return roles;
-    }
-    public void setRoles(List<Role> r){
-        this.roles = r;
     }
 
     public boolean isWrapped(){

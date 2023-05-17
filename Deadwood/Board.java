@@ -46,14 +46,15 @@ public class Board {
         return this.name;
     }
 
+
     public Location getLocation(String name){
         return getAllLocations().get(name);
     }
 
-    // TODO -- can leave getAllLocations for testing, but should remove before submitting
     public Map<String, Location> getAllLocations(){
         return this.locations;
     }
+
 
     public int getOpenScenes(){
         return this.openScenes;
@@ -63,9 +64,11 @@ public class Board {
         this.openScenes = o;
     }
 
+
     public boolean checkEndDay(){
         return getOpenScenes() == 1;
     }
+
 
     public void dealCards() {
         for (Location location : locations.values()) {

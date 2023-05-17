@@ -4,7 +4,7 @@
  * Purpose: Take: Take object
  */
 
-// imports
+
 public class Take {
     // fields
     private int number;

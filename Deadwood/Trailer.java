@@ -13,8 +13,4 @@ public class Trailer extends Location{
         super(name, neighbors, area);
     }
 
-    public boolean actionAllowed(){ // --- probably don't need this now that Location is abstract
-        // do logic here
-        return false;
-    }
 }

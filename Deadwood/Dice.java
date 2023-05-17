@@ -17,18 +17,10 @@ public class Dice {
 
     // constructor
     public Dice(int sides) {
-        setSides(sides);
+        this.sides = sides;
         this.rand = new Random();
     }
 
-    // getters and setters
-    public void setSides(int num) {
-        this.sides = num;
-    }
-
-    public int getSides() {
-        return this.sides;
-    }
 
     // rollDie: signifies one dice roll
     public int rollDie() {
@@ -37,12 +29,11 @@ public class Dice {
 
     // wrapRoll: loop to get all dice rolls for scene wrap
     public List<Integer> wrapRoll(int budget){
-        // do wrap calculations
         List<Integer> result = new ArrayList<Integer>();
         for(int i = 0; i < budget; i++){
             result.add(rollDie());
         }
-        result.sort(Collections.reverseOrder());
+        result.sort(Collections.reverseOrder()); // sort in descending order
         return result;
     }
 

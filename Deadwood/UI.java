@@ -62,6 +62,25 @@ public class UI {
         displayMessage("'back' - returns to the actions menu");
         displayMessage("'quit' - ends the game\n");
     }
+    // displays player's stats
+    public void displayStats(Player p){
+        if(p.hasRole()) { // if player has role
+            displayMessage("\nHere are your current stats: \n" +
+                    "Location: " + p.getLocation().getName() + "\n" +
+                    "Role: " + p.getRole().getName() + "\n" +
+                    "Rank: " + p.getRank() + "\n" +
+                    "Credits: " + p.getCredits() + "\n" +
+                    "Dollars: " + p.getDollars() + "\n" +
+                    "Practice Chips: " + p.getPracticeChips() + "\n");
+        } else { // if player does not have role
+            displayMessage("\nHere are your current stats: \n" +
+                    "Location: " + p.getLocation().getName() + "\n" +
+                    "Rank: " + p.getRank() + "\n" +
+                    "Credits: " + p.getCredits() + "\n" +
+                    "Dollars: " + p.getDollars() + "\n" +
+                    "Practice Chips: " + p.getPracticeChips() + "\n");
+        }
+    }
     // startDayMessage: displays message at start of each day
     public void startDayMessage(int days) {
         if(days == 1) {
@@ -83,6 +102,7 @@ public class UI {
         displayMessage("\nIt is " + playerName + "'s turn.");
         displayMessage("\nYour current location is: " + locationName + "\n");
     }
+    // diceRollAnimation: conducts unnecessary fun
     public void diceRollAnimation() {
         displayPrompt("Rolling dice ");
         for(int i = 3; i > 0; i--) {
@@ -246,7 +266,7 @@ public class UI {
         String choice = scanner.next(); // get choice
 
         if(choice.equals("quit")) {
-            return "quit"; // quit game
+            return "quit";
         } else if (choice.equals("help")) {
             return "help";
         } else if(choice.equals("stats")) {
@@ -327,7 +347,6 @@ public class UI {
 
         int i = 1;
 
-        // TODO -- duplicate code - refactor
         prompt.append("\nThe available upgrades are: \n"); // add header
         for(Map.Entry<Integer, List<String>> upgrade : upgrades.entrySet()) {
             String choices = "Rank " + upgrade.getKey() + " - " + String.join(" or ", upgrade.getValue()); // build choice
@@ -355,33 +374,6 @@ public class UI {
         displayMessage(prompt.toString()); // display prompt
 
         return getChoiceInput(options); // get choice
-    }
-
-    // displays where each player is
-    public void displayBoard(List<Player> players){
-        for(Player player : players){ // for each player
-            displayMessage(player.getName() + " is at " + player.getLocation().getName()); // display player's location
-        }
-    }
-
-    // displays player's stats
-    public void displayStats(Player p){
-        if(p.hasRole()) { // if player has role
-            displayMessage("\nHere are your current stats: \n" +
-                    "Location: " + p.getLocation().getName() + "\n" +
-                    "Role: " + p.getRole().getName() + "\n" +
-                    "Rank: " + p.getRank() + "\n" +
-                    "Credits: " + p.getCredits() + "\n" +
-                    "Dollars: " + p.getDollars() + "\n" +
-                    "Practice Chips: " + p.getPracticeChips() + "\n");
-        } else { // if player does not have role
-            displayMessage("\nHere are your current stats: \n" +
-                    "Location: " + p.getLocation().getName() + "\n" +
-                    "Rank: " + p.getRank() + "\n" +
-                    "Credits: " + p.getCredits() + "\n" +
-                    "Dollars: " + p.getDollars() + "\n" +
-                    "Practice Chips: " + p.getPracticeChips() + "\n");
-            }
     }
 
     // quit game
