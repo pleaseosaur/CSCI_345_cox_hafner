@@ -246,7 +246,7 @@ public class UI {
         String choice = scanner.next(); // get choice
 
         if(choice.equals("quit")) {
-            return quitGame(); // quit game
+            return "quit"; // quit game
         } else if (choice.equals("help")) {
             helpMessage(); // display help message
             return getChoiceInput(availableActions);

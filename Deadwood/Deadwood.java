@@ -61,6 +61,7 @@ public class Deadwood {
                         case "move" -> { // TODO -- need to add scene wrapped/no roles message
                             String choice = ui.promptMove(currentPlayer);
                             switch (choice) {
+                                case "quit" -> endGame();
                                 case "back" -> ui.displayMessage("\nNo problem!");
                                 case "stats" -> ui.displayStats(currentPlayer);
                                 case "view" -> manager.displayBoard();
@@ -73,6 +74,7 @@ public class Deadwood {
                         case "take role" -> {
                             String choice = ui.promptRole(availableRoles);
                             switch (choice) {
+                                case "quit" -> endGame();
                                 case "back" -> ui.displayMessage("\nNo problem!");
                                 case "stats" -> ui.displayStats(currentPlayer);
                                 case "view" -> manager.displayBoard();
@@ -103,6 +105,7 @@ public class Deadwood {
                         case "upgrade" -> {
                             String choice = ui.promptUpgrade(manager.getAvailableUpgrades());
                             switch (choice) {
+                                case "quit" -> endGame();
                                 case "back" -> ui.displayMessage("\nNo problem!");
                                 case "stats" -> ui.displayStats(currentPlayer);
                                 case "view" -> manager.displayBoard();
@@ -132,7 +135,7 @@ public class Deadwood {
                             endTurn();
                             turnActive = false;
                         }
-                        case "end" -> endGame();
+                        case "quit" -> endGame();
                         case "stats" -> ui.displayStats(currentPlayer);
                         case "view" -> manager.displayBoard();
                         default -> ui.displayMessage("Invalid action");
