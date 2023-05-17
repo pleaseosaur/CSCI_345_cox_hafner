@@ -266,6 +266,17 @@ public class GameManager {
         }
     }
 
+    public void resetRoles() {
+        // iterate through set locations and reset the default roles
+        for(Location location : board.getAllLocations().values()) {
+            if(location instanceof Set set) { // if location is a set
+                for(Role role : set.getRoles()) {
+                    role.setTaken(false);
+                }
+            }
+        }
+    }
+
     public Player getCurrentPlayer() {
         return this.currentPlayer;
     }
@@ -283,6 +294,7 @@ public class GameManager {
                 // do nothing
             } else {
                 resetPlayers();
+                resetRoles();
                 board.setOpenScenes(10);
                 board.dealCards(); // deal cards
             }
