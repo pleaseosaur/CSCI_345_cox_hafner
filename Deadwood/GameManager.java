@@ -290,9 +290,7 @@ public class GameManager {
 
     public boolean endDay() {
         if(board.checkEndDay()) {
-            if(checkEndGame()) {
-                // do nothing
-            } else {
+            if(!checkEndGame()){
                 resetPlayers();
                 resetRoles();
                 board.setOpenScenes(10);
