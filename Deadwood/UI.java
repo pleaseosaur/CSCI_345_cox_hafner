@@ -377,8 +377,8 @@ public class UI {
     }
 
     // quit game
-    public String quitGame() {
+    public void quitGame() {
         displayMessage("\nYour loss! Enjoy not being a world-renown thespian.");
-        return "end";
+        System.exit(0);
     }
 }
