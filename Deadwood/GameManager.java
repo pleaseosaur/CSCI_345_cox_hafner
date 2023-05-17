@@ -62,21 +62,19 @@ public class GameManager {
         allRoles.removeAll(onCardRoles);
         allRoles.addAll(onCardRoles);
 
-        boolean rankCheck = false;
         for(Role role : allRoles) {
-            if(!role.isTaken()) {
-                if(currentPlayer.getRank() >= role.getRank()) {
-                    currentPlayer.setRole(role);
-                    currentPlayer.setHasTakenRole(true);
-                    role.setTaken(true);
-                } else {
-                    rankCheck = true;
+            if(role.getName().equals(r)) {
+                if(!role.isTaken()) {
+                    if(currentPlayer.getRank() >= role.getRank()) {
+                        currentPlayer.setRole(role);
+                        currentPlayer.setHasTakenRole(true);
+                        role.setTaken(true);
+                    } else {
+                        System.out.println("\nYou do not have a high enough rank to take this role.");
+                    }
                 }
             }
-        }
 
-        if(rankCheck) {
-            System.out.println("\nYou do not have a high enough rank to take this role.");
         }
     }
 
@@ -161,19 +159,20 @@ public class GameManager {
 
         for(Player player : getPlayers()) { // for each player
             if(player.getLocation().equals(location)) { // if player is on current location
-                if(player.getRole()!=null && player.getRole().isOnCard()) { // if on card (checks that role is not null first, otherwise it crashes)
-                    onCardPlayers.add(player); // add to on card players
-                    onCardRoles.add(player.getRole()); // add to on card roles
-                    allPlayers.add(player); // add to all players
-                }
-                else {
-                    offCardPlayers.add(player); // add to off card players
-                    allPlayers.add(player); // add to all players
+                if(player.getRole()!=null) {
+                    if(player.getRole().isOnCard()) {
+                        onCardPlayers.add(player); // add to on card players
+                        onCardRoles.add(player.getRole()); // add to on card roles
+                        allPlayers.add(player); // add to all players
+                    } else {
+                        offCardPlayers.add(player); // add to off card players
+                        allPlayers.add(player); // add to all players
+                    }
                 }
             }
         }
 
-        if(onCardPlayers.size() != 0) { // if there are on card players
+        if(onCardPlayers.size() > 0) { // if there are on card players
             wrapBonus(onCardPlayers, offCardPlayers, onCardRoles); // roll for wrap bonuses
         }
 
