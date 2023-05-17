@@ -75,10 +75,6 @@ game will notify the player and prompt them to select a different action.
 When ```1. end turn``` is the only available action remaining, select it to end the current 
 player's turn. The next player will then be prompted to begin their turn.
 
-_**Note:**_ Functionality to automatically end a player's turn when no further actions 
-remain may be implemented in the future. At such a time, the instructions will be updated 
-and this note will be removed.
-
 The game will continue until all rounds (days) have been completed. At the end of the game, 
 the scores will be calculated and the winner(s) displayed. 
 
@@ -117,4 +113,9 @@ These commands will be displayed at the beginning of the game.
 
 ---
 
+## Known Issues:
 
+---
+
+* The ```quit``` command occasionally acts as an interrupt to the current prompt and needs to 
+be entered again to end the game. 
