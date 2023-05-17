@@ -85,9 +85,14 @@ public class Deadwood {
                             }
                         }
                         case "rehearse" -> {
-                            rehearse();
-                            ui.displayMessage("\nAnd a great rehearsal it was!");
-                            ui.displayMessage("\nYou now have " + currentPlayer.getPracticeChips() + " practice chips!");
+                            Set set = (Set) currentPlayer.getLocation();
+                            if(currentPlayer.getPracticeChips() == set.getScene().getBudget()-1) {
+                                ui.displayMessage("\nYou have maxed out your practice chips! Try acting instead!");
+                            } else {
+                                rehearse();
+                                ui.displayMessage("\nAnd a great rehearsal it was!");
+                                ui.displayMessage("\nYou now have " + currentPlayer.getPracticeChips() + " practice chips!");
+                            }
                         }
                         case "act" -> { // TODO -- temp message - should probably display payouts
                             if(act()) {

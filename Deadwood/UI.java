@@ -64,8 +64,16 @@ public class UI {
     }
     // startDayMessage: displays message at start of each day
     public void startDayMessage(int days) {
-        displayMessage("\nA new day has begun!");
-        displayMessage("There are " + days + " days remaining.");
+        if(days == 1) {
+            displayMessage("\nA new day has begun!");
+            displayMessage("This is the last day, so make it count!");
+        } else if(days == 0) {
+            displayMessage("\nThe final day has come to a close and the game has ended!");
+        }else {
+            displayMessage("\nA new day has begun!");
+            displayMessage("There are " + days + " days remaining.");
+        }
+
     }
     // startTurnMessage: displays message at start of each turn
     public void startTurnMessage(Player player) {
@@ -76,6 +84,7 @@ public class UI {
         displayMessage("\nYour current location is: " + locationName + "\n");
     }
     public void diceRollAnimation() {
+        displayPrompt("Rolling dice ");
         for(int i = 3; i > 0; i--) {
             displayPrompt(". ");
             try {
