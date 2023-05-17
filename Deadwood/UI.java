@@ -248,8 +248,7 @@ public class UI {
         if(choice.equals("quit")) {
             return "quit"; // quit game
         } else if (choice.equals("help")) {
-            helpMessage(); // display help message
-            return getChoiceInput(availableActions);
+            return "help";
         } else if(choice.equals("stats")) {
             return "stats";
         } else if (choice.equals("back")) {

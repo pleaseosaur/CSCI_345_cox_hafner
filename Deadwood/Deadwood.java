@@ -62,6 +62,7 @@ public class Deadwood {
                             String choice = ui.promptMove(currentPlayer);
                             switch (choice) {
                                 case "quit" -> endGame();
+                                case "help" -> ui.helpMessage();
                                 case "back" -> ui.displayMessage("\nNo problem!");
                                 case "stats" -> ui.displayStats(currentPlayer);
                                 case "view" -> manager.displayBoard();
@@ -75,6 +76,7 @@ public class Deadwood {
                             String choice = ui.promptRole(availableRoles);
                             switch (choice) {
                                 case "quit" -> endGame();
+                                case "help" -> ui.helpMessage();
                                 case "back" -> ui.displayMessage("\nNo problem!");
                                 case "stats" -> ui.displayStats(currentPlayer);
                                 case "view" -> manager.displayBoard();
@@ -106,6 +108,7 @@ public class Deadwood {
                             String choice = ui.promptUpgrade(manager.getAvailableUpgrades());
                             switch (choice) {
                                 case "quit" -> endGame();
+                                case "help" -> ui.helpMessage();
                                 case "back" -> ui.displayMessage("\nNo problem!");
                                 case "stats" -> ui.displayStats(currentPlayer);
                                 case "view" -> manager.displayBoard();
@@ -135,6 +138,7 @@ public class Deadwood {
                             endTurn();
                             turnActive = false;
                         }
+                        case "help" -> ui.helpMessage();
                         case "quit" -> endGame();
                         case "stats" -> ui.displayStats(currentPlayer);
                         case "view" -> manager.displayBoard();
