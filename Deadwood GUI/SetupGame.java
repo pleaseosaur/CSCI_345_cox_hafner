@@ -15,8 +15,8 @@ public class SetupGame {
     public SetupGame(int numPlayers) {
         // Exception catch
         try{
-            GameData.initializeGameData(getClass().getClassLoader().getResourceAsStream("Deadwood/xml/board.xml"),
-                                        getClass().getClassLoader().getResourceAsStream("Deadwoowd/xml/cards.xml"));
+            GameData.initializeGameData(getClass().getClassLoader().getResourceAsStream("/Deadwood/xml/board.xml"),
+                                        getClass().getClassLoader().getResourceAsStream("/Deadwood/xml/board.xml"));
             setPlayers(numPlayers);
             setDays(numPlayers);
         }
