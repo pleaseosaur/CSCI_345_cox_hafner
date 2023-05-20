@@ -11,6 +11,7 @@ import model.Set;
 import model.Upgrade;
 
 import java.util.*;
+import view.UI;
 
 public class Deadwood {
     // fields
