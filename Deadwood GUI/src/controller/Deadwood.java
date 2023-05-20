@@ -1,10 +1,15 @@
-/*
+package controller;/*
  * Author: Peter Hafner and Andrew Cox
  * Date: 16 May 2023
- * Purpose: Deadwood: Core game logic
+ * Purpose: controller.Deadwood: Core game logic
  */
 
 // imports
+import model.CastingOffice;
+import model.Player;
+import model.Set;
+import model.Upgrade;
+
 import java.util.*;
 
 public class Deadwood {
@@ -19,7 +24,7 @@ public class Deadwood {
         this.ui = new UI();
     }
 
-    // startGame: queries for player count, calls GameManager to set up accordingly, then starts game
+    // startGame: queries for player count, calls controller.GameManager to set up accordingly, then starts game
     public void startGame() {
         ui.displayWelcomeMessage();
         int players = ui.getPlayerCount();
@@ -102,7 +107,7 @@ public class Deadwood {
                         case "act" -> {
                             if(act()) {
                                 ui.diceRollAnimation();
-                                ui.displayMessage("Scene is wrapped");
+                                ui.displayMessage("model.Scene is wrapped");
                             }
                         }
                         case "upgrade" -> {

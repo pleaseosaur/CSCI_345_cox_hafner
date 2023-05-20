@@ -1,10 +1,13 @@
-/*
+package controller;/*
  * Author: Peter Hafner and Andrew Cox
  * Date: 16 May 2023
- * Purpose: SetupGame: Handles initial setup for game
+ * Purpose: controller.SetupGame: Handles initial setup for game
  */
 
 // imports
+import model.GameData;
+import model.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +47,7 @@ public class SetupGame {
         }
 
         for(int i = 1; i <= numPlayers; i++) {
-            Player player = new Player("Player " + i, rank, credits, dollars);
+            Player player = new Player("model.Player " + i, rank, credits, dollars);
             players.add(player);
         }
 

@@ -5,7 +5,8 @@
  */
 
 // imports
-import java.util.Set;
+import controller.Deadwood;
+import controller.GameManager;
 
 public class Main {
     public static void main (String[] args) {

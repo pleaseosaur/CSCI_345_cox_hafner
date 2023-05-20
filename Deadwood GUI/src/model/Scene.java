@@ -1,7 +1,7 @@
-/*
+package model;/*
  * Author: Peter Hafner and Andrew Cox
  * Date: 16 May 2023
- * Purpose: Scene: Scene object
+ * Purpose: model.Scene: model.Scene object
  */
 
 // imports

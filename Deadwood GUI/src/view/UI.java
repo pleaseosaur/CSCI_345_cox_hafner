@@ -1,10 +1,14 @@
-/*
+package view;/*
  * Author: Peter Hafner and Andrew Cox
  * Date: 16 May 2023
- * Purpose: UI: Handles output and player input
+ * Purpose: view.UI: Handles output and player input
  */
 
 // imports
+import model.Location;
+import model.Player;
+import model.Set;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -49,7 +53,7 @@ public class UI {
     }
     // displayWelcomeMessage: initial welcome prompt
     public void displayWelcomeMessage() {
-        displayMessage("Welcome to Deadwood!\n"); // basic - add more later if desired
+        displayMessage("Welcome to controller.Deadwood!\n"); // basic - add more later if desired
         displayMessage("When available actions/selections are displayed, please enter the number corresponding to your choice.");
         displayMessage("Once the game has started, you may type any of the following commands at any time:\n");
         helpMessage();
@@ -66,15 +70,15 @@ public class UI {
     public void displayStats(Player p){
         if(p.hasRole()) { // if player has role
             displayMessage("\nHere are your current stats: \n" +
-                    "Location: " + p.getLocation().getName() + "\n" +
-                    "Role: " + p.getRole().getName() + "\n" +
+                    "model.Location: " + p.getLocation().getName() + "\n" +
+                    "model.Role: " + p.getRole().getName() + "\n" +
                     "Rank: " + p.getRank() + "\n" +
                     "Credits: " + p.getCredits() + "\n" +
                     "Dollars: " + p.getDollars() + "\n" +
                     "Practice Chips: " + p.getPracticeChips() + "\n");
         } else { // if player does not have role
             displayMessage("\nHere are your current stats: \n" +
-                    "Location: " + p.getLocation().getName() + "\n" +
+                    "model.Location: " + p.getLocation().getName() + "\n" +
                     "Rank: " + p.getRank() + "\n" +
                     "Credits: " + p.getCredits() + "\n" +
                     "Dollars: " + p.getDollars() + "\n" +
@@ -183,7 +187,7 @@ public class UI {
         Map<String, String> availableActions = new HashMap<>(); // available actions for user input
 
         switch (player.getLocation().getName()) {
-            case "Trailer" -> trailerActions(player, availableActions); // get actions for trailer
+            case "model.Trailer" -> trailerActions(player, availableActions); // get actions for trailer
             case "Casting Office" -> officeActions(player, availableActions); // get actions for casting office
             default -> setActions(player, availableActions, availableRoles); // get actions for other locations
         }

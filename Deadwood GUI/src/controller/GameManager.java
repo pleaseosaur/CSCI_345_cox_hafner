@@ -1,10 +1,20 @@
-/*
+package controller;/*
  * Author: Peter Hafner and Andrew Cox
  * Date: 16 May 2023
- * Purpose: GameManager: handles player interface and game tracking
+ * Purpose: controller.GameManager: handles player interface and game tracking
  */
 
 // imports
+import model.Board;
+import model.CastingOffice;
+import model.Dice;
+import model.Location;
+import model.Player;
+import model.Role;
+import model.Scene;
+import model.Set;
+import model.Upgrade;
+
 import java.util.*;
 
 public class GameManager {
@@ -110,7 +120,7 @@ public class GameManager {
             System.out.println("\nYour act was a success!");
             isSuccess = true;
 
-            // TODO -- move to UI for GUI implementation
+            // TODO -- move to view.UI for GUI implementation
             int takesNum = set.getCurrentTakeIndex()+1;
             System.out.println((set.getTakes().size()-takesNum)+" takes remaining.");
 
@@ -181,7 +191,7 @@ public class GameManager {
         }
         // decrement Open Scenes
         board.setOpenScenes(board.getOpenScenes()-1);
-        System.out.println(board.getOpenScenes()+" open scenes remaining."); // TODO -- move to UI for GUI implementation
+        System.out.println(board.getOpenScenes()+" open scenes remaining."); // TODO -- move to view.UI for GUI implementation
     }
 
     // wrapBonus: rolls for wrap bonuses if players are on card
@@ -255,7 +265,7 @@ public class GameManager {
     // setStartingLocation: sets all players to starting location
     public void resetPlayers() {
         for (Player player : getPlayers()) {
-            player.setLocation(board.getLocation("Trailer")); // set all players to trailer
+            player.setLocation(board.getLocation("model.Trailer")); // set all players to trailer
             player.setHasActed(false); // reset player actions
             player.setHasMoved(false);
             player.setHasRehearsed(false);
@@ -343,7 +353,7 @@ public class GameManager {
             Set set = (Set) playerLocation; // cast player location to set
 
             if(set.getScene().isWrapped()){ // if scene is wrapped, no roles are available
-                availableRoles.put("0", "Scene is wrapped. No roles are available.");
+                availableRoles.put("0", "model.Scene is wrapped. No roles are available.");
             }
 
             else { // if scene is not wrapped, add available roles to map
@@ -395,7 +405,7 @@ public class GameManager {
         return availableUpgrades;
     }
 
-    // calls displayBoard method in Board class
+    // calls displayBoard method in model.Board class
     public void displayBoard() {
         board.displayBoard();
     }

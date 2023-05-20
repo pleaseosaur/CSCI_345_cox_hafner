@@ -1,7 +1,7 @@
-/*
+package model;/*
  * Author: Peter Hafner and Andrew Cox
  * Date: 16 May 2023
- * Purpose: Area: Store Area data for future use in GUI implementation
+ * Purpose: model.Area: Store model.Area data for future use in GUI implementation
  */
 
 public class Area {

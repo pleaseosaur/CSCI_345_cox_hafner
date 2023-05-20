@@ -1,13 +1,14 @@
-/*
+package model;/*
  * Author: Peter Hafner and Andrew Cox
  * Date: 16 May 2023
- * Purpose: Set: Set object
+ * Purpose: model.Set: model.Set object
  */
 
 // imports
+
 import java.util.List;
 
-public class Set extends Location{
+public class Set extends Location {
     // fields
     private Scene scene;
     private List<Take> takes;

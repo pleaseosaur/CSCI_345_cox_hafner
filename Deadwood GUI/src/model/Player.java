@@ -1,7 +1,7 @@
-/*
+package model;/*
  * Author: Peter Hafner and Andrew Cox
  * Date: 16 May 2023
- * Purpose: Player: Player object to store player data
+ * Purpose: model.Player: model.Player object to store player data
  */
 
 

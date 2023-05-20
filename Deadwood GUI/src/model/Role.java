@@ -1,8 +1,10 @@
-/*
+package model;/*
  * Author: Peter Hafner and Andrew Cox
  * Date: 16 May 2023
- * Purpose: Role: Role object
+ * Purpose: model.Role: model.Role object
  */
+
+import model.Area;
 
 public class Role {
     // fields

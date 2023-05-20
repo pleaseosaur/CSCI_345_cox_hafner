@@ -1,7 +1,7 @@
-/*
+package model;/*
  * Author: Peter Hafner and Andrew Cox
  * Date: 16 May 2023
- * Purpose: GameData: XML parsing and setup
+ * Purpose: model.GameData: XML parsing and setup
  */
 
 // imports
@@ -90,7 +90,7 @@ public class GameData {
     }
 
     // constructGraph: turns list of locations into a graph for traversals
-    private Map<String,Location> constructGraph(List<Location> tempLocations) {
+    private Map<String, Location> constructGraph(List<Location> tempLocations) {
 
         Map<String, Location> locations = new HashMap<>(); // create map of locations
 
@@ -133,7 +133,7 @@ public class GameData {
         Deck.initializeDeck(cards); // create deck
     }
 
-    // createCard: creates Scene card
+    // createCard: creates model.Scene card
     private Scene createCard(Element cardElement) {
 
         String cardName = cardElement.getAttribute("name"); // get card name
@@ -146,7 +146,7 @@ public class GameData {
         return new Scene(cardName, sceneNumber, sceneDescription, budget, roles, false); // create card;
     }
 
-    // createSet: creates Set location
+    // createSet: creates model.Set location
     private Location createSet(Element setElement) {
 
         String locationName = setElement.getAttribute("name"); // get location name
@@ -173,7 +173,7 @@ public class GameData {
                     neighbors.add("Casting Office"); // add office to list
                 }
                 else if (neighborElement.getAttribute("name").equals("trailer")) {
-                    neighbors.add("Trailer"); // add trailer to list
+                    neighbors.add("model.Trailer"); // add trailer to list
                 }
                 else {
                     neighbors.add(neighborElement.getAttribute("name")); // add neighbor name to list
@@ -201,7 +201,7 @@ public class GameData {
         return takes;
     }
 
-    // createTake: creates one Take from element
+    // createTake: creates one model.Take from element
     private Take createTake(Element takeElement) {
 
         int takeNumber = Integer.parseInt(takeElement.getAttribute("number")); // get take number
@@ -228,7 +228,7 @@ public class GameData {
         return roles;
     }
 
-    // createRole: creates one Role from element
+    // createRole: creates one model.Role from element
     private Role createRole(Element partElement, boolean onCard) {
 
         String partName = partElement.getAttribute("name"); // get part/role name
@@ -245,7 +245,7 @@ public class GameData {
         List<String> trailerNeighbors = createNeighbors(trailerElement.getElementsByTagName("neighbor")); // get trailer neighbor nodes
         Area trailerArea = getArea((Element) trailerElement.getElementsByTagName("area").item(0)); // get trailer area
 
-        return new Trailer("Trailer", trailerNeighbors, trailerArea); // create trailer
+        return new Trailer("model.Trailer", trailerNeighbors, trailerArea); // create trailer
     }
 
     // createOffice: creates office location

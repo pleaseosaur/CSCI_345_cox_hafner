@@ -145,7 +145,7 @@
       <area x="20" y="47" h="40" w="40" />
       <line>Hold him still!</line>
     </part>
-    <part name="Woman with Board" level="3">
+    <part name="Woman with model.Board" level="3">
       <area x="83" y="47" h="40" w="40" />
       <line>Nonsense, Frank!</line>
     </part>
@@ -267,7 +267,7 @@
       After the mine explosion, the traveling circus takes time out to get drunk
       and start a fight.
     </scene>
-    <part name="Piano Player" level="2">
+    <part name="Piano model.Player" level="2">
       <area x="20" y="47" h="40" w="40" />
       <line>It's a nocturne!</line>
     </part>

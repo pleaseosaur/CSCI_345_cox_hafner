@@ -1,13 +1,14 @@
-/*
+package model;/*
  * Author: Peter Hafner and Andrew Cox
  * Date: 16 May 2023
- * Purpose: CastingOffice: Location child object representing the casting office
+ * Purpose: model.CastingOffice: model.Location child object representing the casting office
  */
 
 // imports
+
 import java.util.List;
 
-public class CastingOffice extends Location{
+public class CastingOffice extends Location {
     // fields
     private final List<Upgrade> upgrades;
 

@@ -1,7 +1,7 @@
-/*
+package model;/*
  * Author: Peter Hafner and Andrew Cox
  * Date: 16 May 2023
- * Purpose: Deck: Deck object to hold scene cards
+ * Purpose: model.Deck: model.Deck object to hold scene cards
  */
 
 // imports
@@ -24,14 +24,14 @@ public class Deck {
     // getters and setters
     public static void initializeDeck(List<Scene> c){
         if(deck != null){
-            throw new IllegalStateException("Deck has already been initialized");
+            throw new IllegalStateException("model.Deck has already been initialized");
         }
         deck = new Deck(c);
     }
 
     public static Deck getInstance(){
         if(deck == null){
-            throw new IllegalStateException("Deck has not been initialized");
+            throw new IllegalStateException("model.Deck has not been initialized");
         }
         return deck;
     }
