@@ -6,8 +6,6 @@
       <sourceFolder url="file://$MODULE_DIR$/Deadwood" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Deadwood GUI/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Deadwood GUI/src/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Deadwood GUI/src/resources/images" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Deadwood GUI/src/resources/xml" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
