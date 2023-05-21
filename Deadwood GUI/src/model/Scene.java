@@ -14,16 +14,18 @@ public class Scene {
     private String description;
     private int budget;
     private List<Role> roles;
+    private String img;
     private boolean wrap;
 
 
     // constructor
-    public Scene(String n, int num, String d, int b, List<Role> r, boolean w) {
+    public Scene(String n, int num, String d, int b, List<Role> r, String img, boolean w) {
         this.name = n;
         this.number = num;
         this.description = d;
         this.budget = b;
         this.roles = r;
+        this.img = img;
         setWrap(w);
     }
 
