@@ -7,7 +7,7 @@ package model;/*
 // imports
 import java.util.List;
 
-public class Scene {
+public class Card {
     // fields
     private String name;
     private int number;
@@ -19,7 +19,7 @@ public class Scene {
 
 
     // constructor
-    public Scene(String n, int num, String d, int b, List<Role> r, String img, boolean w) {
+    public Card(String n, int num, String d, int b, List<Role> r, String img, boolean w) {
         this.name = n;
         this.number = num;
         this.description = d;

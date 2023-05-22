@@ -11,18 +11,18 @@ import java.util.List;
 public class Deck {
     // fields
     private static Deck deck;
-    private final List<Scene> cards;
+    private final List<Card> cards;
     private int nextCard;
 
     // constructor
-    private Deck(List<Scene> c){
+    private Deck(List<Card> c){
         this.cards = c;
         this.nextCard = 0;
         Collections.shuffle(cards);
     }
 
     // getters and setters
-    public static void initializeDeck(List<Scene> c){
+    public static void initializeDeck(List<Card> c){
         if(deck != null){
             throw new IllegalStateException("model.Deck has already been initialized");
         }
@@ -37,9 +37,9 @@ public class Deck {
     }
 
     // drawScene: draws scene card to be assigned to location
-    public Scene drawScene(){
+    public Card drawScene(){
         if (nextCard < cards.size()) {
-            Scene card = cards.get(nextCard);
+            Card card = cards.get(nextCard);
             nextCard++;
             return card;
         } else {

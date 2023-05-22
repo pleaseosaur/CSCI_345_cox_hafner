@@ -11,7 +11,7 @@ import model.Dice;
 import model.Location;
 import model.Player;
 import model.Role;
-import model.Scene;
+import model.Card;
 import model.Set;
 import model.Upgrade;
 
@@ -196,8 +196,8 @@ public class GameManager {
 
     // wrapBonus: rolls for wrap bonuses if players are on card
     public void wrapBonus(List<Player> onCardPlayers, List<Player> offCardPlayers, List<Role> onCardRoles) {
-        Scene scene = ((Set) currentPlayer.getLocation()).getScene();
-        List<Integer> results = dice.wrapRoll(scene.getBudget()); // roll number of dice equal to budget
+        Card card = ((Set) currentPlayer.getLocation()).getScene();
+        List<Integer> results = dice.wrapRoll(card.getBudget()); // roll number of dice equal to budget
         Map<Role, Integer> distribution = new HashMap<>(); // map of roles to results
 
         onCardRoles.sort(Comparator.comparing(Role::getRank).reversed()); // sorts roles by rank

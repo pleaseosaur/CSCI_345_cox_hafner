@@ -117,14 +117,14 @@ public class GameData {
 
         NodeList cardNodes = d.getElementsByTagName("card"); // get card nodes
 
-        List<Scene> cards = new ArrayList<>(); // create list of cards
+        List<Card> cards = new ArrayList<>(); // create list of cards
 
         for(int i = 0; i < cardNodes.getLength(); i++) {
             Node cardNode = cardNodes.item(i); // get card node
 
             if (cardNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element cardElement = (Element) cardNode; // cast node to element
-                Scene card = createCard(cardElement); // create card
+                Card card = createCard(cardElement); // create card
 
                 cards.add(card); // add card to list
             }
@@ -134,7 +134,7 @@ public class GameData {
     }
 
     // createCard: creates model.Scene card
-    private Scene createCard(Element cardElement) {
+    private Card createCard(Element cardElement) {
 
         String cardName = cardElement.getAttribute("name"); // get card name
         Element sceneNode = (Element) cardElement.getElementsByTagName("scene").item(0); // get scene node
@@ -144,7 +144,7 @@ public class GameData {
         String sceneDescription = cardElement.getElementsByTagName("scene").item(0).getTextContent(); // get scene description
         List<Role> roles = createRoles(cardElement.getElementsByTagName("part"), true); // get part/role nodes
 
-        return new Scene(cardName, sceneNumber, sceneDescription, budget, roles, image, false); // create card;
+        return new Card(cardName, sceneNumber, sceneDescription, budget, roles, image, false); // create card;
     }
 
     // createSet: creates model.Set location

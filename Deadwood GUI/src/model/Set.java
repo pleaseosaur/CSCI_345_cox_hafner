@@ -10,15 +10,15 @@ import java.util.List;
 
 public class Set extends Location {
     // fields
-    private Scene scene;
+    private Card card;
     private List<Take> takes;
     private List<Role> roles;
     private Take currentTake;
 
     // constructor
-    public Set(String name, List<String> neighbors, Area area, Scene scene, List<Take> takes, List<Role> roles) {
+    public Set(String name, List<String> neighbors, Area area, Card card, List<Take> takes, List<Role> roles) {
         super(name, neighbors, area);
-        setScene(scene);
+        setScene(card);
         this.takes = takes;
         this.roles = roles;
         currentTake = this.takes.get(0);
@@ -26,11 +26,11 @@ public class Set extends Location {
 
 
     // getters and setters
-    public void setScene(Scene s){
-        this.scene = s;
+    public void setScene(Card s){
+        this.card = s;
     }
-    public Scene getScene(){
-        return this.scene;
+    public Card getScene(){
+        return this.card;
     }
 
     public List<Take> getTakes(){
