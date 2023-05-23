@@ -1,11 +1,3 @@
-package model;/*
- * Author: Peter Hafner and Andrew Cox
- * Date: 16 May 2023
- * Purpose: model.Upgrade: model.Upgrade object to store upgrade data
- */
-
-import model.Area;
-
 public class Upgrade {
     // fields
     private int rank;

@@ -1,9 +1,3 @@
-package model;/*
- * Author: Peter Hafner and Andrew Cox
- * Date: 16 May 2023
- * Purpose: model.Dice: model.Dice object containing randomizer and dice rolling logic
- */
-
 // imports
 import java.util.Collections;
 import java.util.List;

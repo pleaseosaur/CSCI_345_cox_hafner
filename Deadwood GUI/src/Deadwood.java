@@ -1,17 +1,6 @@
-package controller;/*
- * Author: Peter Hafner and Andrew Cox
- * Date: 16 May 2023
- * Purpose: controller.Deadwood: Core game logic
- */
-
 // imports
-import model.CastingOffice;
-import model.Player;
-import model.Set;
-import model.Upgrade;
 
 import java.util.*;
-import view.UI;
 
 public class Deadwood {
     // fields
@@ -25,7 +14,7 @@ public class Deadwood {
         this.ui = new UI();
     }
 
-    // startGame: queries for player count, calls controller.GameManager to set up accordingly, then starts game
+    // startGame: queries for player count, calls GameManager to set up accordingly, then starts game
     public void startGame() {
         ui.displayWelcomeMessage();
         int players = ui.getPlayerCount();

@@ -1,10 +1,3 @@
-package model;/*
- * Author: Peter Hafner and Andrew Cox
- * Date: 16 May 2023
- * Purpose: model.Player: model.Player object to store player data
- */
-
-
 public class Player {
     // fields
     private String name;

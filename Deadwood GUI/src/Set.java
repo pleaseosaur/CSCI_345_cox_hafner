@@ -1,9 +1,3 @@
-package model;/*
- * Author: Peter Hafner and Andrew Cox
- * Date: 16 May 2023
- * Purpose: model.Set: model.Set object
- */
-
 // imports
 
 import java.util.List;

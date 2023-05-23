@@ -1,12 +1,3 @@
-package model;/*
- * Author: Peter Hafner and Andrew Cox
- * Date: 16 May 2023
- * Purpose: model.Take: model.Take object
- */
-
-
-import model.Area;
-
 public class Take {
     // fields
     private int number;

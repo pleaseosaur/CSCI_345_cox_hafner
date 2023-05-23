@@ -1,9 +1,3 @@
-package model;/*
- * Author: Peter Hafner and Andrew Cox
- * Date: 16 May 2023
- * Purpose: model.Board: Object representing game's board
- */
-
 // imports
 
 import java.util.ArrayList;
@@ -29,14 +23,14 @@ public class Board {
 
     public static Board getInstance() {
         if(board == null) {
-            throw new IllegalStateException("model.Board has not been initialized");
+            throw new IllegalStateException("Board has not been initialized");
         }
         return board;
     }
 
     public static void initializeBoard(String n, Map<String, Location> l, int o) {
         if(board != null) {
-            throw new IllegalStateException("model.Board has already been initialized");
+            throw new IllegalStateException("Board has already been initialized");
         }
         board = new Board(n, l, o);
     }

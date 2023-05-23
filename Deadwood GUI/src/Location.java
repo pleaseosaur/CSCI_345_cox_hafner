@@ -1,9 +1,3 @@
-package model;/*
- * Author: Peter Hafner and Andrew Cox
- * Date: 16 May 2023
- * Purpose: model.Location object containing data for each location
- */
-
 // imports
 
 import java.util.List;
@@ -12,7 +6,7 @@ public abstract class Location {
     // fields
     private String name;
     private List<String> temp; // temporary list of neighbors
-    private List<Location> neighbors; // list of neighbors as model.Location objects
+    private List<Location> neighbors; // list of neighbors as Location objects
     private Area area;
 
     // constructor
@@ -54,6 +48,6 @@ public abstract class Location {
     }
 
     public boolean isSet() {
-        return !getName().equals("model.Trailer") && !getName().equals("Casting Office");
+        return !getName().equals("Trailer") && !getName().equals("Casting Office");
     }
 }

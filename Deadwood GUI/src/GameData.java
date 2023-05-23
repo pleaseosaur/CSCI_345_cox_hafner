@@ -1,9 +1,3 @@
-package model;/*
- * Author: Peter Hafner and Andrew Cox
- * Date: 16 May 2023
- * Purpose: model.GameData: XML parsing and setup
- */
-
 // imports
 
 import org.w3c.dom.Document;
@@ -147,7 +141,7 @@ public class GameData {
         return new Card(cardName, sceneNumber, sceneDescription, budget, roles, image, false); // create card;
     }
 
-    // createSet: creates model.Set location
+    // createSet: creates Set location
     private Location createSet(Element setElement) {
 
         String locationName = setElement.getAttribute("name"); // get location name
@@ -174,7 +168,7 @@ public class GameData {
                     neighbors.add("Casting Office"); // add office to list
                 }
                 else if (neighborElement.getAttribute("name").equals("trailer")) {
-                    neighbors.add("model.Trailer"); // add trailer to list
+                    neighbors.add("Trailer"); // add trailer to list
                 }
                 else {
                     neighbors.add(neighborElement.getAttribute("name")); // add neighbor name to list
@@ -202,7 +196,7 @@ public class GameData {
         return takes;
     }
 
-    // createTake: creates one model.Take from element
+    // createTake: creates one Take from element
     private Take createTake(Element takeElement) {
 
         int takeNumber = Integer.parseInt(takeElement.getAttribute("number")); // get take number
@@ -229,7 +223,7 @@ public class GameData {
         return roles;
     }
 
-    // createRole: creates one model.Role from element
+    // createRole: creates one Role from element
     private Role createRole(Element partElement, boolean onCard) {
 
         String partName = partElement.getAttribute("name"); // get part/role name
@@ -246,7 +240,7 @@ public class GameData {
         List<String> trailerNeighbors = createNeighbors(trailerElement.getElementsByTagName("neighbor")); // get trailer neighbor nodes
         Area trailerArea = getArea((Element) trailerElement.getElementsByTagName("area").item(0)); // get trailer area
 
-        return new Trailer("model.Trailer", trailerNeighbors, trailerArea); // create trailer
+        return new Trailer("Trailer", trailerNeighbors, trailerArea); // create trailer
     }
 
     // createOffice: creates office location
