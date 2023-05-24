@@ -46,14 +46,14 @@ public class Game {
         statsPanel.add(playerStatsArea, BorderLayout.CENTER); // Add the text area to the stats panel
 
         JLayeredPane layeredPane = new JLayeredPane(); // Create the JLayeredPane to hold the board, cards, tokens, etc.
-        layeredPane.setPreferredSize(new Dimension(1200, 900));
-        // TODO - board image won't load
-        ImageIcon icon = new ImageIcon("resources/images/board.jpg"); // Add the board image
-        JLabel boardLabel = new JLabel(icon); // Add the board image to the board label
-        boardLabel.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight()); // Set the size and position of the board label
+
+        ImageIcon board = new ImageIcon(getClass().getResource("images/board.jpg")); // Create the board image
+        board.setImage(board.getImage().getScaledInstance(1200, 900, Image.SCALE_DEFAULT));
+        JLabel boardLabel = new JLabel(board); // Add the board image to a label
+        boardLabel.setBounds(0, 0, board.getIconWidth(), board.getIconHeight()); // Set the size of the board label
 
         // testing - dummy player icon
-        ImageIcon playerIcon = new ImageIcon("/resources/images/players/red-1.png"); // TODO - images aren't loading
+        ImageIcon playerIcon = new ImageIcon("resources/images/players/red-1.png"); // TODO - images aren't loading
         JLabel playerLabel = new JLabel(playerIcon);
         playerLabel.setBounds(200, 200, 100, 150);
 
